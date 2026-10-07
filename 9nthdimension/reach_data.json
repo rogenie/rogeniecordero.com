@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-07T13:35:55-07:00",
+ "generatedAt": "2026-10-07T14:00:38-07:00",
  "date": "2026-10-07",
  "windowDays": 30,
  "accounts": {
@@ -14,18 +14,20 @@
    },
    "followers": 877,
    "views": 33468,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   },
   "facebook_9nthdimension": {
    "brand": "@9nthdimension",
    "platform": "facebook",
    "history": {
     "2026-10-07": {
-     "f": 571
+     "f": 571,
+     "v": 1432
     }
    },
    "followers": 571,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 1432
   },
   "youtube_9nthdimension": {
    "brand": "@9nthdimension",
@@ -38,18 +40,20 @@
    },
    "followers": 165,
    "views": 3190,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   },
   "tiktok_natalnotes": {
    "brand": "@natalnotes",
    "platform": "tiktok",
    "history": {
     "2026-10-07": {
-     "f": 64
+     "f": 64,
+     "v": 1009
     }
    },
    "followers": 64,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 1009
   },
   "youtube_natalnotes": {
    "brand": "@natalnotes",
@@ -60,29 +64,33 @@
     }
    },
    "followers": 426,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   },
   "tiktok_parvaregina": {
    "brand": "@parvaregina",
    "platform": "tiktok",
    "history": {
     "2026-10-07": {
-     "f": 5129
+     "f": 5129,
+     "v": 8260
     }
    },
    "followers": 5129,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 8260
   },
   "facebook_parvaregina": {
    "brand": "@parvaregina",
    "platform": "facebook",
    "history": {
     "2026-10-07": {
-     "f": 16
+     "f": 16,
+     "v": 32
     }
    },
    "followers": 16,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 32
   },
   "youtube_parvaregina": {
    "brand": "@parvaregina",
@@ -95,64 +103,33 @@
    },
    "followers": 33,
    "views": 234,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
-  },
-  "tiktok_undaamor": {
-   "brand": "@undaamor",
-   "platform": "tiktok",
-   "history": {
-    "2026-10-07": {
-     "f": 5129
-    }
-   },
-   "followers": 5129,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
-  },
-  "facebook_undaamor": {
-   "brand": "@undaamor",
-   "platform": "facebook",
-   "history": {
-    "2026-10-07": {
-     "f": 16
-    }
-   },
-   "followers": 16,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
-  },
-  "youtube_undaamor": {
-   "brand": "@undaamor",
-   "platform": "youtube",
-   "history": {
-    "2026-10-07": {
-     "f": 33,
-     "v": 234
-    }
-   },
-   "followers": 33,
-   "views": 234,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   },
   "tiktok_tibimundum": {
    "brand": "@tibimundum",
    "platform": "tiktok",
    "history": {
     "2026-10-07": {
-     "f": 3832
+     "f": 3832,
+     "v": 7263
     }
    },
    "followers": 3832,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 7263
   },
   "facebook_tibimundum": {
    "brand": "@tibimundum",
    "platform": "facebook",
    "history": {
     "2026-10-07": {
-     "f": 21
+     "f": 21,
+     "v": 56
     }
    },
    "followers": 21,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 56
   },
   "youtube_tibimundum": {
    "brand": "@tibimundum",
@@ -165,7 +142,7 @@
    },
    "followers": 50,
    "views": 24695,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   },
   "tiktok_teachings.of.jesuschrist": {
    "brand": "@teachings.of.jesuschrist",
@@ -178,18 +155,20 @@
    },
    "followers": 13,
    "views": 11169,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   },
   "facebook_teachings.of.jesuschrist": {
    "brand": "@teachings.of.jesuschrist",
    "platform": "facebook",
    "history": {
     "2026-10-07": {
-     "f": 21
+     "f": 21,
+     "v": 17
     }
    },
    "followers": 21,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 17
   },
   "youtube_teachings.of.jesuschrist": {
    "brand": "@teachings.of.jesuschrist",
@@ -202,29 +181,33 @@
    },
    "followers": 33,
    "views": 12116,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   },
   "tiktok_computatio": {
    "brand": "@computatio",
    "platform": "tiktok",
    "history": {
     "2026-10-07": {
-     "f": 12383
+     "f": 12383,
+     "v": 102
     }
    },
    "followers": 12383,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 102
   },
   "facebook_computatio": {
    "brand": "@computatio",
    "platform": "facebook",
    "history": {
     "2026-10-07": {
-     "f": 1309
+     "f": 1309,
+     "v": 16
     }
    },
    "followers": 1309,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00",
+   "views": 16
   },
   "youtube_computatio": {
    "brand": "@computatio",
@@ -235,7 +218,55 @@
     }
    },
    "followers": 8,
-   "updatedAt": "2026-10-07T13:35:55-07:00"
+   "updatedAt": "2026-10-07T14:00:38-07:00"
+  },
+  "facebook_natalnotes": {
+   "brand": "@natalnotes",
+   "platform": "facebook",
+   "history": {
+    "2026-10-07": {
+     "v": 8
+    }
+   },
+   "views": 8,
+   "updatedAt": "2026-10-07T14:00:38-07:00"
+  },
+  "tiktok_thatmommatho": {
+   "brand": "@thatmommatho",
+   "platform": "tiktok",
+   "history": {
+    "2026-10-07": {
+     "f": 13172,
+     "v": 954
+    }
+   },
+   "followers": 13172,
+   "views": 954,
+   "updatedAt": "2026-10-07T14:00:38-07:00"
+  },
+  "facebook_thatmommatho": {
+   "brand": "@thatmommatho",
+   "platform": "facebook",
+   "history": {
+    "2026-10-07": {
+     "f": 19,
+     "v": 19
+    }
+   },
+   "followers": 19,
+   "views": 19,
+   "updatedAt": "2026-10-07T14:00:38-07:00"
+  },
+  "youtube_thatmommatho": {
+   "brand": "@thatmommatho",
+   "platform": "youtube",
+   "history": {
+    "2026-10-07": {
+     "f": 137
+    }
+   },
+   "followers": 137,
+   "updatedAt": "2026-10-07T14:00:38-07:00"
   }
  },
  "errors": []
