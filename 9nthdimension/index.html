@@ -76,6 +76,28 @@ input,select{background:var(--bg);border:1px solid var(--line);border-radius:6px
 .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:6px}
 #msg{color:var(--down);font-size:13px;min-height:1em}
 a{color:var(--accent)}
+@media (max-width:640px){
+  .wrap{padding-inline:16px;padding-block:20px 40px;gap:20px}
+  h1{font-size:24px}
+  .totals{grid-template-columns:repeat(6,1fr)}
+  .tot{padding:12px;grid-column:span 2}
+  .tot:nth-child(-n+2){grid-column:span 3}
+  .tot .big{font-size:21px}
+  .tot .small{font-size:12px}
+  .panel{padding:14px}
+  .seg{max-width:100%}
+  .seg button{padding:8px 10px}
+  .scroll{overflow-x:visible}
+  table{min-width:0}
+  thead{display:none}
+  table,tbody,tr,td{display:block;width:100%}
+  tr{border:1px solid var(--line);border-radius:8px;background:var(--bg);padding:4px;margin-top:12px}
+  td{border:0;padding:0 4px}
+  td.brand{padding:8px 12px 2px;font-size:16px;overflow-wrap:anywhere}
+  td[data-label]{display:grid;grid-template-columns:88px minmax(0,1fr);align-items:start;border-top:1px solid var(--line)}
+  td[data-label]::before{content:attr(data-label);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:10px 0 0 8px}
+  .cell .h{overflow-wrap:anywhere}
+}
 </style>
 
 </head>
@@ -177,16 +199,16 @@ function render(){
   for(const b of brands){
     const mine=accounts.filter(a=>a.brand===b);
     h+=`<tr><td class="brand">${esc(b)}</td>`;
-    for(const [p] of PLATS){
+    for(const [p,pn] of PLATS){
       const a=mine.find(x=>x.platform===p);
-      if(!a){ h+=`<td><div class="cell add">–</div></td>`; continue; }
-      h+=`<td><div class="cell">
+      if(!a){ h+=`<td data-label="${pn}"><div class="cell add">–</div></td>`; continue; }
+      h+=`<td data-label="${pn}"><div class="cell">
         <div class="f">${fmt(a.followers)}</div>
         <div class="v">${a.views==null?"views –":fmt(a.views)+" views, 30d"}</div>
         <div>${deltaHtml(delta7(a,"followers"))}</div>
         <div class="h">@${esc(a.handle)}${a.confirmed?"":' <span class="flag">· unconfirmed</span>'}</div></div></td>`;
     }
-    h+=`<td><div class="cell" style="cursor:default"><div class="f">${fmt(sum(mine,"followers"))}</div><div class="v">${fmt(sum(mine,"views"))} views</div><div>${deltaHtml(dsum(mine,"followers"))}</div></div></td></tr>`;
+    h+=`<td data-label="Total"><div class="cell" style="cursor:default"><div class="f">${fmt(sum(mine,"followers"))}</div><div class="v">${fmt(sum(mine,"views"))} views</div><div>${deltaHtml(dsum(mine,"followers"))}</div></div></td></tr>`;
   }
   $("ledger").innerHTML=h+"</tbody></table>";
 }
@@ -198,7 +220,7 @@ function renderChart(){
   if(pts.length<2){
     $("chart").innerHTML=`<div class="empty">${pts.length?"One day of counts recorded so far. The line appears after the second daily update.":"The growth line starts once counts have been recorded for at least two days."}</div>`; return;
   }
-  const W=720,H=240,L=52,R=16,T=14,B=28;
+  const W=Math.max(300,Math.min(720,$("chart").clientWidth||720)),H=W<480?200:240,L=44,R=12,T=14,B=28;
   const t0=Date.parse(pts[0].d),t1=Date.parse(pts[pts.length-1].d);
   const raw=Math.max(...pts.map(p=>p.y),1), mag=Math.pow(10,Math.floor(Math.log10(raw))), max=Math.ceil(raw/mag)*mag;
   const x=d=>L+(Date.parse(d)-t0)/(t1-t0)*(W-L-R), y=v=>T+(1-v/max)*(H-T-B);
@@ -218,6 +240,7 @@ function seg(id,attr,set){
   $(id).addEventListener("click",ev=>{const b=ev.target.closest("button"); if(!b) return;
     [...$(id).children].forEach(c=>c.setAttribute("aria-pressed",c===b)); set(b.dataset[attr]); renderChart();});
 }
+let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderChart,150)});
 seg("metricSeg","m",v=>metric=v); seg("platSeg","p",v=>plat=v);
 
 render();
