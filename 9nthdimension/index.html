@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>9nth Dimension Control Center</title>
+<style>body{margin:0}[hidden]{display:none!important}</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column. Portfolio totals first, then the growth line, then a brand-by-platform ledger where every cell is an account. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --line:#d9dee7; --fg:#131a2a; --muted:#5b6578;
+  --accent:#2a4bd7; --accent-fg:#ffffff;
+  --tt:#0f8f8f; --fb:#2f6fe0; --yt:#d23b2e;
+  --up:#17794a; --down:#b3322a; --warn:#9a6a00;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --fg:#e8ecf4; --muted:#98a3b8;
+  --accent:#8aa2ff; --accent-fg:#0e121b;
+  --tt:#3fc9c4; --fb:#6fa0ff; --yt:#ff7a6b;
+  --up:#55cf92; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --fg:#e8ecf4; --muted:#98a3b8;
+  --accent:#8aa2ff; --accent-fg:#0e121b;
+  --tt:#3fc9c4; --fb:#6fa0ff; --yt:#ff7a6b;
+  --up:#55cf92; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:20px;padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-wrap:wrap;gap:12px 24px;align-items:flex-end;justify-content:space-between}
+h1{font:700 30px/1.1 var(--display);margin:0;text-wrap:balance}
+h2{font:700 18px/1.2 var(--display);margin:0}
+.sub{color:var(--muted);margin:4px 0 0}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+button,select,input{font:inherit;color:inherit}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:8px 14px;cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg);font-weight:600}
+.btn.danger{color:var(--down)}
+.btn:focus-visible,input:focus-visible,select:focus-visible,.cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tot{background:var(--surface);padding:16px 18px;min-width:0}
+.tot .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tot .big{font:500 28px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
+.tot .small{font-size:13px;color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.tiktok{--p:var(--tt)}.facebook{--p:var(--fb)}.youtube{--p:var(--yt)}
+.dot{background:var(--p,var(--accent))}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
+.row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
+svg{display:block;width:100%;height:auto;margin-top:12px}
+.empty{color:var(--muted);padding:28px 8px;text-align:center}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.brand{font-weight:600;padding-top:14px}
+.cell{display:block;width:100%;text-align:left;border:1px solid transparent;background:transparent;border-radius:6px;padding:6px 8px;cursor:pointer}
+.cell:hover{border-color:var(--line);background:var(--bg)}
+.cell .f{font:500 16px/1.3 var(--mono);font-variant-numeric:tabular-nums}
+.cell .v,.cell .h{font-size:12px;color:var(--muted)}
+.cell.add{color:var(--muted)}
+.up{color:var(--up)}.down{color:var(--down)}.flag{color:var(--warn);font-size:12px}
+dialog{border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--fg);padding:22px;width:min(440px,calc(100vw - 32px))}
+dialog::backdrop{background:rgba(8,12,20,.55)}
+form{display:grid;gap:12px}
+label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+input,select{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;color:var(--fg);width:100%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:6px}
+#msg{color:var(--down);font-size:13px;min-height:1em}
+a{color:var(--accent)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>9nth Dimension Control Center</h1>
+      <p class="sub" id="status">Loading accounts…</p>
+    </div>
+  </header>
+
+  <section class="totals" id="totals" aria-label="Portfolio totals"></section>
+
+  <section class="panel">
+    <div class="row">
+      <h2>Growth</h2>
+      <div class="row">
+        <div class="seg" id="metricSeg" role="group" aria-label="Metric">
+          <button type="button" data-m="followers" aria-pressed="true">Followers</button>
+          <button type="button" data-m="views" aria-pressed="false">Views, 30d</button>
+        </div>
+        <div class="seg" id="platSeg" role="group" aria-label="Platform">
+          <button type="button" data-p="all" aria-pressed="true">All</button>
+          <button type="button" data-p="tiktok" aria-pressed="false">TikTok</button>
+          <button type="button" data-p="facebook" aria-pressed="false">Facebook</button>
+          <button type="button" data-p="youtube" aria-pressed="false">YouTube</button>
+        </div>
+      </div>
+    </div>
+    <div id="chart"></div>
+  </section>
+
+  <section class="panel">
+    <div class="row"><h2>Brands</h2><span class="sub" id="brandCount"></span></div>
+    <div class="scroll" id="ledger"></div>
+  </section>
+</div>
+
+
+<script>
+const PLATS=[["tiktok","TikTok"],["facebook","Facebook"],["youtube","YouTube"]];
+const GOAL=33;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const cf=new Intl.NumberFormat("en",{notation:"compact",maximumFractionDigits:1});
+const nf=new Intl.NumberFormat("en");
+const fmt=n=>n==null?"–":(n>=10000?cf.format(n):nf.format(n));
+const dkey=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today=()=>dkey(new Date());
+const fld={followers:"f",views:"v"};
+
+let accounts=[], loaded=false, metric="followers", plat="all", editing=null, armed=false;
+
+// value of an account's metric on or before a date (carried forward)
+function at(a,m,date){
+  const h=a.history||{}; let best=null;
+  for(const d of Object.keys(h).sort()){ if(d<=date && h[d] && h[d][fld[m]]!=null) best=h[d][fld[m]]; }
+  return best;
+}
+function delta7(a,m){
+  const cur=a[m]; if(cur==null) return null;
+  const d=new Date(); d.setDate(d.getDate()-7);
+  let prev=at(a,m,dkey(d));
+  if(prev==null){ const ds=Object.keys(a.history||{}).sort(); if(ds.length>1) prev=a.history[ds[0]][fld[m]]; }
+  return prev==null?null:cur-prev;
+}
+const sum=(list,m)=>list.reduce((t,a)=>t+(a[m]||0),0);
+function deltaHtml(n){
+  if(n==null) return "";
+  if(n===0) return '<span class="v">no change, 7d</span>';
+  return `<span class="${n>0?"up":"down"} num">${n>0?"▲ +":"▼ −"}${fmt(Math.abs(n))}</span> <span class="v">7d</span>`;
+}
+
+function render(){
+  const brands=[...new Set(accounts.map(a=>a.brand))].sort((a,b)=>a.localeCompare(b));
+  const last=accounts.map(a=>a.updatedAt).filter(Boolean).sort().pop();
+  $("status").textContent=!loaded?"Loading accounts…":
+    accounts.length?`${brands.length} of ${GOAL} brands · ${accounts.length} accounts · `+(last?"counts last updated "+new Date(last).toLocaleString():"no counts recorded yet")
+    :"No accounts yet.";
+  
+
+  // totals
+  const dsum=(list,m)=>{const ds=list.map(a=>delta7(a,m)).filter(x=>x!=null);return ds.length?ds.reduce((t,x)=>t+x,0):null};
+  let t=`<div class="tot"><div class="lab">All followers</div><div class="big">${fmt(sum(accounts,"followers"))}</div><div class="small">${deltaHtml(dsum(accounts,"followers"))||"&nbsp;"}</div></div>
+         <div class="tot"><div class="lab">Views, last 30 days</div><div class="big">${fmt(sum(accounts,"views"))}</div><div class="small">${deltaHtml(dsum(accounts,"views"))||"&nbsp;"}</div></div>`;
+  for(const [p,name] of PLATS){
+    const l=accounts.filter(a=>a.platform===p);
+    t+=`<div class="tot ${p}"><div class="lab"><span class="dot"></span>${name}</div><div class="big">${fmt(sum(l,"followers"))}</div><div class="small">${fmt(sum(l,"views"))} views in 30d · ${l.length} accounts</div></div>`;
+  }
+  $("totals").innerHTML=t;
+
+  renderChart();
+
+  // ledger
+  $("brandCount").textContent=brands.length?`${brands.length} of ${GOAL} launched`:"";
+  if(!accounts.length){ $("ledger").innerHTML=`<div class="empty">${loaded?"Each brand's TikTok, Facebook and YouTube accounts will be listed here. They appear after the first nightly refresh.":"Loading…"}</div>`; return; }
+  let h=`<table><thead><tr><th>Brand</th>${PLATS.map(([p,n])=>`<th class="${p}"><span class="dot"></span>${n}</th>`).join("")}<th>Brand total</th></tr></thead><tbody>`;
+  for(const b of brands){
+    const mine=accounts.filter(a=>a.brand===b);
+    h+=`<tr><td class="brand">${esc(b)}</td>`;
+    for(const [p] of PLATS){
+      const a=mine.find(x=>x.platform===p);
+      if(!a){ h+=`<td><div class="cell add">–</div></td>`; continue; }
+      h+=`<td><div class="cell">
+        <div class="f">${fmt(a.followers)}</div>
+        <div class="v">${a.views==null?"views –":fmt(a.views)+" views, 30d"}</div>
+        <div>${deltaHtml(delta7(a,"followers"))}</div>
+        <div class="h">@${esc(a.handle)}${a.confirmed?"":' <span class="flag">· unconfirmed</span>'}</div></div></td>`;
+    }
+    h+=`<td><div class="cell" style="cursor:default"><div class="f">${fmt(sum(mine,"followers"))}</div><div class="v">${fmt(sum(mine,"views"))} views</div><div>${deltaHtml(dsum(mine,"followers"))}</div></div></td></tr>`;
+  }
+  $("ledger").innerHTML=h+"</tbody></table>";
+}
+
+function renderChart(){
+  const list=accounts.filter(a=>plat==="all"||a.platform===plat);
+  const dates=[...new Set(list.flatMap(a=>Object.keys(a.history||{})))].sort();
+  const pts=dates.map(d=>({d,y:list.reduce((t,a)=>t+(at(a,metric,d)||0),0)}));
+  if(pts.length<2){
+    $("chart").innerHTML=`<div class="empty">${pts.length?"One day of counts recorded so far. The line appears after the second daily update.":"The growth line starts once counts have been recorded for at least two days."}</div>`; return;
+  }
+  const W=720,H=240,L=52,R=16,T=14,B=28;
+  const t0=Date.parse(pts[0].d),t1=Date.parse(pts[pts.length-1].d);
+  const raw=Math.max(...pts.map(p=>p.y),1), mag=Math.pow(10,Math.floor(Math.log10(raw))), max=Math.ceil(raw/mag)*mag;
+  const x=d=>L+(Date.parse(d)-t0)/(t1-t0)*(W-L-R), y=v=>T+(1-v/max)*(H-T-B);
+  const col=plat==="all"?"var(--accent)":`var(--${{tiktok:"tt",facebook:"fb",youtube:"yt"}[plat]})`;
+  const line=pts.map((p,i)=>(i?"L":"M")+x(p.d).toFixed(1)+" "+y(p.y).toFixed(1)).join(" ");
+  const e=pts[pts.length-1];
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Total ${metric} over time">`;
+  for(const v of [0,max/2,max]) s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="var(--mono)">${cf.format(v)}</text>`;
+  s+=`<path d="${line} L${x(e.d)} ${y(0)} L${x(pts[0].d)} ${y(0)} Z" fill="${col}" opacity=".1"/><path d="${line}" fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="${x(e.d)}" cy="${y(e.y)}" r="4" fill="${col}"/>
+      <text x="${L}" y="${H-8}" font-size="11" fill="var(--muted)" font-family="var(--mono)">${pts[0].d}</text>
+      <text x="${W-R}" y="${H-8}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="var(--mono)">${e.d} · ${fmt(e.y)}</text></svg>`;
+  $("chart").innerHTML=s;
+}
+
+function seg(id,attr,set){
+  $(id).addEventListener("click",ev=>{const b=ev.target.closest("button"); if(!b) return;
+    [...$(id).children].forEach(c=>c.setAttribute("aria-pressed",c===b)); set(b.dataset[attr]); renderChart();});
+}
+seg("metricSeg","m",v=>metric=v); seg("platSeg","p",v=>plat=v);
+
+render();
+fetch("reach_data.json?t="+Date.now(),{cache:"no-store"}).then(r=>{if(!r.ok) throw 0; return r.json();}).then(d=>{
+  accounts=Object.entries(d.accounts||{}).map(([id,a])=>({id,handle:String(a.brand||id).replace(/^@/,""),confirmed:true,...a}));
+  loaded=true; render();
+}).catch(()=>{ loaded=true; render(); $("status").textContent="Couldn't load reach_data.json. It appears after the first nightly refresh is published."; });
+</script>
+
+</body>
+</html>
