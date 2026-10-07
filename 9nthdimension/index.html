@@ -76,6 +76,8 @@ input,select{background:var(--bg);border:1px solid var(--line);border-radius:6px
 .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:6px}
 #msg{color:var(--down);font-size:13px;min-height:1em}
 a{color:var(--accent)}
+.sortlab{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.sortlab select{width:auto;background:var(--surface);padding:6px 8px}
 @media (max-width:640px){
   .wrap{padding-inline:16px;padding-block:20px 40px;gap:20px}
   h1{font-size:24px}
@@ -132,7 +134,17 @@ a{color:var(--accent)}
   </section>
 
   <section class="panel">
-    <div class="row"><h2>Brands</h2><span class="sub" id="brandCount"></span></div>
+    <div class="row"><h2>Brands</h2>
+      <div class="row"><span class="sub" id="brandCount"></span>
+        <label class="sortlab" for="sortSel">Sort by
+          <select id="sortSel">
+            <option value="followers">Most followers</option>
+            <option value="tiktok">Most TikTok followers</option>
+            <option value="facebook">Most Facebook followers</option>
+            <option value="youtube">Most YouTube subscribers</option>
+            <option value="views">Most views, 30d</option>
+            <option value="name">Name, A to Z</option>
+          </select></label></div></div>
     <div class="scroll" id="ledger"></div>
   </section>
 </div>
@@ -196,7 +208,10 @@ function render(){
   $("brandCount").textContent=brands.length?`${brands.length} of ${GOAL} launched`:"";
   if(!accounts.length){ $("ledger").innerHTML=`<div class="empty">${loaded?"Each brand's TikTok, Facebook and YouTube accounts will be listed here. They appear after the first nightly refresh.":"Loading…"}</div>`; return; }
   let h=`<table><thead><tr><th>Brand</th>${PLATS.map(([p,n])=>`<th class="${p}"><span class="dot"></span>${n}</th>`).join("")}<th>Brand total</th></tr></thead><tbody>`;
-  for(const b of brands){
+  const key=b=>{const m=accounts.filter(a=>a.brand===b);
+    return sortBy==="views"?sum(m,"views"):sortBy==="followers"?sum(m,"followers"):sum(m.filter(a=>a.platform===sortBy),"followers");};
+  const ordered=sortBy==="name"?brands:[...brands].sort((a,b)=>key(b)-key(a)||a.localeCompare(b));
+  for(const b of ordered){
     const mine=accounts.filter(a=>a.brand===b);
     h+=`<tr><td class="brand">${esc(b)}</td>`;
     for(const [p,pn] of PLATS){
@@ -240,6 +255,10 @@ function seg(id,attr,set){
   $(id).addEventListener("click",ev=>{const b=ev.target.closest("button"); if(!b) return;
     [...$(id).children].forEach(c=>c.setAttribute("aria-pressed",c===b)); set(b.dataset[attr]); renderChart();});
 }
+let sortBy="followers";
+try{ sortBy=localStorage.getItem("reachSort")||sortBy; }catch(e){}
+$("sortSel").value=sortBy; if(!$("sortSel").value){ sortBy="followers"; $("sortSel").value=sortBy; }
+$("sortSel").addEventListener("change",()=>{ sortBy=$("sortSel").value; try{ localStorage.setItem("reachSort",sortBy); }catch(e){} render(); });
 let rt; addEventListener("resize",()=>{clearTimeout(rt);rt=setTimeout(renderChart,150)});
 seg("metricSeg","m",v=>metric=v); seg("platSeg","p",v=>plat=v);
 
