@@ -12,7 +12,7 @@
 :root{
   --bg:#f3f5f8; --surface:#ffffff; --line:#d9dee7; --fg:#131a2a; --muted:#5b6578;
   --accent:#2a4bd7; --accent-fg:#ffffff;
-  --tt:#0f8f8f; --fb:#2f6fe0; --yt:#d23b2e;
+  --tt:#0f8f8f; --fb:#2f6fe0; --yt:#d23b2e; --ig:#b8338f;
   --up:#17794a; --down:#b3322a; --warn:#9a6a00;
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
@@ -21,12 +21,12 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --fg:#e8ecf4; --muted:#98a3b8;
   --accent:#8aa2ff; --accent-fg:#0e121b;
-  --tt:#3fc9c4; --fb:#6fa0ff; --yt:#ff7a6b;
+  --tt:#3fc9c4; --fb:#6fa0ff; --yt:#ff7a6b; --ig:#e879c4;
   --up:#55cf92; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --fg:#e8ecf4; --muted:#98a3b8;
   --accent:#8aa2ff; --accent-fg:#0e121b;
-  --tt:#3fc9c4; --fb:#6fa0ff; --yt:#ff7a6b;
+  --tt:#3fc9c4; --fb:#6fa0ff; --yt:#ff7a6b; --ig:#e879c4;
   --up:#55cf92; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
@@ -47,17 +47,17 @@ button,select,input{font:inherit;color:inherit}
 .tot .big{font:500 28px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
 .tot .small{font-size:13px;color:var(--muted)}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
-.tiktok{--p:var(--tt)}.facebook{--p:var(--fb)}.youtube{--p:var(--yt)}
+.tiktok{--p:var(--tt)}.facebook{--p:var(--fb)}.youtube{--p:var(--yt)}.instagram{--p:var(--ig)}
 .dot{background:var(--p,var(--accent))}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
 .row{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:6px;overflow:hidden}
 .seg button{border:0;background:transparent;padding:6px 12px;cursor:pointer}
 .seg button[aria-pressed="true"]{background:var(--fg);color:var(--bg)}
 svg{display:block;width:100%;height:auto;margin-top:12px}
 .empty{color:var(--muted);padding:28px 8px;text-align:center}
 .scroll{overflow-x:auto}
-table{border-collapse:collapse;width:100%;min-width:760px}
+table{border-collapse:collapse;width:100%;min-width:900px}
 th{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
 td{padding:6px 10px;border-bottom:1px solid var(--line);vertical-align:top}
 td.brand{font-weight:600;padding-top:14px}
@@ -82,8 +82,7 @@ a{color:var(--accent)}
   .wrap{padding-inline:16px;padding-block:20px 40px;gap:20px}
   h1{font-size:24px}
   .totals{grid-template-columns:repeat(6,1fr)}
-  .tot{padding:12px;grid-column:span 2}
-  .tot:nth-child(-n+2){grid-column:span 3}
+  .tot{padding:12px;grid-column:span 3}
   .tot .big{font-size:21px}
   .tot .small{font-size:12px}
   .panel{padding:14px}
@@ -125,6 +124,7 @@ a{color:var(--accent)}
         <div class="seg" id="platSeg" role="group" aria-label="Platform">
           <button type="button" data-p="all" aria-pressed="true">All</button>
           <button type="button" data-p="tiktok" aria-pressed="false">TikTok</button>
+          <button type="button" data-p="instagram" aria-pressed="false">Instagram</button>
           <button type="button" data-p="facebook" aria-pressed="false">Facebook</button>
           <button type="button" data-p="youtube" aria-pressed="false">YouTube</button>
         </div>
@@ -140,6 +140,7 @@ a{color:var(--accent)}
           <select id="sortSel">
             <option value="followers">Most followers</option>
             <option value="tiktok">Most TikTok followers</option>
+            <option value="instagram">Most Instagram followers</option>
             <option value="facebook">Most Facebook followers</option>
             <option value="youtube">Most YouTube subscribers</option>
             <option value="views">Most views, 30d</option>
@@ -151,7 +152,7 @@ a{color:var(--accent)}
 
 
 <script>
-const PLATS=[["tiktok","TikTok"],["facebook","Facebook"],["youtube","YouTube"]];
+const PLATS=[["tiktok","TikTok"],["instagram","Instagram"],["facebook","Facebook"],["youtube","YouTube"]];
 const GOAL=33;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -206,7 +207,7 @@ function render(){
 
   // ledger
   $("brandCount").textContent=brands.length?`${brands.length} of ${GOAL} launched`:"";
-  if(!accounts.length){ $("ledger").innerHTML=`<div class="empty">${loaded?"Each brand's TikTok, Facebook and YouTube accounts will be listed here. They appear after the first nightly refresh.":"Loading…"}</div>`; return; }
+  if(!accounts.length){ $("ledger").innerHTML=`<div class="empty">${loaded?"Each brand's TikTok, Instagram, Facebook and YouTube accounts will be listed here. They appear after the first nightly refresh.":"Loading…"}</div>`; return; }
   let h=`<table><thead><tr><th>Brand</th>${PLATS.map(([p,n])=>`<th class="${p}"><span class="dot"></span>${n}</th>`).join("")}<th>Brand total</th></tr></thead><tbody>`;
   const key=b=>{const m=accounts.filter(a=>a.brand===b);
     return sortBy==="views"?sum(m,"views"):sortBy==="followers"?sum(m,"followers"):sum(m.filter(a=>a.platform===sortBy),"followers");};
@@ -239,7 +240,7 @@ function renderChart(){
   const t0=Date.parse(pts[0].d),t1=Date.parse(pts[pts.length-1].d);
   const raw=Math.max(...pts.map(p=>p.y),1), mag=Math.pow(10,Math.floor(Math.log10(raw))), max=Math.ceil(raw/mag)*mag;
   const x=d=>L+(Date.parse(d)-t0)/(t1-t0)*(W-L-R), y=v=>T+(1-v/max)*(H-T-B);
-  const col=plat==="all"?"var(--accent)":`var(--${{tiktok:"tt",facebook:"fb",youtube:"yt"}[plat]})`;
+  const col=plat==="all"?"var(--accent)":`var(--${{tiktok:"tt",instagram:"ig",facebook:"fb",youtube:"yt"}[plat]})`;
   const line=pts.map((p,i)=>(i?"L":"M")+x(p.d).toFixed(1)+" "+y(p.y).toFixed(1)).join(" ");
   const e=pts[pts.length-1];
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Total ${metric} over time">`;
