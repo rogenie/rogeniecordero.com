@@ -41,7 +41,7 @@ button,select,input{font:inherit;color:inherit}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg);font-weight:600}
 .btn.danger{color:var(--down)}
 .btn:focus-visible,input:focus-visible,select:focus-visible,.cell:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.totals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .tot{background:var(--surface);padding:16px 18px;min-width:0}
 .tot .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .tot .big{font:500 28px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
@@ -76,8 +76,18 @@ input,select{background:var(--bg);border:1px solid var(--line);border-radius:6px
 .actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-top:6px}
 #msg{color:var(--down);font-size:13px;min-height:1em}
 a{color:var(--accent)}
+.post{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;font-size:12px;margin-top:3px}
+.chip{display:inline-block;font-size:11px;font-weight:600;line-height:1.5;padding:0 7px;border-radius:999px;border:1px solid currentColor}
+.chip.fail{color:var(--down)}.chip.stale{color:var(--warn)}
+.okdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--up)}
+.warntxt{color:var(--warn)!important}
+.attention{background:var(--surface);border:1px solid var(--down);border-radius:8px;padding:14px 18px}
+.attention h2{display:flex;gap:10px;align-items:baseline}
+.attention ul{margin:10px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.attention li{overflow-wrap:anywhere}
 .sortlab{display:flex;align-items:center;gap:8px;white-space:nowrap}
 .sortlab select{width:auto;background:var(--surface);padding:6px 8px}
+@media (min-width:1000px){.totals{grid-template-columns:repeat(6,minmax(0,1fr))}}
 @media (max-width:640px){
   .wrap{padding-inline:16px;padding-block:20px 40px;gap:20px}
   h1{font-size:24px}
@@ -110,6 +120,8 @@ a{color:var(--accent)}
       <p class="sub" id="status">Loading accounts…</p>
     </div>
   </header>
+
+  <section class="attention" id="attention" hidden></section>
 
   <section class="totals" id="totals" aria-label="Portfolio totals"></section>
 
@@ -144,6 +156,7 @@ a{color:var(--accent)}
             <option value="facebook">Most Facebook followers</option>
             <option value="youtube">Most YouTube subscribers</option>
             <option value="views">Most views, 30d</option>
+            <option value="attention">Needs attention first</option>
             <option value="name">Name, A to Z</option>
           </select></label></div></div>
     <div class="scroll" id="ledger"></div>
@@ -185,6 +198,32 @@ function deltaHtml(n){
   return `<span class="${n>0?"up":"down"} num">${n>0?"▲ +":"▼ −"}${fmt(Math.abs(n))}</span> <span class="v">7d</span>`;
 }
 
+const STALE_H=48;
+const PROBLEM=["fail","stale","none"];
+function postState(a){
+  if(!("lastPostAt" in a)) return null;
+  if(a.lastPostStatus && /ERROR|FAIL|REJECT/.test(a.lastPostStatus)) return "fail";
+  if(!a.lastPostAt) return "none";
+  return (Date.now()-new Date(a.lastPostAt))/36e5>STALE_H?"stale":"ok";
+}
+const when=s=>new Date(s).toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+function ago(s){const h=Math.max(0,(Date.now()-new Date(s))/36e5); return h<1?"just now":h<48?Math.round(h)+"h ago":Math.round(h/24)+"d ago";}
+function postHtml(a){
+  const st=postState(a); if(st===null) return "";
+  if(st==="none") return `<div class="post"><span class="chip stale">No posts in 30 days</span></div>`;
+  const chip=st==="fail"?'<span class="chip fail">Failed</span>':st==="stale"?'<span class="chip stale">Stale</span>':'<span class="okdot" title="Posting normally"></span>';
+  return `<div class="post">${chip}<span>Last post ${when(a.lastPostAt)} · ${ago(a.lastPostAt)}</span></div>`+
+    (a.nextPostAt?`<div class="v">Next ${when(a.nextPostAt)}</div>`:`<div class="v warntxt">Nothing scheduled</div>`);
+}
+function renderAttention(){
+  const label=Object.fromEntries(PLATS);
+  const why={fail:"Last post failed",stale:"No post in over 2 days",none:"No posts in 30 days"};
+  const bad=accounts.map(a=>({a,st:postState(a)})).filter(x=>PROBLEM.includes(x.st))
+    .sort((x,y)=>PROBLEM.indexOf(x.st)-PROBLEM.indexOf(y.st)||String(x.a.brand).localeCompare(y.a.brand));
+  const box=$("attention"); box.hidden=!bad.length; if(!bad.length) return;
+  box.innerHTML=`<h2>Needs attention <span class="sub">${bad.length} account${bad.length>1?"s":""}</span></h2><ul>`+
+    bad.map(({a,st})=>`<li><span class="chip ${st==="fail"?"fail":"stale"}">${why[st]}</span> <b>${esc(a.brand)}</b> ${label[a.platform]||esc(a.platform)}${a.lastPostAt?` · last post ${when(a.lastPostAt)}`:""}</li>`).join("")+"</ul>";
+}
 function render(){
   const brands=[...new Set(accounts.map(a=>a.brand))].sort((a,b)=>a.localeCompare(b));
   const last=accounts.map(a=>a.updatedAt).filter(Boolean).sort().pop();
@@ -204,13 +243,14 @@ function render(){
   $("totals").innerHTML=t;
 
   renderChart();
+  renderAttention();
 
   // ledger
   $("brandCount").textContent=brands.length?`${brands.length} of ${GOAL} launched`:"";
   if(!accounts.length){ $("ledger").innerHTML=`<div class="empty">${loaded?"Each brand's TikTok, Instagram, Facebook and YouTube accounts will be listed here. They appear after the first nightly refresh.":"Loading…"}</div>`; return; }
   let h=`<table><thead><tr><th>Brand</th>${PLATS.map(([p,n])=>`<th class="${p}"><span class="dot"></span>${n}</th>`).join("")}<th>Brand total</th></tr></thead><tbody>`;
   const key=b=>{const m=accounts.filter(a=>a.brand===b);
-    return sortBy==="views"?sum(m,"views"):sortBy==="followers"?sum(m,"followers"):sum(m.filter(a=>a.platform===sortBy),"followers");};
+    return sortBy==="attention"?m.filter(a=>PROBLEM.includes(postState(a))).length:sortBy==="views"?sum(m,"views"):sortBy==="followers"?sum(m,"followers"):sum(m.filter(a=>a.platform===sortBy),"followers");};
   const ordered=sortBy==="name"?brands:[...brands].sort((a,b)=>key(b)-key(a)||a.localeCompare(b));
   for(const b of ordered){
     const mine=accounts.filter(a=>a.brand===b);
@@ -222,6 +262,7 @@ function render(){
         <div class="f">${fmt(a.followers)}</div>
         <div class="v">${a.views==null?"views –":fmt(a.views)+" views, 30d"}</div>
         <div>${deltaHtml(delta7(a,"followers"))}</div>
+        ${postHtml(a)}
         <div class="h">@${esc(a.handle)}${a.confirmed?"":' <span class="flag">· unconfirmed</span>'}</div></div></td>`;
     }
     h+=`<td data-label="Total"><div class="cell" style="cursor:default"><div class="f">${fmt(sum(mine,"followers"))}</div><div class="v">${fmt(sum(mine,"views"))} views</div><div>${deltaHtml(dsum(mine,"followers"))}</div></div></td></tr>`;
