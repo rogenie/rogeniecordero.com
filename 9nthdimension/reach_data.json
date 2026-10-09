@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-08T17:39:35-07:00",
+ "generatedAt": "2026-10-08T21:00:02-07:00",
  "date": "2026-10-08",
  "windowDays": 30,
  "accounts": {
@@ -18,10 +18,10 @@
    },
    "followers": 879,
    "views": 34134,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
-   "lastPostAt": "2026-10-08T13:51:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
+   "lastPostAt": "2026-10-08T19:19:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T19:19:00"
+   "nextPostAt": "2026-10-09T09:11:00"
   },
   "facebook_9nthdimension": {
    "brand": "@9nthdimension",
@@ -37,11 +37,11 @@
     }
    },
    "followers": 581,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 1454,
-   "lastPostAt": "2026-10-08T13:51:00",
+   "lastPostAt": "2026-10-08T19:19:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T19:19:00"
+   "nextPostAt": "2026-10-09T09:11:00"
   },
   "youtube_9nthdimension": {
    "brand": "@9nthdimension",
@@ -58,10 +58,10 @@
    },
    "followers": 165,
    "views": 3201,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
-   "lastPostAt": "2026-10-08T13:51:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
+   "lastPostAt": "2026-10-08T19:19:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T19:19:00"
+   "nextPostAt": "2026-10-09T09:11:00"
   },
   "tiktok_natalnotes": {
    "brand": "@natalnotes",
@@ -77,11 +77,11 @@
     }
    },
    "followers": 64,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 1404,
-   "lastPostAt": "2026-10-08T13:22:00",
+   "lastPostAt": "2026-10-08T18:52:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T18:52:00"
+   "nextPostAt": "2026-10-09T09:09:00"
   },
   "youtube_natalnotes": {
    "brand": "@natalnotes",
@@ -96,11 +96,11 @@
     }
    },
    "followers": 426,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 64,
-   "lastPostAt": "2026-10-08T13:22:00",
+   "lastPostAt": "2026-10-08T18:52:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T18:52:00"
+   "nextPostAt": "2026-10-09T09:09:00"
   },
   "tiktok_parvaregina": {
    "brand": "@parvaregina",
@@ -116,11 +116,11 @@
     }
    },
    "followers": 5129,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 8817,
-   "lastPostAt": "2026-10-08T14:21:00",
+   "lastPostAt": "2026-10-08T19:38:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T19:38:00"
+   "nextPostAt": "2026-10-09T09:02:00"
   },
   "facebook_parvaregina": {
    "brand": "@parvaregina",
@@ -136,11 +136,11 @@
     }
    },
    "followers": 16,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 17,
-   "lastPostAt": "2026-10-08T14:21:00",
+   "lastPostAt": "2026-10-08T19:38:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T19:38:00"
+   "nextPostAt": "2026-10-09T09:02:00"
   },
   "youtube_parvaregina": {
    "brand": "@parvaregina",
@@ -157,10 +157,10 @@
    },
    "followers": 33,
    "views": 285,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
-   "lastPostAt": "2026-10-08T14:21:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
+   "lastPostAt": "2026-10-08T19:38:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T19:38:00"
+   "nextPostAt": "2026-10-09T09:02:00"
   },
   "tiktok_tibimundum": {
    "brand": "@tibimundum",
@@ -176,11 +176,11 @@
     }
    },
    "followers": 3832,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 7428,
-   "lastPostAt": "2026-10-08T12:21:00",
+   "lastPostAt": "2026-10-08T18:43:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T18:43:00"
+   "nextPostAt": "2026-10-09T12:32:00"
   },
   "facebook_tibimundum": {
    "brand": "@tibimundum",
@@ -196,11 +196,11 @@
     }
    },
    "followers": 20,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 44,
-   "lastPostAt": "2026-10-08T15:23:00",
+   "lastPostAt": "2026-10-08T18:43:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T18:43:00"
+   "nextPostAt": "2026-10-09T09:51:00"
   },
   "youtube_tibimundum": {
    "brand": "@tibimundum",
@@ -217,10 +217,10 @@
    },
    "followers": 50,
    "views": 26262,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
-   "lastPostAt": "2026-10-08T15:23:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
+   "lastPostAt": "2026-10-08T18:43:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T18:43:00"
+   "nextPostAt": "2026-10-09T09:51:00"
   },
   "tiktok_teachings.of.jesuschrist": {
    "brand": "@teachings.of.jesuschrist",
@@ -237,8 +237,8 @@
    },
    "followers": 13,
    "views": 11612,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
-   "lastPostAt": "2026-10-08T17:32:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
+   "lastPostAt": "2026-10-08T20:14:00",
    "lastPostStatus": "ERROR",
    "nextPostAt": "2026-10-09T07:12:00"
   },
@@ -256,10 +256,10 @@
     }
    },
    "followers": 21,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 17,
-   "lastPostAt": "2026-10-08T17:32:00",
-   "lastPostStatus": "ERROR",
+   "lastPostAt": "2026-10-08T20:08:00",
+   "lastPostStatus": "PUBLISHED",
    "nextPostAt": "2026-10-09T07:12:00"
   },
   "youtube_teachings.of.jesuschrist": {
@@ -277,9 +277,9 @@
    },
    "followers": 33,
    "views": 12499,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
-   "lastPostAt": "2026-10-08T17:32:00",
-   "lastPostStatus": "ERROR",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
+   "lastPostAt": "2026-10-08T20:08:00",
+   "lastPostStatus": "PUBLISHED",
    "nextPostAt": "2026-10-09T07:12:00"
   },
   "tiktok_computatio": {
@@ -296,7 +296,7 @@
     }
    },
    "followers": 12382,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 512,
    "lastPostAt": "2026-10-08T17:37:00",
    "lastPostStatus": "PUBLISHED",
@@ -316,7 +316,7 @@
     }
    },
    "followers": 1309,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "views": 17,
    "lastPostAt": "2026-10-08T17:37:00",
    "lastPostStatus": "PUBLISHED",
@@ -334,7 +334,7 @@
     }
    },
    "followers": 8,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "lastPostAt": "2026-10-08T17:37:00",
    "lastPostStatus": "PUBLISHED",
    "nextPostAt": "2026-10-09T07:23:00"
@@ -352,11 +352,11 @@
     }
    },
    "views": 9,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "followers": 1,
-   "lastPostAt": "2026-10-08T13:22:00",
+   "lastPostAt": "2026-10-08T18:52:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T18:52:00"
+   "nextPostAt": "2026-10-09T09:09:00"
   },
   "tiktok_thatmommatho": {
    "brand": "@thatmommatho",
@@ -373,7 +373,7 @@
    },
    "followers": 13174,
    "views": 977,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "lastPostAt": null,
    "lastPostStatus": null,
    "nextPostAt": null
@@ -393,7 +393,7 @@
    },
    "followers": 19,
    "views": 19,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "lastPostAt": null,
    "lastPostStatus": null,
    "nextPostAt": null
@@ -410,7 +410,7 @@
     }
    },
    "followers": 137,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "lastPostAt": null,
    "lastPostStatus": null,
    "nextPostAt": null
@@ -427,10 +427,10 @@
     }
    },
    "followers": 8,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
-   "lastPostAt": "2026-10-08T15:23:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
+   "lastPostAt": "2026-10-08T18:43:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-10-08T18:43:00"
+   "nextPostAt": "2026-10-09T09:51:00"
   },
   "instagram_thatmommatho": {
    "brand": "@thatmommatho",
@@ -444,7 +444,7 @@
     }
    },
    "followers": 2972,
-   "updatedAt": "2026-10-08T17:39:35-07:00",
+   "updatedAt": "2026-10-08T21:00:02-07:00",
    "lastPostAt": null,
    "lastPostStatus": null,
    "nextPostAt": null
