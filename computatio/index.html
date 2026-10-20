@@ -33,7 +33,7 @@ h1{font:700 30px/1.1 var(--display);margin:0;text-wrap:balance}
 h2{font:700 18px/1.2 var(--display);margin:0}
 .sub{color:var(--muted);margin:4px 0 0;max-width:68ch}
 .stamp{color:var(--muted);font-size:13px}
-.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .tot{background:var(--surface);padding:16px 18px;min-width:0}
 .tot .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .tot .big{font:500 28px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
@@ -62,6 +62,14 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 .msg{color:var(--muted);font-size:14px}
 .msg ol{margin:8px 0 0;padding-left:20px}
 .err{color:var(--down);font-size:14px}
+.s-missed{color:var(--down)}
+.s-due,.s-upcoming{color:var(--muted)}
+.s-nolog{color:var(--warn)}
+.chk{font-size:13px;white-space:nowrap}
+.chk.no{color:var(--down)}
+.chk.yes{color:var(--up)}
+.last{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:14px;margin-bottom:10px}
+.tot.alert .big{color:var(--down)}
 .vrows{display:flex;flex-direction:column;gap:8px;margin-top:8px}
 .vrow{display:grid;grid-template-columns:minmax(0,1fr) 3.5rem;gap:10px;align-items:center;font-size:14px}
 .vrow .bar{height:8px;border-radius:4px;background:var(--accent);margin-top:4px;min-width:2px}
@@ -82,10 +90,18 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
   <section class="totals" aria-label="Headline figures">
     <div class="tot"><div class="lab">Visits, all time</div><div class="big" id="t-visits">&mdash;</div><div class="small">Both sites, GoatCounter</div></div>
     <div class="tot"><div class="lab">Guides live</div><div class="big" id="t-live">&mdash;</div><div class="small">On bookbytellc.com</div></div>
+    <div class="tot" id="tile-missed"><div class="lab">Missed runs</div><div class="big" id="t-missed">&mdash;</div><div class="small" id="t-missed-sub">Scheduled guides that didn&rsquo;t go out</div></div>
     <div class="tot"><div class="lab">Written ahead</div><div class="big" id="t-ready">&mdash;</div><div class="small">Waiting for their date</div></div>
     <div class="tot"><div class="lab">Still to write</div><div class="big" id="t-todo">&mdash;</div><div class="small">On the calendar</div></div>
     <div class="tot"><div class="lab">Next guide</div><div class="big" id="t-next">&mdash;</div><div class="small" id="t-next-hub">&nbsp;</div></div>
     <div class="tot"><div class="lab">Setup done</div><div class="big" id="t-setup">&mdash;</div><div class="small">Tracking, Search Console, profiles</div></div>
+  </section>
+
+  <section class="panel" id="activity">
+    <h2>Publishing activity</h2>
+    <p class="note">Each scheduled guide and what its 5:48 AM run did. A run that leaves no record by 9:00 AM Pacific shows as missed.</p>
+    <div class="last" id="lastrun"></div>
+    <div class="scroll"><table id="act"><thead><tr><th>Scheduled</th><th>Result</th><th>Guide</th><th class="hide-narrow">Facts checked</th><th class="hide-narrow">Live check</th><th class="hide-narrow">LinkedIn post</th><th class="hide-narrow">Drive copy</th><th class="hide-narrow">Note</th></tr></thead><tbody></tbody></table></div>
   </section>
 
   <div class="grid">
@@ -145,6 +161,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     const live = state.items.filter(i => i.state === 'live').length;
     const next = state.items.find(i => i.date > today);
     let s = live ? live + ' guide' + (live === 1 ? ' is' : 's are') + ' live. ' : 'No guides are live yet. ';
+    if (state.missed) s += state.missed + ' scheduled run' + (state.missed === 1 ? '' : 's') + ' missed; see Publishing activity. ';
     if (next) s += 'Next one publishes ' + fmtDay(next.date) + '. ';
     if (state.steps){
       const open = state.steps.filter(r => r.status !== 'done' && r.area === 'Measurement').length;
@@ -278,13 +295,63 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     }
   }
 
-  function rerender(){ if (state.items){ drawCalendar(); drawWeeks(); } takeaway(); }
+  function drawActivity(){
+    const now = new Date();
+    const hourPT = Number(now.toLocaleString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',hour12:false})) % 24;
+    const runs = new Map();
+    (state.runs || []).forEach(r => runs.set(r.date, r));
+    const RES = {published:'Published', held:'Held', missed:'Missed', due:'Due today', upcoming:'Next up', nolog:'Live, no run record'};
+    const rows = [];
+    let nextAdded = false;
+    state.items.forEach(i => {
+      const r = runs.get(i.date);
+      let res;
+      if (r) res = r.result === 'held' ? 'held' : 'published';
+      else if (i.date > today){ if (nextAdded) return; nextAdded = true; res = 'upcoming'; }
+      else if (i.url) res = 'nolog';
+      else if (i.date === today && hourPT < 9) res = 'due';
+      else res = 'missed';
+      rows.push({i, r, res});
+    });
+    rows.sort((a,b) => a.i.date < b.i.date ? 1 : -1);
+    const tb = document.querySelector('#act tbody'); tb.textContent = '';
+    const yn = (td, v) => { if (v == null){ td.textContent = '\u2014'; return; } el('span', td, v ? 'Yes' : 'No', 'chk ' + (v ? 'yes' : 'no')); };
+    rows.forEach(({i, r, res}) => {
+      const tr = el('tr', tb);
+      el('td', tr, fmtDay(i.date), 'num');
+      el('span', el('td', tr), RES[res], 'pill s-' + (res === 'published' ? 'live' : res));
+      const g = el('td', tr);
+      if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
+      else el('span', g, HUBS[i.hub] || i.hub, 's-todo');
+      el('td', tr, r && r.facts_checked != null ? String(r.facts_checked) + (r.removed ? ' (' + r.removed + ' removed)' : '') : '\u2014', 'num hide-narrow');
+      yn(el('td', tr, null, 'hide-narrow'), r ? r.live_verified : null);
+      yn(el('td', tr, null, 'hide-narrow'), r ? r.linkedin_post : null);
+      yn(el('td', tr, null, 'hide-narrow'), r ? r.drive_copy : null);
+      el('td', tr, r && r.note ? r.note : (res === 'missed' ? 'No run record. Check the BookByte article publisher task.' : ''), 'hide-narrow');
+    });
+    const missed = rows.filter(x => x.res === 'missed').length;
+    $('t-missed').textContent = missed;
+    $('tile-missed').classList.toggle('alert', missed > 0);
+    const lr = $('lastrun'); lr.textContent = '';
+    const last = [...(state.runs || [])].sort((a,b) => a.at < b.at ? 1 : -1)[0];
+    if (last){
+      const when = new Date(last.at).toLocaleString('en-US',{timeZone:'America/Los_Angeles',weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+      el('span', lr, 'Last run: ' + when + ' PT');
+      el('span', lr, last.result === 'held' ? 'Held' : 'Published', 'pill s-' + (last.result === 'held' ? 'held' : 'live'));
+    } else {
+      el('span', lr, 'No runs yet. The first scheduled run is Wed, Oct 21 at 5:48 AM PT.', 'note');
+    }
+    state.missed = missed;
+  }
+
+  function rerender(){ if (state.items){ drawActivity(); drawCalendar(); drawWeeks(); } takeaway(); }
 
   $('stamp').textContent = 'As of ' + fmtDay(today);
 
   Promise.allSettled([
     fetch(STATUS, {cache:'no-store'}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
       state.items = d.items.map(i => Object.assign({}, i, {state: stateOf(i)}));
+      state.runs = d.runs || [];
     }),
     fetch('setup.json', {cache:'no-store'}).then(r => r.json()).then(drawSetup)
   ]).then(res => {
