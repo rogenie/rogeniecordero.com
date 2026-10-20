@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Computatio SEO Scorecard</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column. Headline totals, then visits and the weekly schedule side by side, then the setup checklist and the guide calendar. Same tokens as /9nthdimension. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --line:#d9dee7; --fg:#131a2a; --muted:#5b6578;
+  --accent:#2a4bd7; --soft:#c9d2e6;
+  --up:#17794a; --down:#b3322a; --warn:#9a6a00;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --fg:#e8ecf4; --muted:#98a3b8;
+  --accent:#8aa2ff; --soft:#3a4560; --up:#55cf92; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --fg:#e8ecf4; --muted:#98a3b8;
+  --accent:#8aa2ff; --soft:#3a4560; --up:#55cf92; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
+[hidden]{display:none!important}
+a{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between}
+h1{font:700 30px/1.1 var(--display);margin:0;text-wrap:balance}
+h2{font:700 18px/1.2 var(--display);margin:0}
+.sub{color:var(--muted);margin:4px 0 0;max-width:68ch}
+.stamp{color:var(--muted);font-size:13px}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tot{background:var(--surface);padding:16px 18px;min-width:0}
+.tot .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tot .big{font:500 28px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
+.tot .small{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+.note{color:var(--muted);font-size:13px;margin:4px 0 12px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.chart{position:relative;min-height:220px}
+svg{display:block;width:100%;height:auto;margin-top:8px}
+svg text{fill:var(--muted);font:12px var(--body)}
+.tip{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.12);padding:6px 10px;font-size:12px;pointer-events:none;white-space:nowrap}
+.tip .d{color:var(--muted)}
+.scroll{overflow:auto;max-height:28rem}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;letter-spacing:.04em;text-transform:uppercase;position:sticky;top:0;background:var(--surface);padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;padding:0 9px;border-radius:999px;border:1px solid currentColor;font-size:12px;white-space:nowrap}
+.s-live,.s-done{color:var(--up)}
+.s-written{color:var(--accent)}
+.s-todo{color:var(--muted)}
+.s-blocked{color:var(--warn)}
+.s-held{color:var(--down)}
+.msg{color:var(--muted);font-size:14px}
+.msg ol{margin:8px 0 0;padding-left:20px}
+.err{color:var(--down);font-size:14px}
+.vrows{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) 3.5rem;gap:10px;align-items:center;font-size:14px}
+.vrow .bar{height:8px;border-radius:4px;background:var(--accent);margin-top:4px;min-width:2px}
+.vrow .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:640px){.hide-narrow{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Computatio SEO scorecard</h1>
+      <p class="sub" id="takeaway">Loading&hellip;</p>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <section class="totals" aria-label="Headline figures">
+    <div class="tot"><div class="lab">Visits, all time</div><div class="big" id="t-visits">&mdash;</div><div class="small">Both sites, GoatCounter</div></div>
+    <div class="tot"><div class="lab">Guides live</div><div class="big" id="t-live">&mdash;</div><div class="small">On bookbytellc.com</div></div>
+    <div class="tot"><div class="lab">Written ahead</div><div class="big" id="t-ready">&mdash;</div><div class="small">Waiting for their date</div></div>
+    <div class="tot"><div class="lab">Still to write</div><div class="big" id="t-todo">&mdash;</div><div class="small">On the calendar</div></div>
+    <div class="tot"><div class="lab">Next guide</div><div class="big" id="t-next">&mdash;</div><div class="small" id="t-next-hub">&nbsp;</div></div>
+    <div class="tot"><div class="lab">Setup done</div><div class="big" id="t-setup">&mdash;</div><div class="small">Tracking, Search Console, profiles</div></div>
+  </section>
+
+  <div class="grid">
+    <section class="panel" id="visits">
+      <h2>Visits</h2>
+      <p class="note">All-time counts since tracking started October 19, 2026</p>
+      <div id="v-body" class="msg">Loading&hellip;</div>
+    </section>
+    <section class="panel" id="cadence">
+      <h2>Publishing schedule by week</h2>
+      <p class="note">Guides planned for each week, by where they stand</p>
+      <div class="legend" id="legend"></div>
+      <div class="chart" id="weekchart"></div>
+    </section>
+  </div>
+
+  <section class="panel" id="setup-card">
+    <h2>SEO setup checklist</h2>
+    <p class="note" id="setup-note">Measurement steps come first: without them there&rsquo;s no way to tell what the guides are doing.</p>
+    <div class="scroll"><table id="setup"><thead><tr><th>Step</th><th>Site</th><th>Status</th><th class="hide-narrow">Note</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section class="panel" id="calendar-card">
+    <h2>Content calendar</h2>
+    <p class="note">Mondays, Wednesdays and Fridays. Titles appear once a guide is live.</p>
+    <div class="scroll"><table id="cal"><thead><tr><th>Date</th><th>Guide</th><th class="hide-narrow">Topic</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const GC = 'https://computatio.goatcounter.com';
+  const STATUS = 'https://bookbytellc.com/status.json';
+  const HUBS = {'ai-accounting':'AI for Accounting','bookkeeping':'Bookkeeping','estimated-taxes':'Estimated taxes','deductions':'Deductions','business-structure':'Business structure','hub':'Topic page'};
+  const LABEL = {live:'Live', written:'Written', todo:'To write', held:'Held'};
+  const COLORS = {live:'var(--up)', written:'var(--accent)', todo:'var(--soft)', held:'var(--down)'};
+  const today = new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'});
+  const $ = id => document.getElementById(id);
+  const el = (tag, parent, text, cls) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  const day = s => new Date(s + 'T00:00:00Z');
+  const fmtDay = s => day(s).toLocaleDateString('en-US',{timeZone:'UTC',weekday:'short',month:'short',day:'numeric'});
+  const fmtShort = s => day(s).toLocaleDateString('en-US',{timeZone:'UTC',month:'short',day:'numeric'});
+  const n = new Intl.NumberFormat('en-US');
+
+  let state = {items:null, steps:null, visits:null};
+
+  function stateOf(i){
+    if (i.status === 'held') return 'held';
+    if (i.title) return 'live';
+    if (i.status === 'written') return i.date <= today ? 'live' : 'written';
+    return 'todo';
+  }
+
+  function takeaway(){
+    const t = $('takeaway');
+    if (!state.items) return;
+    const live = state.items.filter(i => i.state === 'live').length;
+    const next = state.items.find(i => i.date > today);
+    let s = live ? live + ' guide' + (live === 1 ? ' is' : 's are') + ' live. ' : 'No guides are live yet. ';
+    if (next) s += 'Next one publishes ' + fmtDay(next.date) + '. ';
+    if (state.steps){
+      const open = state.steps.filter(r => r.status !== 'done' && r.area === 'Measurement').length;
+      if (open) s += open + ' measurement step' + (open === 1 ? '' : 's') + ' still open, including Search Console.';
+    }
+    t.textContent = s;
+  }
+
+  function drawCalendar(){
+    const items = state.items, tb = document.querySelector('#cal tbody');
+    tb.textContent = '';
+    items.forEach(i => {
+      const tr = el('tr', tb);
+      el('td', tr, fmtDay(i.date), 'num');
+      const g = el('td', tr);
+      if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
+      else el('span', g, i.state === 'written' ? 'Written, publishes on its date' : '—', 's-todo');
+      el('td', tr, HUBS[i.hub] || i.hub, 'hide-narrow');
+      el('span', el('td', tr), LABEL[i.state], 'pill s-' + i.state);
+    });
+    const c = k => items.filter(i => i.state === k).length;
+    $('t-live').textContent = c('live');
+    $('t-ready').textContent = c('written');
+    $('t-todo').textContent = c('todo');
+    const next = items.find(i => i.date > today);
+    $('t-next').textContent = next ? fmtShort(next.date) : 'None';
+    $('t-next-hub').textContent = next ? (HUBS[next.hub] || next.hub) : '';
+  }
+
+  function drawWeeks(){
+    const box = $('weekchart'); box.textContent = '';
+    const lg = $('legend'); lg.textContent = '';
+    ['live','written','todo'].forEach(k => { const s = el('span', lg); el('i', s).style.background = COLORS[k]; s.appendChild(document.createTextNode(LABEL[k])); });
+    const by = new Map();
+    state.items.forEach(i => {
+      const d = day(i.date), dow = (d.getUTCDay() + 6) % 7;
+      const wk = new Date(d.getTime() - dow * 864e5).toISOString().slice(0,10);
+      if (!by.has(wk)) by.set(wk, {week:wk, live:0, written:0, todo:0, held:0});
+      by.get(wk)[i.state]++;
+    });
+    const rows = [...by.values()].sort((a,b) => a.week < b.week ? -1 : 1);
+    const keys = ['live','written','todo','held'];
+    const W = Math.max(300, box.clientWidth || 420), H = 220, m = {t:8, r:6, b:26, l:22};
+    const max = Math.max(1, ...rows.map(r => keys.reduce((s,k) => s + r[k], 0)));
+    const iw = W - m.l - m.r, ih = H - m.t - m.b, band = iw / rows.length, bw = Math.min(28, band * 0.7);
+    const y = v => m.t + ih - (v / max) * ih;
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('role','img');
+    svg.setAttribute('aria-label','Guides planned per week, stacked by status');
+    const add = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
+    for (let v = 0; v <= max; v++){
+      add('line', {x1:m.l, x2:W - m.r, y1:y(v), y2:y(v), stroke:'var(--line)'});
+      add('text', {x:m.l - 6, y:y(v) + 4, 'text-anchor':'end'}).textContent = v;
+    }
+    const every = Math.ceil(rows.length / Math.max(1, Math.floor(iw / 52)));
+    const tip = el('div', box, null, 'tip'); tip.hidden = true;
+    rows.forEach((r, idx) => {
+      const x0 = m.l + idx * band, bx = x0 + (band - bw) / 2;
+      let acc = 0;
+      keys.forEach(k => {
+        if (!r[k]) return;
+        add('rect', {x:bx, width:bw, y:y(acc + r[k]) + 1, height:Math.max(0, y(acc) - y(acc + r[k]) - 1), rx:3, style:'fill:' + COLORS[k]});
+        acc += r[k];
+      });
+      if (idx % every === 0) add('text', {x:x0 + band / 2, y:H - 8, 'text-anchor':'middle'}).textContent = fmtShort(r.week);
+      const hit = add('rect', {x:x0, width:band, y:m.t, height:ih, style:'fill:transparent'});
+      hit.addEventListener('mousemove', ev => {
+        tip.textContent = '';
+        el('div', tip, 'Week of ' + fmtShort(r.week), 'd');
+        keys.forEach(k => { if (r[k]) el('div', tip, LABEL[k] + ': ' + r[k]); });
+        tip.hidden = false;
+        const b = box.getBoundingClientRect();
+        tip.style.left = Math.max(0, Math.min(ev.clientX - b.left + 12, box.clientWidth - tip.offsetWidth - 4)) + 'px';
+        tip.style.top = Math.max(0, ev.clientY - b.top - tip.offsetHeight - 8) + 'px';
+      });
+      hit.addEventListener('mouseleave', () => { tip.hidden = true; });
+    });
+    box.appendChild(svg);
+  }
+
+  function drawSetup(data){
+    const tb = document.querySelector('#setup tbody'); tb.textContent = '';
+    const order = {blocked:0, todo:1, done:2};
+    state.steps = data.steps;
+    [...data.steps].sort((a,b) => (order[a.status] ?? 3) - (order[b.status] ?? 3)).forEach(r => {
+      const tr = el('tr', tb);
+      el('td', tr, r.step); el('td', tr, r.site);
+      el('span', el('td', tr), r.status === 'done' ? 'Done' : r.status === 'blocked' ? 'Waiting on Rogenie' : 'To do', 'pill s-' + r.status);
+      el('td', tr, r.note, 'hide-narrow');
+    });
+    const done = data.steps.filter(r => r.status === 'done').length;
+    $('t-setup').textContent = done + ' of ' + data.steps.length;
+    $('setup-note').textContent = 'Updated ' + fmtDay(data.updated) + '. Measurement steps come first: without them there’s no way to tell what the guides are doing.';
+  }
+
+  async function count(path){
+    const r = await fetch(GC + '/counter/' + encodeURIComponent(path) + '.json');
+    if (r.status === 404) return 0;
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    return Number(String(j.count).replace(/[^0-9]/g, '')) || 0;
+  }
+
+  async function drawVisits(){
+    const body = $('v-body');
+    try {
+      const total = await count('TOTAL');
+      $('t-visits').textContent = n.format(total);
+      const pages = [{label:'computatio.io home', path:'computatio.io/'}, {label:'bookbytellc.com home', path:'bookbytellc.com/'}];
+      (state.items || []).filter(i => i.url).forEach(i => pages.push({label:i.title, path:'bookbytellc.com' + new URL(i.url).pathname}));
+      const vals = await Promise.all(pages.map(p => count(p.path).catch(() => null)));
+      body.textContent = ''; body.className = '';
+      const max = Math.max(1, ...vals.filter(v => v != null));
+      const list = el('div', body, null, 'vrows');
+      pages.forEach((p, i) => {
+        const row = el('div', list, null, 'vrow');
+        const left = el('div', row);
+        el('div', left, p.label, 't').title = p.path;
+        el('div', left, null, 'bar').style.width = (vals[i] == null ? 0 : (vals[i] / max) * 100) + '%';
+        el('div', row, vals[i] == null ? '—' : n.format(vals[i]), 'num');
+      });
+      el('p', body, 'Full detail, including where visitors came from, is at computatio.goatcounter.com.', 'note');
+    } catch (e) {
+      body.textContent = '';
+      el('p', body, 'Visit counts aren’t public yet, so this page can’t show them. To turn them on:');
+      const ol = el('ol', body);
+      el('li', ol, 'Log in at computatio.goatcounter.com.');
+      el('li', ol, 'Open Settings, then Site settings.');
+      el('li', ol, 'Turn on “Allow adding visitor counts on your website,” then Save.');
+    }
+  }
+
+  function rerender(){ if (state.items){ drawCalendar(); drawWeeks(); } takeaway(); }
+
+  $('stamp').textContent = 'As of ' + fmtDay(today);
+
+  Promise.allSettled([
+    fetch(STATUS, {cache:'no-store'}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(d => {
+      state.items = d.items.map(i => Object.assign({}, i, {state: stateOf(i)}));
+    }),
+    fetch('setup.json', {cache:'no-store'}).then(r => r.json()).then(drawSetup)
+  ]).then(res => {
+    if (res[0].status === 'rejected'){
+      $('takeaway').textContent = 'The guide schedule didn’t load from bookbytellc.com. Reload the page to try again.';
+      $('takeaway').className = 'sub err';
+    }
+    rerender();
+    drawVisits();
+  });
+
+  let w = window.innerWidth;
+  window.addEventListener('resize', () => { if (state.items && Math.abs(window.innerWidth - w) > 40){ w = window.innerWidth; drawWeeks(); } });
+})();
+</script>
+</body>
+</html>

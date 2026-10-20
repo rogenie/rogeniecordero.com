@@ -1,0 +1,96 @@
+{
+ "updated": "2026-10-19",
+ "steps": [
+  {
+   "step": "Contact form connected (Formspree)",
+   "site": "computatio.io",
+   "area": "Conversion",
+   "status": "done",
+   "note": "Live Oct 19. Confirm the first test message in your inbox."
+  },
+  {
+   "step": "Booking links point to calendly.com/computatio",
+   "site": "computatio.io",
+   "area": "Conversion",
+   "status": "done",
+   "note": "Live Oct 19."
+  },
+  {
+   "step": "Stripe checkout buttons",
+   "site": "computatio.io",
+   "area": "Conversion",
+   "status": "done",
+   "note": "Simple Return, Self-Employed Return, Monthly Books."
+  },
+  {
+   "step": "Sitemap and robots.txt",
+   "site": "bookbytellc.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Rebuilt on every publish."
+  },
+  {
+   "step": "Article schema and breadcrumbs",
+   "site": "bookbytellc.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Article, BreadcrumbList and WebSite data on every guide."
+  },
+  {
+   "step": "Automatic publishing (Mon/Wed/Fri)",
+   "site": "bookbytellc.com",
+   "area": "Content",
+   "status": "done",
+   "note": "Scheduled task runs the publishing runbook."
+  },
+  {
+   "step": "Sitemap and robots.txt",
+   "site": "computatio.io",
+   "area": "Technical SEO",
+   "status": "todo",
+   "note": "Single page today; add when more pages exist."
+  },
+  {
+   "step": "Visit tracking (GoatCounter)",
+   "site": "computatio.io",
+   "area": "Measurement",
+   "status": "done",
+   "note": "Live Oct 19, one account for both sites."
+  },
+  {
+   "step": "Visit tracking (GoatCounter)",
+   "site": "bookbytellc.com",
+   "area": "Measurement",
+   "status": "done",
+   "note": "Live Oct 19, one account for both sites."
+  },
+  {
+   "step": "Google Search Console verified",
+   "site": "computatio.io",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "Needs a DNS TXT record at Namecheap."
+  },
+  {
+   "step": "Google Search Console verified",
+   "site": "bookbytellc.com",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "Needs a DNS TXT record at Namecheap."
+  },
+  {
+   "step": "Sitemap submitted to Search Console",
+   "site": "bookbytellc.com",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "After verification."
+  },
+  {
+   "step": "Google Business Profile",
+   "site": "computatio.io",
+   "area": "Local",
+   "status": "todo",
+   "note": "Service-area business; no street address shown."
+  }
+ ]
+}
