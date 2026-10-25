@@ -1,0 +1,19 @@
+{
+ "updated": "2026-10-24",
+ "months": [
+  {
+   "month": "2026-11",
+   "status": "proposed",
+   "note": "Proposed by Claude on Oct 24 as a starting point; edit any target. Only Monthly Books counts toward MRR; returns and cleanup are one-time.",
+   "goals": [
+    {"key": "clients", "label": "Paying monthly clients", "group": "Revenue", "target": 1, "actual": null, "unit": "count", "source": "manual", "note": "Signed Monthly Books clients at month end"},
+    {"key": "mrr", "label": "Contracted MRR", "group": "Revenue", "target": 500, "actual": null, "unit": "usd", "source": "manual", "note": "Monthly Books is $500/mo; one-time work excluded"},
+    {"key": "inquiries", "label": "Qualified inquiries", "group": "Pipeline", "target": 8, "actual": null, "unit": "count", "source": "manual", "note": "Owner who fits the offer and asked about pricing or a call"},
+    {"key": "calls", "label": "Discovery calls held", "group": "Pipeline", "target": 4, "actual": null, "unit": "count", "source": "manual", "note": "Calendly calls that actually took place"},
+    {"key": "proposals", "label": "Proposals sent", "group": "Pipeline", "target": 2, "actual": null, "unit": "count", "source": "manual", "note": "Written quote or engagement letter sent"},
+    {"key": "guides", "label": "Guides published", "group": "Content", "target": 13, "actual": null, "unit": "count", "source": "status", "note": "Every Mon/Wed/Fri guide on the calendar"},
+    {"key": "visits", "label": "Site visits", "group": "Content", "target": 200, "actual": null, "unit": "count", "source": "goatcounter", "note": "Both sites. A guess: there is no baseline yet"}
+   ]
+  }
+ ]
+}
