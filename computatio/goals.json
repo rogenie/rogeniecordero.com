@@ -85,6 +85,16 @@
      "unit": "count",
      "source": "goatcounter",
      "note": "Both sites. A guess: there is no baseline yet"
+    },
+    {
+     "key": "social",
+     "label": "New social followers",
+     "group": "Content",
+     "target": 50,
+     "actual": null,
+     "unit": "count",
+     "source": "social",
+     "note": "Net gain across TikTok, YouTube and Facebook. A guess: October was down 6"
     }
    ]
   }

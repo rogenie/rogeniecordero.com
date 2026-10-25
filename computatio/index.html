@@ -132,6 +132,12 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     <div class="tot"><div class="lab">Setup done</div><div class="big" id="t-setup">&mdash;</div><div class="small">Tracking, Search Console, profiles</div></div>
   </section>
 
+  <section class="panel" id="social-card">
+    <h2>Social followers</h2>
+    <p class="note" id="s-note">Loading&hellip;</p>
+    <div class="totals" id="social"></div>
+  </section>
+
   <section class="panel" id="activity">
     <h2>Publishing activity</h2>
     <p class="note">Each scheduled guide and what its 5:48 AM run did. A run that leaves no record by 9:00 AM Pacific shows as missed.</p>
@@ -303,6 +309,38 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     return keys.find(k => k === thisMonth) || keys.find(k => k > thisMonth) || keys[keys.length - 1];
   }
 
+  function socialPoint(a, month){
+    const ks = Object.keys(a.history).sort();
+    const before = ks.filter(k => k < month + '-01'), inside = ks.filter(k => k.slice(0,7) === month);
+    if (!inside.length) return null;
+    const base = before.length ? a.history[before[before.length - 1]] : a.history[inside[0]];
+    return {now: a.history[inside[inside.length - 1]], base};
+  }
+  function socialGain(month){
+    if (!state.social) return null;
+    let sum = 0;
+    for (const a of state.social.accounts){ const p = socialPoint(a, month); if (!p) return null; sum += p.now - p.base; }
+    return sum;
+  }
+  function drawSocial(){
+    const d = state.social, box = $('social'); box.textContent = '';
+    if (!d){ $('s-note').textContent = 'Follower data didn’t load. Reload the page to try again.'; $('s-note').className = 'note err'; return; }
+    $('s-note').textContent = 'From Metricool. Last update ' + fmtDay(d.updated) + '. Change is since the start of ' + monthName(thisMonth).split(' ')[0] + '.';
+    let total = 0, totalChg = 0, have = true;
+    d.accounts.forEach(a => {
+      const ks = Object.keys(a.history).sort(), now = a.history[ks[ks.length - 1]];
+      const p = socialPoint(a, thisMonth), chg = p ? p.now - p.base : null;
+      total += now; if (chg == null) have = false; else totalChg += chg;
+      const t = el('div', box, null, 'tot');
+      const lab = el('div', t, null, 'lab'); const link = el('a', lab, a.network + ' ' + a.handle); link.href = a.url; link.target = '_blank'; link.rel = 'noopener';
+      el('div', t, n.format(now), 'big');
+      el('div', t, chg == null ? 'No data this month yet' : (chg > 0 ? '+' : '') + n.format(chg) + ' this month', 'small ' + (chg > 0 ? 'g-met' : chg < 0 ? 'g-behind' : ''));
+    });
+    const t = el('div', box, null, 'tot');
+    el('div', t, 'All three', 'lab'); el('div', t, n.format(total), 'big');
+    el('div', t, have ? (totalChg > 0 ? '+' : '') + n.format(totalChg) + ' this month' : '', 'small');
+  }
+
   async function drawGoals(){
     const data = state.goals; if (!data || !data.months.length) return;
     const sel = $('g-month');
@@ -318,7 +356,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     $('g-title').textContent = monthName(mo.month) + ' goals';
     let note = phase === 'future' ? 'Starts ' + fmtDay(mo.month + '-01') + '. ' : '';
     if (mo.status === 'proposed') note += 'Proposed targets, not yet confirmed. ';
-    note += (mo.note || '') + ' Clients and MRR come from Stripe and subscribers from Kit; guides and visits count themselves; inquiries, calls and proposals are logged by hand (last update ' + fmtDay(data.updated) + ').';
+    note += (mo.note || '') + ' Clients and MRR come from Stripe, subscribers from Kit and followers from Metricool; guides and visits count themselves; inquiries, calls and proposals are logged by hand (last update ' + fmtDay(data.updated) + ').';
     $('g-note').textContent = note;
 
     const inMonth = i => i.date.slice(0,7) === mo.month;
@@ -335,6 +373,10 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
           actual = state.items.filter(i => inMonth(i) && i.state === 'live').length;
           expected = state.items.filter(i => inMonth(i) && i.date <= today).length;
         } else why = 'Schedule didn’t load';
+      }
+      if (g.source === 'social'){
+        actual = phase === 'future' ? 0 : socialGain(mo.month);
+        if (actual == null) why = state.social ? 'No follower data for this month yet' : 'Follower data didn’t load';
       }
       if (g.source === 'goatcounter'){
         actual = phase === 'future' ? 0 : visits;
@@ -459,13 +501,15 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       state.runs = d.runs || [];
     }),
     fetch('setup.json', {cache:'no-store'}).then(r => r.json()).then(drawSetup),
-    fetch('goals.json', {cache:'no-store'}).then(r => r.json()).then(d => { state.goals = d; })
+    fetch('goals.json', {cache:'no-store'}).then(r => r.json()).then(d => { state.goals = d; }),
+    fetch('social.json', {cache:'no-store'}).then(r => r.json()).then(d => { state.social = d; })
   ]).then(res => {
     if (res[0].status === 'rejected'){
       const lr = $('lastrun'); lr.textContent = ''; el('span', lr, 'The guide schedule didn’t load from bookbytellc.com. Reload the page to try again.', 'err');
     }
     if (res[2].status === 'rejected'){ $('g-note').textContent = 'Goals didn’t load. Reload the page to try again.'; $('g-note').className = 'note err'; }
     rerender();
+    drawSocial();
     drawGoals();
     drawVisits();
   });
