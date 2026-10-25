@@ -57,6 +57,16 @@
      "note": "Written quote or engagement letter sent"
     },
     {
+     "key": "subscribers",
+     "label": "New newsletter subscribers",
+     "group": "Pipeline",
+     "target": 10,
+     "actual": null,
+     "unit": "count",
+     "source": "kit",
+     "note": "Free write-offs guide signups in Kit. A guess: about 5% of the visits target"
+    },
+    {
      "key": "guides",
      "label": "Guides published",
      "group": "Content",
