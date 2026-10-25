@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Computatio 88 Million Dashboard</title>
+<link rel="icon" href="logo.jpg">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 /* Layout: one column. Headline totals, then visits and the weekly schedule side by side, then the setup checklist and the guide calendar. Same tokens as /9nthdimension. */
@@ -29,6 +30,9 @@ a{color:var(--accent)}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
 header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between}
+.brand{display:flex;gap:14px;align-items:center;min-width:0}
+.brand .logo{flex:none;border-radius:50%;width:56px;height:56px;box-shadow:0 0 0 1px var(--line)}
+@media (max-width:640px){.brand{align-items:flex-start}.brand .logo{width:44px;height:44px;margin-top:2px}}
 h1{font:700 30px/1.1 var(--display);margin:0;text-wrap:balance}
 h2{font:700 18px/1.2 var(--display);margin:0}
 .sub{color:var(--muted);margin:4px 0 0;max-width:68ch}
@@ -95,9 +99,12 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 <body>
 <div class="wrap">
   <header>
-    <div>
+    <div class="brand">
+      <img src="logo.jpg" alt="Computatio logo" width="56" height="56" class="logo">
+      <div>
       <h1>Computatio 88 Million Dashboard</h1>
       <p class="sub" id="takeaway">Loading&hellip;</p>
+      </div>
     </div>
     <div class="stamp" id="stamp"></div>
   </header>
