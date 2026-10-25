@@ -108,7 +108,6 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       <h1>Computatio 88 Million Dashboard</h1>
       <p class="affirm">I am God, God is in me and will do everything together. This is a way of strengthening His people.</p>
       <p class="verse">&ldquo;I can do all things through Christ which strengtheneth me.&rdquo; <cite>Philippians 4:13 (KJV)</cite></p>
-      <p class="sub" id="takeaway">Loading&hellip;</p>
       </div>
     </div>
     <div class="stamp" id="stamp"></div>
@@ -193,7 +192,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 
   function takeaway(){
     const t = $('takeaway');
-    if (!state.items) return;
+    if (!t || !state.items) return;
     const live = state.items.filter(i => i.state === 'live').length;
     const next = state.items.find(i => i.date > today);
     let s = live ? live + ' guide' + (live === 1 ? ' is' : 's are') + ' live. ' : 'No guides are live yet. ';
@@ -463,8 +462,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     fetch('goals.json', {cache:'no-store'}).then(r => r.json()).then(d => { state.goals = d; })
   ]).then(res => {
     if (res[0].status === 'rejected'){
-      $('takeaway').textContent = 'The guide schedule didn’t load from bookbytellc.com. Reload the page to try again.';
-      $('takeaway').className = 'sub err';
+      const lr = $('lastrun'); lr.textContent = ''; el('span', lr, 'The guide schedule didn’t load from bookbytellc.com. Reload the page to try again.', 'err');
     }
     if (res[2].status === 'rejected'){ $('g-note').textContent = 'Goals didn’t load. Reload the page to try again.'; $('g-note').className = 'note err'; }
     rerender();
