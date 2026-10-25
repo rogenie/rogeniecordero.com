@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24",
+ "updated": "2026-10-25",
  "steps": [
   {
    "step": "Contact form connected (Formspree)",
@@ -68,15 +68,15 @@
    "step": "Google Search Console verified",
    "site": "computatio.io",
    "area": "Measurement",
-   "status": "todo",
-   "note": "Rogenie: add a Domain property in Search Console, paste its TXT record at Namecheap (Host @)."
+   "status": "done",
+   "note": "DNS TXT record confirmed 10/25."
   },
   {
    "step": "Google Search Console verified",
    "site": "bookbytellc.com",
    "area": "Measurement",
-   "status": "todo",
-   "note": "Rogenie: add a Domain property in Search Console, paste its TXT record at Namecheap (Host @)."
+   "status": "done",
+   "note": "DNS TXT record confirmed 10/25."
   },
   {
    "step": "Sitemap submitted to Search Console",
