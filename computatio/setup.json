@@ -48,7 +48,7 @@
    "site": "computatio.io",
    "area": "Technical SEO",
    "status": "done",
-   "note": "Added Oct 24: one-page sitemap; add pages to it as the site grows."
+   "note": "Lists all 6 pages: home, three services, privacy, terms."
   },
   {
    "step": "Visit tracking (GoatCounter)",
@@ -83,14 +83,14 @@
    "site": "bookbytellc.com",
    "area": "Measurement",
    "status": "todo",
-   "note": "After verification: submit bookbytellc.com/sitemap.xml."
+   "note": "Only a 2018 sitemap from a previous domain owner is listed. Resubmit sitemap.xml."
   },
   {
    "step": "Sitemap submitted to Search Console",
    "site": "computatio.io",
    "area": "Measurement",
-   "status": "todo",
-   "note": "After verification: submit computatio.io/sitemap.xml."
+   "status": "done",
+   "note": "Submitted Oct 25; read successfully, 6 pages found."
   },
   {
    "step": "Google Business Profile",
