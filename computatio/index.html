@@ -30,9 +30,12 @@ a{color:var(--accent)}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
 header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between}
-.brand{display:flex;gap:14px;align-items:center;min-width:0}
+.brand{display:flex;gap:14px;align-items:flex-start;min-width:0}
 .brand .logo{flex:none;border-radius:50%;width:56px;height:56px;box-shadow:0 0 0 1px var(--line)}
 @media (max-width:640px){.brand{align-items:flex-start}.brand .logo{width:44px;height:44px;margin-top:2px}}
+.affirm{font:500 16px/1.4 var(--display);margin:6px 0 0;max-width:68ch;color:var(--accent)}
+.verse{margin:2px 0 6px;font-size:14px;font-style:italic;color:var(--muted);max-width:68ch}
+.verse cite{font-style:normal;font-size:13px;white-space:nowrap}
 h1{font:700 30px/1.1 var(--display);margin:0;text-wrap:balance}
 h2{font:700 18px/1.2 var(--display);margin:0}
 .sub{color:var(--muted);margin:4px 0 0;max-width:68ch}
@@ -103,6 +106,8 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       <img src="logo.jpg" alt="Computatio logo" width="56" height="56" class="logo">
       <div>
       <h1>Computatio 88 Million Dashboard</h1>
+      <p class="affirm">I am God, God is in me and will do everything together. This is a way of strengthening His people.</p>
+      <p class="verse">&ldquo;I can do all things through Christ which strengtheneth me.&rdquo; <cite>Philippians 4:13 (KJV)</cite></p>
       <p class="sub" id="takeaway">Loading&hellip;</p>
       </div>
     </div>
