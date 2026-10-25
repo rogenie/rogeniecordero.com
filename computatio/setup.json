@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-23",
+ "updated": "2026-10-24",
  "steps": [
   {
    "step": "Contact form connected (Formspree)",
@@ -47,8 +47,8 @@
    "step": "Sitemap and robots.txt",
    "site": "computatio.io",
    "area": "Technical SEO",
-   "status": "todo",
-   "note": "Single page today; add when more pages exist."
+   "status": "done",
+   "note": "Added Oct 24: one-page sitemap; add pages to it as the site grows."
   },
   {
    "step": "Visit tracking (GoatCounter)",
@@ -69,28 +69,35 @@
    "site": "computatio.io",
    "area": "Measurement",
    "status": "todo",
-   "note": "Needs a DNS TXT record at Namecheap."
+   "note": "Rogenie: add a Domain property in Search Console, paste its TXT record at Namecheap (Host @)."
   },
   {
    "step": "Google Search Console verified",
    "site": "bookbytellc.com",
    "area": "Measurement",
    "status": "todo",
-   "note": "Needs a DNS TXT record at Namecheap."
+   "note": "Rogenie: add a Domain property in Search Console, paste its TXT record at Namecheap (Host @)."
   },
   {
    "step": "Sitemap submitted to Search Console",
    "site": "bookbytellc.com",
    "area": "Measurement",
    "status": "todo",
-   "note": "After verification."
+   "note": "After verification: submit bookbytellc.com/sitemap.xml."
+  },
+  {
+   "step": "Sitemap submitted to Search Console",
+   "site": "computatio.io",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "After verification: submit computatio.io/sitemap.xml."
   },
   {
    "step": "Google Business Profile",
    "site": "computatio.io",
    "area": "Local",
    "status": "todo",
-   "note": "Service-area business; no street address shown."
+   "note": "Rogenie: create at business.google.com as a service-area business; hide the address."
   }
  ]
 }
