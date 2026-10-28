@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Parva Regina Dashboard</title>
+<link rel="icon" href="logo.svg">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column. Headline totals, then visits and the weekly schedule side by side, then the setup checklist and the article calendar. Colors follow parvaregina.com: berry, blush and champagne. */
+:root{
+  --bg:#fff9f6; --surface:#ffffff; --line:#efd9d3; --fg:#3a2530; --muted:#76626a;
+  --accent:#9a3b62; --soft:#f1dade; --berry:#6e2f4c; --gold:#a57a3e;
+  --up:#4e6e5a; --down:#b3322a; --warn:#9a5b22;
+  --display:"Lora",Georgia,serif;
+  --body:"Inter","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1b1116; --surface:#261a20; --line:#3f2c35; --fg:#f6e9ee; --muted:#bba4ae;
+  --accent:#ee9dbd; --soft:#4b3441; --berry:#ee9dbd; --gold:#e2c08a; --up:#8fc7a3; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1b1116; --surface:#261a20; --line:#3f2c35; --fg:#f6e9ee; --muted:#bba4ae;
+  --accent:#ee9dbd; --soft:#4b3441; --berry:#ee9dbd; --gold:#e2c08a; --up:#8fc7a3; --down:#ff8a80; --warn:#e2b548; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
+[hidden]{display:none!important}
+a{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px;display:flex;flex-direction:column;gap:28px}
+header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between}
+.brand{display:flex;gap:14px;align-items:flex-start;min-width:0}
+.brand .logo{flex:none;border-radius:14px;width:56px;height:56px;box-shadow:0 0 0 1px var(--line)}
+@media (max-width:640px){.brand{align-items:flex-start}.brand .logo{width:44px;height:44px;margin-top:2px}}
+.affirm{font:500 16px/1.4 var(--display);margin:6px 0 0;max-width:68ch;color:var(--berry)}
+.verse{margin:2px 0 6px;font-size:14px;font-style:italic;color:var(--muted);max-width:68ch}
+.verse cite{font-style:normal;font-size:13px;white-space:nowrap}
+h1{font:700 30px/1.1 var(--display);margin:0;text-wrap:balance}
+h2{font:700 18px/1.2 var(--display);margin:0}
+.sub{color:var(--muted);margin:4px 0 0;max-width:68ch}
+.stamp{color:var(--muted);font-size:13px}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,140px),1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tot{background:var(--surface);padding:16px 18px;min-width:0}
+.tot .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.tot .big{font:500 28px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
+.tot .small{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;min-width:0}
+.note{color:var(--muted);font-size:13px;margin:4px 0 12px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.chart{position:relative;min-height:220px}
+svg{display:block;width:100%;height:auto;margin-top:8px}
+svg text{fill:var(--muted);font:12px var(--body)}
+.tip{position:absolute;background:var(--surface);border:1px solid var(--line);border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.12);padding:6px 10px;font-size:12px;pointer-events:none;white-space:nowrap}
+.tip .d{color:var(--muted)}
+.scroll{overflow:auto;max-height:28rem}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font-weight:600;color:var(--muted);font-size:12px;letter-spacing:.04em;text-transform:uppercase;position:sticky;top:0;background:var(--surface);padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;padding:0 9px;border-radius:999px;border:1px solid currentColor;font-size:12px;white-space:nowrap}
+.s-live,.s-done{color:var(--up)}
+.s-written{color:var(--accent)}
+.s-todo{color:var(--muted)}
+.s-blocked{color:var(--warn)}
+.s-held{color:var(--down)}
+.msg{color:var(--muted);font-size:14px}
+.msg ol{margin:8px 0 0;padding-left:20px}
+.err{color:var(--down);font-size:14px}
+.s-missed{color:var(--down)}
+.s-due,.s-upcoming{color:var(--muted)}
+.s-nolog{color:var(--warn)}
+.chk{font-size:13px;white-space:nowrap}
+.chk.no{color:var(--down)}
+.chk.yes{color:var(--up)}
+.last{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:14px;margin-bottom:10px}
+.tot.alert .big{color:var(--down)}
+.vrows{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) 3.5rem;gap:10px;align-items:center;font-size:14px}
+.vrow .bar{height:8px;border-radius:4px;background:var(--accent);margin-top:4px;min-width:2px}
+.vrow .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ghead{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between}
+.ghead select{font:14px var(--body);color:var(--fg);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 8px}
+.goals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;margin-top:4px}
+.goal{border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.goal .grp{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.goal .gl{font-weight:600;margin-top:2px}
+.goal .gv{font:500 22px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:6px}
+.goal .gv span{font-size:14px;color:var(--muted)}
+.goal .track{position:relative;height:8px;border-radius:4px;background:var(--soft);margin:8px 0 6px;overflow:hidden}
+.goal .fill{height:100%;border-radius:4px;background:var(--accent)}
+.goal.met .fill{background:var(--up)}
+.goal .pace{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--fg);opacity:.55}
+.goal .gs{font-size:13px;color:var(--muted)}
+.goal .gs b{font-weight:600}
+.g-met{color:var(--up)} .g-behind{color:var(--warn)} .g-nolog{color:var(--muted)}
+@media (max-width:640px){.hide-narrow{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img src="logo.svg" alt="Parva Regina logo" width="56" height="56" class="logo">
+      <div>
+      <h1>Parva Regina Dashboard</h1>
+      <p class="affirm">Everything I build, I build for God. His fire burns in me. I will not shrink, I will not quit, and I will not stop until His people are strengthened.</p>
+      <p class="verse">&ldquo;I can do all things through Christ which strengtheneth me.&rdquo; <cite>Philippians 4:13 (KJV)</cite></p>
+      </div>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </header>
+
+  <section class="panel" id="goals-card">
+    <div class="ghead">
+      <h2 id="g-title">Monthly goals</h2>
+      <select id="g-month" aria-label="Month" hidden></select>
+    </div>
+    <p class="note" id="g-note">Loading&hellip;</p>
+    <div class="goals" id="goals"></div>
+  </section>
+
+  <section class="totals" aria-label="Headline figures">
+    <div class="tot"><div class="lab">Visits, all time</div><div class="big" id="t-visits">&mdash;</div><div class="small">parvaregina.com, GoatCounter</div></div>
+    <div class="tot"><div class="lab">Articles live</div><div class="big" id="t-live">&mdash;</div><div class="small">On parvaregina.com</div></div>
+    <div class="tot" id="tile-missed"><div class="lab">Missed runs</div><div class="big" id="t-missed">&mdash;</div><div class="small" id="t-missed-sub">Scheduled articles that didn&rsquo;t go out</div></div>
+    <div class="tot"><div class="lab">Written ahead</div><div class="big" id="t-ready">&mdash;</div><div class="small">Waiting for their date</div></div>
+    <div class="tot"><div class="lab">Still to write</div><div class="big" id="t-todo">&mdash;</div><div class="small">On the calendar</div></div>
+    <div class="tot"><div class="lab">Next article</div><div class="big" id="t-next">&mdash;</div><div class="small" id="t-next-hub">&nbsp;</div></div>
+    <div class="tot"><div class="lab">Setup done</div><div class="big" id="t-setup">&mdash;</div><div class="small">Tracking, Search Console, newsletter</div></div>
+  </section>
+
+  <section class="panel" id="social-card">
+    <h2>Social followers</h2>
+    <p class="note" id="s-note">Loading&hellip;</p>
+    <div class="totals" id="social"></div>
+  </section>
+
+  <section class="panel" id="activity">
+    <h2>Publishing activity</h2>
+    <p class="note">Each scheduled article and what its 5:59 AM run did. A run that leaves no record by 9:00 AM Pacific shows as missed.</p>
+    <div class="last" id="lastrun"></div>
+    <div class="scroll"><table id="act"><thead><tr><th>Scheduled</th><th>Result</th><th>Article</th><th class="hide-narrow">Facts checked</th><th class="hide-narrow">Live check</th><th class="hide-narrow">Social caption</th><th class="hide-narrow">Note</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <div class="grid">
+    <section class="panel" id="visits">
+      <h2>Visits</h2>
+      <p class="note" id="v-note">All-time counts for parvaregina.com</p>
+      <div id="v-body" class="msg">Loading&hellip;</div>
+    </section>
+    <section class="panel" id="cadence">
+      <h2>Publishing schedule by week</h2>
+      <p class="note">Articles planned for each week, by where they stand</p>
+      <div class="legend" id="legend"></div>
+      <div class="chart" id="weekchart"></div>
+    </section>
+  </div>
+
+  <section class="panel" id="setup-card">
+    <h2>SEO setup checklist</h2>
+    <p class="note" id="setup-note">Measurement steps come first: without them there&rsquo;s no way to tell what the articles are doing.</p>
+    <div class="scroll"><table id="setup"><thead><tr><th>Step</th><th>Site</th><th>Status</th><th class="hide-narrow">Note</th></tr></thead><tbody></tbody></table></div>
+  </section>
+
+  <section class="panel" id="calendar-card">
+    <h2>Content calendar</h2>
+    <p class="note">Evidence checks and Foundations on Mondays and Fridays; research news on Wednesdays, picked by the Sunday topic scout. Titles appear once an article is live.</p>
+    <div class="scroll"><table id="cal"><thead><tr><th>Date</th><th>Article</th><th class="hide-narrow">Section</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+  </section>
+</div>
+
+<script>
+(function(){
+  // Set GC to the GoatCounter site URL (e.g. 'https://parvaregina.goatcounter.com') once tracking is on parvaregina.com.
+  const GC = null;
+  const STATUS = ['https://parvaregina.com/status.json', 'https://raw.githubusercontent.com/rogenie/parvaregina/main/status.json'];
+  const HUBS = {'evidence':'Evidence check','news':'Research news','foundations':'Foundations','hub':'Section page'};
+  const LABEL = {live:'Live', written:'Written', todo:'To write', held:'Held'};
+  const COLORS = {live:'var(--up)', written:'var(--accent)', todo:'var(--soft)', held:'var(--down)'};
+  const today = new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'});
+  const $ = id => document.getElementById(id);
+  const el = (tag, parent, text, cls) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  const day = s => new Date(s + 'T00:00:00Z');
+  const fmtDay = s => day(s).toLocaleDateString('en-US',{timeZone:'UTC',weekday:'short',month:'short',day:'numeric'});
+  const fmtShort = s => day(s).toLocaleDateString('en-US',{timeZone:'UTC',month:'short',day:'numeric'});
+  const n = new Intl.NumberFormat('en-US');
+
+  let state = {items:null, steps:null, visits:null};
+
+  function stateOf(i){
+    if (i.status === 'held') return 'held';
+    if (i.title) return 'live';
+    if (i.status === 'written') return i.date <= today ? 'live' : 'written';
+    return 'todo';
+  }
+
+  function takeaway(){
+    const t = $('takeaway');
+    if (!t || !state.items) return;
+    const live = state.items.filter(i => i.state === 'live').length;
+    const next = state.items.find(i => i.date > today);
+    let s = live ? live + ' article' + (live === 1 ? ' is' : 's are') + ' live. ' : 'No articles are live yet. ';
+    if (state.missed) s += state.missed + ' scheduled run' + (state.missed === 1 ? '' : 's') + ' missed; see Publishing activity. ';
+    if (next) s += 'Next one publishes ' + fmtDay(next.date) + '. ';
+    if (state.steps){
+      const open = state.steps.filter(r => r.status !== 'done' && r.area === 'Measurement').length;
+      if (open) s += open + ' measurement step' + (open === 1 ? '' : 's') + ' still open, including Search Console.';
+    }
+    t.textContent = s;
+  }
+
+  function drawCalendar(){
+    const items = state.items, tb = document.querySelector('#cal tbody');
+    tb.textContent = '';
+    items.forEach(i => {
+      const tr = el('tr', tb);
+      el('td', tr, fmtDay(i.date), 'num');
+      const g = el('td', tr);
+      if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
+      else el('span', g, i.state === 'written' ? 'Written, publishes on its date' : '—', 's-todo');
+      el('td', tr, HUBS[i.hub] || i.hub, 'hide-narrow');
+      el('span', el('td', tr), LABEL[i.state], 'pill s-' + i.state);
+    });
+    const c = k => items.filter(i => i.state === k).length;
+    $('t-live').textContent = c('live');
+    $('t-ready').textContent = c('written');
+    $('t-todo').textContent = c('todo');
+    const next = items.find(i => i.date > today);
+    $('t-next').textContent = next ? fmtShort(next.date) : 'None';
+    $('t-next-hub').textContent = next ? (HUBS[next.hub] || next.hub) : '';
+  }
+
+  function drawWeeks(){
+    const box = $('weekchart'); box.textContent = '';
+    const lg = $('legend'); lg.textContent = '';
+    ['live','written','todo'].forEach(k => { const s = el('span', lg); el('i', s).style.background = COLORS[k]; s.appendChild(document.createTextNode(LABEL[k])); });
+    const by = new Map();
+    state.items.forEach(i => {
+      const d = day(i.date), dow = (d.getUTCDay() + 6) % 7;
+      const wk = new Date(d.getTime() - dow * 864e5).toISOString().slice(0,10);
+      if (!by.has(wk)) by.set(wk, {week:wk, live:0, written:0, todo:0, held:0});
+      by.get(wk)[i.state]++;
+    });
+    const rows = [...by.values()].sort((a,b) => a.week < b.week ? -1 : 1);
+    const keys = ['live','written','todo','held'];
+    const W = Math.max(300, box.clientWidth || 420), H = 220, m = {t:8, r:6, b:26, l:22};
+    const max = Math.max(1, ...rows.map(r => keys.reduce((s,k) => s + r[k], 0)));
+    const iw = W - m.l - m.r, ih = H - m.t - m.b, band = iw / rows.length, bw = Math.min(28, band * 0.7);
+    const y = v => m.t + ih - (v / max) * ih;
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('role','img');
+    svg.setAttribute('aria-label','Articles planned per week, stacked by status');
+    const add = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); (parent || svg).appendChild(e); return e; };
+    for (let v = 0; v <= max; v++){
+      add('line', {x1:m.l, x2:W - m.r, y1:y(v), y2:y(v), stroke:'var(--line)'});
+      add('text', {x:m.l - 6, y:y(v) + 4, 'text-anchor':'end'}).textContent = v;
+    }
+    const every = Math.ceil(rows.length / Math.max(1, Math.floor(iw / 52)));
+    const tip = el('div', box, null, 'tip'); tip.hidden = true;
+    rows.forEach((r, idx) => {
+      const x0 = m.l + idx * band, bx = x0 + (band - bw) / 2;
+      let acc = 0;
+      keys.forEach(k => {
+        if (!r[k]) return;
+        add('rect', {x:bx, width:bw, y:y(acc + r[k]) + 1, height:Math.max(0, y(acc) - y(acc + r[k]) - 1), rx:3, style:'fill:' + COLORS[k]});
+        acc += r[k];
+      });
+      if (idx % every === 0) add('text', {x:x0 + band / 2, y:H - 8, 'text-anchor':'middle'}).textContent = fmtShort(r.week);
+      const hit = add('rect', {x:x0, width:band, y:m.t, height:ih, style:'fill:transparent'});
+      hit.addEventListener('mousemove', ev => {
+        tip.textContent = '';
+        el('div', tip, 'Week of ' + fmtShort(r.week), 'd');
+        keys.forEach(k => { if (r[k]) el('div', tip, LABEL[k] + ': ' + r[k]); });
+        tip.hidden = false;
+        const b = box.getBoundingClientRect();
+        tip.style.left = Math.max(0, Math.min(ev.clientX - b.left + 12, box.clientWidth - tip.offsetWidth - 4)) + 'px';
+        tip.style.top = Math.max(0, ev.clientY - b.top - tip.offsetHeight - 8) + 'px';
+      });
+      hit.addEventListener('mouseleave', () => { tip.hidden = true; });
+    });
+    box.appendChild(svg);
+  }
+
+  function drawSetup(data){
+    const tb = document.querySelector('#setup tbody'); tb.textContent = '';
+    const order = {blocked:0, todo:1, done:2};
+    state.steps = data.steps;
+    [...data.steps].sort((a,b) => (order[a.status] ?? 3) - (order[b.status] ?? 3)).forEach(r => {
+      const tr = el('tr', tb);
+      el('td', tr, r.step); el('td', tr, r.site);
+      el('span', el('td', tr), r.status === 'done' ? 'Done' : r.status === 'blocked' ? 'Waiting on Rogenie' : 'To do', 'pill s-' + r.status);
+      el('td', tr, r.note, 'hide-narrow');
+    });
+    const done = data.steps.filter(r => r.status === 'done').length;
+    $('t-setup').textContent = done + ' of ' + data.steps.length;
+    $('setup-note').textContent = 'Updated ' + fmtDay(data.updated) + '. Measurement steps come first: without them there’s no way to tell what the articles are doing.';
+  }
+
+  const usd = new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+  const monthName = m => new Date(m + '-01T00:00:00Z').toLocaleDateString('en-US',{timeZone:'UTC',month:'long',year:'numeric'});
+  const thisMonth = today.slice(0,7);
+  const daysIn = m => new Date(Date.UTC(+m.slice(0,4), +m.slice(5,7), 0)).getUTCDate();
+
+  function pickMonth(months){
+    const keys = months.map(m => m.month).sort();
+    return keys.find(k => k === thisMonth) || keys.find(k => k > thisMonth) || keys[keys.length - 1];
+  }
+
+  function socialPoint(a, month){
+    const ks = Object.keys(a.history).sort();
+    const before = ks.filter(k => k < month + '-01'), inside = ks.filter(k => k.slice(0,7) === month);
+    if (!inside.length) return null;
+    const base = before.length ? a.history[before[before.length - 1]] : a.history[inside[0]];
+    return {now: a.history[inside[inside.length - 1]], base};
+  }
+  function socialGain(month){
+    if (!state.social) return null;
+    let sum = 0;
+    for (const a of state.social.accounts){ const p = socialPoint(a, month); if (!p) return null; sum += p.now - p.base; }
+    return sum;
+  }
+  function drawSocial(){
+    const d = state.social, box = $('social'); box.textContent = '';
+    if (!d){ $('s-note').textContent = 'Follower data didn’t load. Reload the page to try again.'; $('s-note').className = 'note err'; return; }
+    $('s-note').textContent = 'From Metricool. Last update ' + fmtDay(d.updated) + '. Change is since the start of ' + monthName(thisMonth).split(' ')[0] + '.';
+    let total = 0, totalChg = 0, have = true;
+    d.accounts.forEach(a => {
+      const ks = Object.keys(a.history).sort(), now = a.history[ks[ks.length - 1]];
+      const p = socialPoint(a, thisMonth), chg = p ? p.now - p.base : null;
+      total += now; if (chg == null) have = false; else totalChg += chg;
+      const t = el('div', box, null, 'tot');
+      const lab = el('div', t, null, 'lab'); const link = el('a', lab, a.network + ' ' + a.handle); link.href = a.url; link.target = '_blank'; link.rel = 'noopener';
+      el('div', t, n.format(now), 'big');
+      el('div', t, chg == null ? 'No data this month yet' : (chg > 0 ? '+' : '') + n.format(chg) + ' this month', 'small ' + (chg > 0 ? 'g-met' : chg < 0 ? 'g-behind' : ''));
+    });
+    const t = el('div', box, null, 'tot');
+    el('div', t, d.accounts.length === 3 ? 'All three' : 'All accounts', 'lab'); el('div', t, n.format(total), 'big');
+    el('div', t, have ? (totalChg > 0 ? '+' : '') + n.format(totalChg) + ' this month' : '', 'small');
+  }
+
+  async function drawGoals(){
+    const data = state.goals; if (!data || !data.months.length) return;
+    const sel = $('g-month');
+    if (!sel.options.length){
+      [...data.months].sort((a,b) => a.month < b.month ? 1 : -1).forEach(m => { const o = el('option', sel, monthName(m.month)); o.value = m.month; });
+      sel.value = pickMonth(data.months);
+      sel.hidden = data.months.length < 2;
+      sel.addEventListener('change', drawGoals);
+    }
+    const mo = data.months.find(m => m.month === sel.value);
+    const phase = mo.month < thisMonth ? 'past' : mo.month > thisMonth ? 'future' : 'now';
+    const elapsed = phase === 'past' ? 1 : phase === 'future' ? 0 : Number(today.slice(8,10)) / daysIn(mo.month);
+    $('g-title').textContent = monthName(mo.month) + ' goals';
+    let note = phase === 'future' ? 'Starts ' + fmtDay(mo.month + '-01') + '. ' : '';
+    if (mo.status === 'proposed') note += 'Proposed targets, not yet confirmed. ';
+    note += (mo.note || '') + ' Articles count themselves and followers come from Metricool; subscribers and newsletter issues are logged by hand until the Kit signup is live (last update ' + fmtDay(data.updated) + ').';
+    $('g-note').textContent = note;
+
+    const inMonth = i => i.date.slice(0,7) === mo.month;
+    let visits = null;
+    if (GC && mo.goals.some(g => g.source === 'goatcounter') && phase !== 'future'){
+      const end = phase === 'past' ? mo.month + '-' + daysIn(mo.month) : today;
+      visits = await count('TOTAL', '?start=' + mo.month + '-01&end=' + end).catch(() => null);
+    }
+    const box = $('goals'); box.textContent = '';
+    mo.goals.forEach(g => {
+      let actual = g.actual, expected = g.target * elapsed, why = '';
+      if (g.source === 'status'){
+        if (state.items){
+          actual = state.items.filter(i => inMonth(i) && i.state === 'live').length;
+          expected = state.items.filter(i => inMonth(i) && i.date <= today).length;
+        } else why = 'Article schedule didn’t load';
+      }
+      if (g.source === 'social'){
+        actual = phase === 'future' ? 0 : socialGain(mo.month);
+        if (actual == null) why = state.social ? 'No follower data for this month yet' : 'Follower data didn’t load';
+      }
+      if (g.source === 'goatcounter'){
+        actual = phase === 'future' ? 0 : visits;
+        if (actual == null) why = GC ? 'Visit counts aren’t public yet' : 'Visit tracking isn’t on the site yet';
+      }
+      const fmt = v => g.unit === 'usd' ? usd.format(v) : n.format(v);
+      const card = el('div', box, null, 'goal');
+      el('div', card, g.group, 'grp');
+      el('div', card, g.label, 'gl');
+      const gv = el('div', card, null, 'gv');
+      gv.appendChild(document.createTextNode(actual == null ? '—' : fmt(actual)));
+      el('span', gv, ' / ' + fmt(g.target));
+      const tr = el('div', card, null, 'track');
+      el('div', tr, null, 'fill').style.width = (actual == null ? 0 : Math.min(1, actual / g.target) * 100) + '%';
+      if (phase === 'now') el('div', tr, null, 'pace').style.left = 'calc(' + Math.min(1, expected / g.target) * 100 + '% - 1px)';
+      let st, cls;
+      if (actual != null && actual >= g.target){ st = 'Met'; cls = 'g-met'; card.classList.add('met'); }
+      else if (phase === 'future'){ st = 'Not started'; cls = 'g-nolog'; }
+      else if (actual == null){ st = why || 'Not logged yet'; cls = 'g-nolog'; }
+      else if (phase === 'past'){ st = 'Missed'; cls = 'g-behind'; }
+      else if (actual >= Math.floor(expected)){ st = 'On track'; cls = 'g-met'; }
+      else { st = 'Behind pace'; cls = 'g-behind'; }
+      const gs = el('div', card, null, 'gs');
+      el('b', gs, st, cls);
+      if (g.note) gs.appendChild(document.createTextNode(' · ' + g.note));
+    });
+  }
+
+  async function getStatus(){
+    let last;
+    for (const u of STATUS){
+      try { const r = await fetch(u, {cache:'no-store'}); if (!r.ok) throw new Error(r.status); return await r.json(); }
+      catch (e) { last = e; }
+    }
+    throw last;
+  }
+
+  async function count(path, qs){
+    const r = await fetch(GC + '/counter/' + encodeURIComponent(path) + '.json' + (qs || ''));
+    if (r.status === 404) return 0;
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    return Number(String(j.count).replace(/[^0-9]/g, '')) || 0;
+  }
+
+  async function drawVisits(){
+    const body = $('v-body');
+    if (!GC){
+      body.textContent = '';
+      el('p', body, 'Visit tracking isn’t on parvaregina.com yet, so there are no counts to show. To turn it on:');
+      const ol = el('ol', body);
+      el('li', ol, 'Create a free site at goatcounter.com (for example parvaregina.goatcounter.com).');
+      el('li', ol, 'In its Site settings, turn on “Allow adding visitor counts on your website.”');
+      el('li', ol, 'Ask Claude to add the tracking script to parvaregina.com, update the privacy page, and switch this panel on.');
+      $('v-note').textContent = 'Not tracked yet';
+      $('t-visits').textContent = 'Off';
+      return;
+    }
+    try {
+      const total = await count('TOTAL');
+      $('t-visits').textContent = n.format(total);
+      const pages = [{label:'parvaregina.com home', path:'/'}];
+      (state.items || []).filter(i => i.url && i.state === 'live').forEach(i => pages.push({label:i.title, path:new URL(i.url).pathname}));
+      const vals = await Promise.all(pages.map(p => count(p.path).catch(() => null)));
+      body.textContent = ''; body.className = '';
+      const max = Math.max(1, ...vals.filter(v => v != null));
+      const list = el('div', body, null, 'vrows');
+      pages.forEach((p, i) => {
+        const row = el('div', list, null, 'vrow');
+        const left = el('div', row);
+        el('div', left, p.label, 't').title = p.path;
+        el('div', left, null, 'bar').style.width = (vals[i] == null ? 0 : (vals[i] / max) * 100) + '%';
+        el('div', row, vals[i] == null ? '—' : n.format(vals[i]), 'num');
+      });
+      el('p', body, 'Full detail, including where visitors came from, is at ' + GC.replace('https://','') + '.', 'note');
+    } catch (e) {
+      body.textContent = '';
+      el('p', body, 'Visit counts aren’t public yet, so this page can’t show them. In GoatCounter, open Settings, then Site settings, and turn on “Allow adding visitor counts on your website.”');
+    }
+  }
+
+  function drawActivity(){
+    const now = new Date();
+    const hourPT = Number(now.toLocaleString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',hour12:false})) % 24;
+    const runs = new Map();
+    (state.runs || []).forEach(r => runs.set(r.date, r));
+    const RES = {published:'Published', held:'Held', missed:'Missed', due:'Due today', upcoming:'Next up', nolog:'Live, no run record'};
+    const rows = [];
+    let nextAdded = false;
+    state.items.forEach(i => {
+      const r = runs.get(i.date);
+      let res;
+      if (r) res = r.result === 'held' ? 'held' : 'published';
+      else if (i.date > today){ if (nextAdded) return; nextAdded = true; res = 'upcoming'; }
+      else if (i.url) res = 'nolog';
+      else if (i.date === today && hourPT < 9) res = 'due';
+      else res = 'missed';
+      rows.push({i, r, res});
+    });
+    rows.sort((a,b) => a.i.date < b.i.date ? 1 : -1);
+    const tb = document.querySelector('#act tbody'); tb.textContent = '';
+    const yn = (td, v) => { if (v == null){ td.textContent = '\u2014'; return; } el('span', td, v ? 'Yes' : 'No', 'chk ' + (v ? 'yes' : 'no')); };
+    rows.forEach(({i, r, res}) => {
+      const tr = el('tr', tb);
+      el('td', tr, fmtDay(i.date), 'num');
+      el('span', el('td', tr), RES[res], 'pill s-' + (res === 'published' ? 'live' : res));
+      const g = el('td', tr);
+      if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
+      else el('span', g, HUBS[i.hub] || i.hub, 's-todo');
+      el('td', tr, r && r.facts_checked != null ? String(r.facts_checked) + (r.removed ? ' (' + r.removed + ' removed)' : '') : '\u2014', 'num hide-narrow');
+      yn(el('td', tr, null, 'hide-narrow'), r ? r.live_verified : null);
+      yn(el('td', tr, null, 'hide-narrow'), r ? r.social_caption : null);
+      el('td', tr, r && r.note ? r.note : (res === 'missed' ? 'No run record. Check the Parva Regina article publisher task.' : ''), 'hide-narrow');
+    });
+    const missed = rows.filter(x => x.res === 'missed').length;
+    $('t-missed').textContent = missed;
+    $('tile-missed').classList.toggle('alert', missed > 0);
+    const lr = $('lastrun'); lr.textContent = '';
+    const last = [...(state.runs || [])].sort((a,b) => a.at < b.at ? 1 : -1)[0];
+    if (last){
+      const when = new Date(last.at).toLocaleString('en-US',{timeZone:'America/Los_Angeles',weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
+      el('span', lr, 'Last run: ' + when + ' PT');
+      el('span', lr, last.result === 'held' ? 'Held' : 'Published', 'pill s-' + (last.result === 'held' ? 'held' : 'live'));
+    } else {
+      el('span', lr, 'No runs yet. The first scheduled run is Fri, Oct 30 at 5:59 AM PT.', 'note');
+    }
+    state.missed = missed;
+  }
+
+  function rerender(){ if (state.items){ drawActivity(); drawCalendar(); drawWeeks(); } takeaway(); }
+
+  $('stamp').textContent = 'As of ' + fmtDay(today);
+
+  Promise.allSettled([
+    getStatus().then(d => {
+      state.items = d.items.map(i => Object.assign({}, i, {state: stateOf(i)}));
+      state.runs = d.runs || [];
+    }),
+    fetch('setup.json', {cache:'no-store'}).then(r => r.json()).then(drawSetup),
+    fetch('goals.json', {cache:'no-store'}).then(r => r.json()).then(d => { state.goals = d; }),
+    fetch('social.json', {cache:'no-store'}).then(r => r.json()).then(d => { state.social = d; })
+  ]).then(res => {
+    if (res[0].status === 'rejected'){
+      const lr = $('lastrun'); lr.textContent = ''; el('span', lr, 'The article schedule didn’t load from parvaregina.com. Reload the page to try again.', 'err');
+    }
+    if (res[2].status === 'rejected'){ $('g-note').textContent = 'Goals didn’t load. Reload the page to try again.'; $('g-note').className = 'note err'; }
+    rerender();
+    drawSocial();
+    drawGoals();
+    drawVisits();
+  });
+
+  let w = window.innerWidth;
+  window.addEventListener('resize', () => { if (state.items && Math.abs(window.innerWidth - w) > 40){ w = window.innerWidth; drawWeeks(); } });
+})();
+</script>
+</body>
+</html>

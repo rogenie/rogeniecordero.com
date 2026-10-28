@@ -1,0 +1,62 @@
+{
+ "updated": "2026-10-28",
+ "months": [
+  {
+   "month": "2026-11",
+   "status": "proposed",
+   "note": "Proposed by Claude on Oct 28 as a starting point; edit any target.",
+   "goals": [
+    {
+     "key": "articles",
+     "label": "Articles published",
+     "group": "Content",
+     "target": 13,
+     "actual": null,
+     "unit": "count",
+     "source": "status",
+     "note": "9 Mon/Fri items on the calendar plus about 4 Wednesday news pieces from the scout"
+    },
+    {
+     "key": "social",
+     "label": "New social followers",
+     "group": "Audience",
+     "target": 60,
+     "actual": null,
+     "unit": "count",
+     "source": "social",
+     "note": "Net gain across TikTok, YouTube and Facebook. October was +46 through the 27th"
+    },
+    {
+     "key": "subscribers",
+     "label": "New newsletter subscribers",
+     "group": "Audience",
+     "target": 25,
+     "actual": null,
+     "unit": "count",
+     "source": "manual",
+     "note": "A guess: signup isn't live yet, so this starts at zero"
+    },
+    {
+     "key": "issues",
+     "label": "Newsletter issues sent",
+     "group": "Audience",
+     "target": 4,
+     "actual": null,
+     "unit": "count",
+     "source": "manual",
+     "note": "One Little Queen Brief per week, sent by Rogenie"
+    },
+    {
+     "key": "visits",
+     "label": "Site visits",
+     "group": "Audience",
+     "target": 300,
+     "actual": null,
+     "unit": "count",
+     "source": "goatcounter",
+     "note": "A guess: there is no baseline until tracking is on"
+    }
+   ]
+  }
+ ]
+}

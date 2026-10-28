@@ -1,0 +1,82 @@
+{
+ "updated": "2026-10-28",
+ "steps": [
+  {
+   "step": "Sitemap and robots.txt",
+   "site": "parvaregina.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Rebuilt on every publish; robots.txt points to the sitemap."
+  },
+  {
+   "step": "Article schema and breadcrumbs",
+   "site": "parvaregina.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Article, BreadcrumbList and Organization data on every article."
+  },
+  {
+   "step": "Editorial policy, corrections and privacy pages",
+   "site": "parvaregina.com",
+   "area": "Trust",
+   "status": "done",
+   "note": "Live at launch Oct 28; corrections log is updated by the publisher."
+  },
+  {
+   "step": "Automatic publishing (Mon/Wed/Fri)",
+   "site": "parvaregina.com",
+   "area": "Content",
+   "status": "done",
+   "note": "Parva Regina article publisher task runs at 5:59 AM PT."
+  },
+  {
+   "step": "Weekly topic scout and newsletter draft",
+   "site": "parvaregina.com",
+   "area": "Content",
+   "status": "done",
+   "note": "Sundays 2:35 PM PT; drafts The Little Queen Brief in _src/newsletter/."
+  },
+  {
+   "step": "Social captions saved with each article",
+   "site": "parvaregina.com",
+   "area": "Content",
+   "status": "done",
+   "note": "Written to _src/social/ on every publish; nothing is posted automatically."
+  },
+  {
+   "step": "Visit tracking (GoatCounter)",
+   "site": "parvaregina.com",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "Not on the site yet. Privacy page must be updated in the same change."
+  },
+  {
+   "step": "Google Search Console verified",
+   "site": "parvaregina.com",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "Rogenie: add parvaregina.com as a domain property and add the DNS TXT record."
+  },
+  {
+   "step": "Sitemap submitted to Search Console",
+   "site": "parvaregina.com",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "After verification, submit https://parvaregina.com/sitemap.xml."
+  },
+  {
+   "step": "Newsletter signup connected (Kit)",
+   "site": "parvaregina.com",
+   "area": "Conversion",
+   "status": "todo",
+   "note": "Signup form shows once a Kit form id is set in _src/pages.py."
+  },
+  {
+   "step": "Social profiles link to parvaregina.com",
+   "site": "parvaregina.com",
+   "area": "Conversion",
+   "status": "todo",
+   "note": "Rogenie: put the site link in the TikTok, YouTube and Facebook bios."
+  }
+ ]
+}
