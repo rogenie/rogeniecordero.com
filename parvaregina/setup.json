@@ -54,15 +54,15 @@
    "step": "Google Search Console verified",
    "site": "parvaregina.com",
    "area": "Measurement",
-   "status": "todo",
-   "note": "Rogenie: add parvaregina.com as a domain property and add the DNS TXT record."
+   "status": "done",
+   "note": "Domain property verified Oct 28."
   },
   {
    "step": "Sitemap submitted to Search Console",
    "site": "parvaregina.com",
    "area": "Measurement",
    "status": "todo",
-   "note": "After verification, submit https://parvaregina.com/sitemap.xml."
+   "note": "Submitted Oct 28; Google said it couldn't read it yet (site launched that day). Resubmit."
   },
   {
    "step": "Newsletter signup connected (Kit)",
