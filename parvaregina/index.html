@@ -356,7 +356,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     $('g-title').textContent = monthName(mo.month) + ' goals';
     let note = phase === 'future' ? 'Starts ' + fmtDay(mo.month + '-01') + '. ' : '';
     if (mo.status === 'proposed') note += 'Proposed targets, not yet confirmed. ';
-    note += (mo.note || '') + ' Articles count themselves and followers come from Metricool; subscribers and newsletter issues are logged by hand until the Kit signup is live (last update ' + fmtDay(data.updated) + ').';
+    note += (mo.note || '') + ' Articles count themselves and followers come from Metricool; subscribers and newsletter issues are logged by hand from Kit (last update ' + fmtDay(data.updated) + ').';
     $('g-note').textContent = note;
 
     const inMonth = i => i.date.slice(0,7) === mo.month;

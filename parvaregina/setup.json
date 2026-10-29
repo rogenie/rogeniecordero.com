@@ -68,8 +68,8 @@
    "step": "Newsletter signup connected (Kit)",
    "site": "parvaregina.com",
    "area": "Conversion",
-   "status": "todo",
-   "note": "Signup form shows once a Kit form id is set in _src/pages.py."
+   "status": "done",
+   "note": "Kit form live Oct 28 on the home, newsletter, section and article pages."
   },
   {
    "step": "Social profiles link to parvaregina.com",
