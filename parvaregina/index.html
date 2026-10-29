@@ -167,7 +167,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 
   <section class="panel" id="calendar-card">
     <h2>Content calendar</h2>
-    <p class="note">Evidence checks and Foundations on Mondays and Fridays; research news on Wednesdays, picked by the Sunday topic scout. Titles appear once an article is live.</p>
+    <p class="note">Mondays and Fridays rotate through Body, Beauty and Longevity, led by Skin, Supplements, Bones &amp; strength and Sleep; trending topics can take a slot. Wednesdays are research news. Titles appear once an article is live.</p>
     <div class="scroll"><table id="cal"><thead><tr><th>Date</th><th>Article</th><th class="hide-narrow">Section</th><th>Status</th></tr></thead><tbody></tbody></table></div>
   </section>
 </div>
@@ -176,7 +176,10 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 (function(){
   const GC = 'https://parvaregina.goatcounter.com';
   const STATUS = ['https://parvaregina.com/status.json', 'https://raw.githubusercontent.com/rogenie/parvaregina/main/status.json'];
-  const HUBS = {'evidence':'Evidence check','news':'Research news','foundations':'Foundations','hub':'Section page'};
+  const HUBS = {'news':'Latest research','supplements':'Supplements','health-trackers':'Health trackers',
+    'skin':'Skin','hair':'Hair','procedures':'Procedures',
+    'fitness':'Fitness','meal-plans':'Meal plans','bones':'Bones & strength','foundations':'Sleep & foundations',
+    'evidence':'Supplements','hub':'Section page'};
   const LABEL = {live:'Live', written:'Written', todo:'To write', held:'Held'};
   const COLORS = {live:'var(--up)', written:'var(--accent)', todo:'var(--soft)', held:'var(--down)'};
   const today = new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'});
