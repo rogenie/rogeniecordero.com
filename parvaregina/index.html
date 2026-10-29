@@ -148,7 +148,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
   <div class="grid">
     <section class="panel" id="visits">
       <h2>Visits</h2>
-      <p class="note" id="v-note">All-time counts for parvaregina.com</p>
+      <p class="note" id="v-note">All-time counts since tracking started October 28, 2026</p>
       <div id="v-body" class="msg">Loading&hellip;</div>
     </section>
     <section class="panel" id="cadence">
@@ -174,8 +174,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 
 <script>
 (function(){
-  // Set GC to the GoatCounter site URL (e.g. 'https://parvaregina.goatcounter.com') once tracking is on parvaregina.com.
-  const GC = null;
+  const GC = 'https://parvaregina.goatcounter.com';
   const STATUS = ['https://parvaregina.com/status.json', 'https://raw.githubusercontent.com/rogenie/parvaregina/main/status.json'];
   const HUBS = {'evidence':'Evidence check','news':'Research news','foundations':'Foundations','hub':'Section page'};
   const LABEL = {live:'Live', written:'Written', todo:'To write', held:'Held'};

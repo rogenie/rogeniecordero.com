@@ -47,8 +47,8 @@
    "step": "Visit tracking (GoatCounter)",
    "site": "parvaregina.com",
    "area": "Measurement",
-   "status": "todo",
-   "note": "Not on the site yet. Privacy page must be updated in the same change."
+   "status": "done",
+   "note": "Live Oct 28 on every page; privacy page updated the same day."
   },
   {
    "step": "Google Search Console verified",
