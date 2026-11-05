@@ -402,7 +402,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       gv.appendChild(document.createTextNode(actual == null ? '—' : fmt(actual)));
       el('span', gv, ' / ' + fmt(g.target));
       const tr = el('div', card, null, 'track');
-      el('div', tr, null, 'fill').style.width = (actual == null ? 0 : Math.min(1, actual / g.target) * 100) + '%';
+      el('div', tr, null, 'fill').style.width = (actual == null ? 0 : Math.max(0, Math.min(1, actual / g.target)) * 100) + '%';
       if (phase === 'now') el('div', tr, null, 'pace').style.left = 'calc(' + Math.min(1, expected / g.target) * 100 + '% - 1px)';
       let st, cls;
       if (actual != null && actual >= g.target){ st = 'Met'; cls = 'g-met'; card.classList.add('met'); }
