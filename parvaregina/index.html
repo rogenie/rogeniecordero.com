@@ -138,12 +138,6 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     <div class="totals" id="social"></div>
   </section>
 
-  <section class="panel" id="activity">
-    <h2>Publishing activity</h2>
-    <p class="note">Each scheduled article and what its 5:59 AM run did. A run that leaves no record by 9:00 AM Pacific shows as missed.</p>
-    <div class="last" id="lastrun"></div>
-    <div class="scroll"><table id="act"><thead><tr><th>Scheduled</th><th>Result</th><th>Article</th><th class="hide-narrow">Facts checked</th><th class="hide-narrow">Live check</th><th class="hide-narrow">Social caption</th><th class="hide-narrow">Note</th></tr></thead><tbody></tbody></table></div>
-  </section>
 
   <div class="grid">
     <section class="panel" id="visits">
@@ -167,7 +161,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 
   <section class="panel" id="calendar-card">
     <h2>Content calendar</h2>
-    <p class="note">Mondays and Fridays rotate through Body, Beauty and Longevity, led by Skin, Supplements, Bones &amp; strength and Sleep; trending topics can take a slot. Wednesdays are research news. Titles appear once an article is live.</p>
+    <p class="note" id="cal-note">Mondays and Fridays rotate through Body, Beauty and Longevity, led by Skin, Supplements, Bones &amp; strength and Sleep; trending topics can take a slot. Wednesdays are research news. Titles appear once an article is live.</p>
     <div class="scroll"><table id="cal"><thead><tr><th>Date</th><th>Article</th><th class="hide-narrow">Section</th><th>Status</th></tr></thead><tbody></tbody></table></div>
   </section>
 </div>
@@ -180,6 +174,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     'skin':'Skin','hair':'Hair','procedures':'Procedures',
     'fitness':'Fitness','meal-plans':'Meal plans','bones':'Bones & strength','foundations':'Sleep & foundations',
     'evidence':'Supplements','hub':'Section page'};
+  const FLAG = {missed:'Missed', due:'Not live yet', unknown:'Not checked'};
   const LABEL = {live:'Live', written:'Written', todo:'To write', held:'Held'};
   const COLORS = {live:'var(--up)', written:'var(--accent)', todo:'var(--soft)', held:'var(--down)'};
   const today = new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'});
@@ -205,7 +200,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     const live = state.items.filter(i => i.state === 'live').length;
     const next = state.items.find(i => i.date > today);
     let s = live ? live + ' article' + (live === 1 ? ' is' : 's are') + ' live. ' : 'No articles are live yet. ';
-    if (state.missed) s += state.missed + ' scheduled run' + (state.missed === 1 ? '' : 's') + ' missed; see Publishing activity. ';
+    if (state.missed) s += state.missed + ' scheduled run' + (state.missed === 1 ? '' : 's') + ' missed; see the calendar. ';
     if (next) s += 'Next one publishes ' + fmtDay(next.date) + '. ';
     if (state.steps){
       const open = state.steps.filter(r => r.status !== 'done' && r.area === 'Measurement').length;
@@ -224,7 +219,8 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
       else el('span', g, i.state === 'written' ? 'Written, publishes on its date' : '—', 's-todo');
       el('td', tr, HUBS[i.hub] || i.hub, 'hide-narrow');
-      el('span', el('td', tr), LABEL[i.state], 'pill s-' + i.state);
+      const f = FLAG[i.flag];
+      el('span', el('td', tr), f || LABEL[i.state], 'pill s-' + (f ? i.flag : i.state));
     });
     const c = k => items.filter(i => i.state === k).length;
     $('t-live').textContent = c('live');
@@ -479,33 +475,10 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       else res = 'missed';
       rows.push({i, r, res});
     });
-    rows.sort((a,b) => a.i.date < b.i.date ? 1 : -1);
-    const tb = document.querySelector('#act tbody'); tb.textContent = '';
-    const yn = (td, v) => { if (v == null){ td.textContent = '\u2014'; return; } el('span', td, v ? 'Yes' : 'No', 'chk ' + (v ? 'yes' : 'no')); };
-    rows.forEach(({i, r, res}) => {
-      const tr = el('tr', tb);
-      el('td', tr, fmtDay(i.date), 'num');
-      el('span', el('td', tr), RES[res], 'pill s-' + (res === 'published' ? 'live' : res));
-      const g = el('td', tr);
-      if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
-      else el('span', g, HUBS[i.hub] || i.hub, 's-todo');
-      el('td', tr, r && r.facts_checked != null ? String(r.facts_checked) + (r.removed ? ' (' + r.removed + ' removed)' : '') : '\u2014', 'num hide-narrow');
-      yn(el('td', tr, null, 'hide-narrow'), r ? r.live_verified : null);
-      yn(el('td', tr, null, 'hide-narrow'), r ? r.social_caption : null);
-      el('td', tr, r && r.note ? r.note : (res === 'missed' ? 'No run record. Check the Parva Regina article publisher task.' : ''), 'hide-narrow');
-    });
+    rows.forEach(x => { x.i.flag = x.res; });
     const missed = rows.filter(x => x.res === 'missed').length;
     $('t-missed').textContent = missed;
     $('tile-missed').classList.toggle('alert', missed > 0);
-    const lr = $('lastrun'); lr.textContent = '';
-    const last = [...(state.runs || [])].sort((a,b) => a.at < b.at ? 1 : -1)[0];
-    if (last){
-      const when = new Date(last.at).toLocaleString('en-US',{timeZone:'America/Los_Angeles',weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'});
-      el('span', lr, 'Last run: ' + when + ' PT');
-      el('span', lr, last.result === 'held' ? 'Held' : 'Published', 'pill s-' + (last.result === 'held' ? 'held' : 'live'));
-    } else {
-      el('span', lr, 'No runs yet. The first scheduled run is Fri, Oct 30 at 5:59 AM PT.', 'note');
-    }
     state.missed = missed;
   }
 
@@ -523,7 +496,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     fetch('social.json', {cache:'no-store'}).then(r => r.json()).then(d => { state.social = d; })
   ]).then(res => {
     if (res[0].status === 'rejected'){
-      const lr = $('lastrun'); lr.textContent = ''; el('span', lr, 'The article schedule didn’t load from parvaregina.com. Reload the page to try again.', 'err');
+      const c = $('cal-note'); c.textContent = 'The article schedule didn’t load from parvaregina.com. Reload the page to try again.'; c.className = 'note err';
     }
     if (res[2].status === 'rejected'){ $('g-note').textContent = 'Goals didn’t load. Reload the page to try again.'; $('g-note').className = 'note err'; }
     rerender();
