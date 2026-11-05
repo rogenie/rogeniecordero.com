@@ -1,0 +1,75 @@
+{
+ "updated": "2026-11-05",
+ "steps": [
+  {
+   "step": "Sitemap and robots.txt",
+   "site": "tibimundum.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Served by the app; the sitemap adds each guide as it goes live."
+  },
+  {
+   "step": "Structured data on guide pages",
+   "site": "tibimundum.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Article, breadcrumb and FAQ data on every guide; software data on the planner."
+  },
+  {
+   "step": "llms.txt for AI assistants",
+   "site": "tibimundum.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Lists every live guide for ChatGPT, Perplexity, Claude and others."
+  },
+  {
+   "step": "IndexNow key for Bing",
+   "site": "tibimundum.com",
+   "area": "Technical SEO",
+   "status": "done",
+   "note": "Each publish pings IndexNow when the network allows."
+  },
+  {
+   "step": "Automatic publishing (every other day)",
+   "site": "tibimundum.com",
+   "area": "Content",
+   "status": "done",
+   "note": "Tibimundum guides publisher runs on odd dates at 6:17 AM PT. Its first run, Nov 5, had not published by 8:25 AM."
+  },
+  {
+   "step": "Social caption saved with each guide",
+   "site": "tibimundum.com",
+   "area": "Content",
+   "status": "done",
+   "note": "Written to _guides/social/ on every publish; nothing is posted automatically."
+  },
+  {
+   "step": "Visit tracking",
+   "site": "tibimundum.com",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "No tracker on tibimundum.com yet. A free GoatCounter site, as on Parva Regina, would fill the Visits panel."
+  },
+  {
+   "step": "Google Search Console verified",
+   "site": "tibimundum.com",
+   "area": "Measurement",
+   "status": "todo",
+   "note": "Not confirmed. Verify tibimundum.com and submit its sitemap."
+  },
+  {
+   "step": "Sales counted on this page",
+   "site": "tibimundum.com",
+   "area": "Revenue",
+   "status": "todo",
+   "note": "Tibi Mundum's Stripe account isn't connected to Claude, so planner sales are logged by hand."
+  },
+  {
+   "step": "Social profiles link to tibimundum.com",
+   "site": "tibimundum.com",
+   "area": "Conversion",
+   "status": "todo",
+   "note": "Not checked. Guide captions end with \u201clink in bio\u201d, so each bio needs the site link."
+  }
+ ]
+}

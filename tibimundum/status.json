@@ -1,0 +1,149 @@
+{
+ "copied_at": "2026-11-05T08:25:00-08:00",
+ "source": "_guides/status.json and _guides/runs.json in the tibimundum-calendar repo, commit 8c1064a",
+ "built": "2026-11-04",
+ "cadence": "Every other day (odd days of the month), 6:17 AM Pacific, published by the 'Tibimundum guides publisher' scheduled task following _guides/PUBLISHING.md. Topics follow _guides/TOPICS.md.",
+ "items": [
+  {
+   "date": "2026-11-05",
+   "slug": "maximize-pto-2027",
+   "title": "How to Maximize PTO in 2027: Every Bridge Day",
+   "status": "todo",
+   "cluster": "year"
+  },
+  {
+   "date": "2026-11-07",
+   "slug": "best-days-to-take-off-2027",
+   "title": "Best Days to Take Off in 2027 (Exact Dates)",
+   "status": "todo",
+   "cluster": "year"
+  },
+  {
+   "date": "2026-11-09",
+   "slug": "christmas-new-year-pto-2026",
+   "title": "Christmas to New Year's 2026: Most Days Off for PTO",
+   "status": "todo",
+   "cluster": "holidays"
+  },
+  {
+   "date": "2026-11-11",
+   "slug": "15-pto-days-2027",
+   "title": "15 PTO Days in 2027: The Plan With the Most Days Off",
+   "status": "todo",
+   "cluster": "pto-count"
+  },
+  {
+   "date": "2026-11-13",
+   "slug": "federal-holidays-2027",
+   "title": "Federal Holidays 2027, With Observed Dates",
+   "status": "todo",
+   "cluster": "year"
+  },
+  {
+   "date": "2026-11-15",
+   "slug": "long-weekends-2027",
+   "title": "Long Weekends in 2027 and How to Stretch Them",
+   "status": "todo",
+   "cluster": "year"
+  },
+  {
+   "date": "2026-11-17",
+   "slug": "10-pto-days-2027",
+   "title": "10 PTO Days in 2027: How to Get the Most Time Off",
+   "status": "todo",
+   "cluster": "pto-count"
+  },
+  {
+   "date": "2026-11-19",
+   "slug": "thanksgiving-pto",
+   "title": "Thanksgiving 2027: 9 Days Off for 4 PTO Days",
+   "status": "todo",
+   "cluster": "holidays"
+  },
+  {
+   "date": "2026-11-21",
+   "slug": "plan-pto-that-accrues",
+   "title": "How to Plan PTO When It Accrues Every Paycheck",
+   "status": "todo",
+   "cluster": "real-jobs"
+  },
+  {
+   "date": "2026-11-23",
+   "slug": "what-is-a-bridge-day",
+   "title": "What Is a Bridge Day? One PTO Day, Four Days Off",
+   "status": "todo",
+   "cluster": "how-pto-works"
+  },
+  {
+   "date": "2026-11-25",
+   "slug": "floating-holidays",
+   "title": "Floating Holidays: How They Work and When to Use Them",
+   "status": "todo",
+   "cluster": "real-jobs"
+  },
+  {
+   "date": "2026-11-27",
+   "slug": "average-pto-days-us",
+   "title": "How Many PTO Days Does the Average American Get?",
+   "status": "todo",
+   "cluster": "how-pto-works"
+  },
+  {
+   "date": "2026-11-29",
+   "slug": "company-holidays-2027",
+   "title": "Only 6 Company Holidays? Maximize PTO in 2027 Anyway",
+   "status": "todo",
+   "cluster": "real-jobs"
+  },
+  {
+   "date": "2026-12-01",
+   "slug": "20-pto-days-2027",
+   "title": "20 PTO Days in 2027: The Best Plan",
+   "status": "todo",
+   "cluster": "pto-count"
+  },
+  {
+   "date": "2026-12-03",
+   "slug": "use-it-or-lose-it-pto",
+   "title": "Use-It-or-Lose-It PTO: Never Forfeit a Day",
+   "status": "todo",
+   "cluster": "real-jobs"
+  },
+  {
+   "date": "2026-12-05",
+   "slug": "veterans-day-long-weekend",
+   "title": "Veterans Day 2027 Is a Thursday: Take Friday Off",
+   "status": "todo",
+   "cluster": "holidays"
+  },
+  {
+   "date": "2026-12-07",
+   "slug": "when-to-request-pto-holidays",
+   "title": "When to Request PTO for the Holidays (and Get a Yes)",
+   "status": "todo",
+   "cluster": "how-pto-works"
+  },
+  {
+   "date": "2026-12-09",
+   "slug": "pto-4x10-shift-schedule",
+   "title": "PTO Planning on a 4x10 or Shift Schedule",
+   "status": "todo",
+   "cluster": "real-jobs"
+  },
+  {
+   "date": "2026-12-11",
+   "slug": "12-pto-days-2027",
+   "title": "12 PTO Days in 2027: The Best Way to Use Them",
+   "status": "todo",
+   "cluster": "pto-count"
+  },
+  {
+   "date": "2026-12-13",
+   "slug": "best-pto-planners",
+   "title": "Best PTO Planners Compared: Free vs Paid (2027)",
+   "status": "todo",
+   "cluster": "tools"
+  }
+ ],
+ "runs": []
+}

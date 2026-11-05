@@ -1,0 +1,52 @@
+{
+ "updated": "2026-11-05",
+ "months": [
+  {
+   "month": "2026-11",
+   "status": "proposed",
+   "note": "Proposed by Claude on Nov 5 as a starting point; edit any target.",
+   "goals": [
+    {
+     "key": "guides",
+     "label": "Guides published",
+     "group": "Content",
+     "target": 13,
+     "actual": null,
+     "unit": "count",
+     "source": "status",
+     "note": "Every odd-dated guide on the calendar from Nov 5 to Nov 29"
+    },
+    {
+     "key": "social",
+     "label": "New social followers",
+     "group": "Audience",
+     "target": 25,
+     "actual": null,
+     "unit": "count",
+     "source": "social",
+     "note": "Net gain across TikTok, YouTube, Facebook and Instagram. October was +4"
+    },
+    {
+     "key": "sales",
+     "label": "Full-year planners sold",
+     "group": "Revenue",
+     "target": 3,
+     "actual": null,
+     "unit": "count",
+     "source": "manual",
+     "note": "$28 each. A guess: there is no sales history to go on yet"
+    },
+    {
+     "key": "visits",
+     "label": "Site visits",
+     "group": "Audience",
+     "target": 300,
+     "actual": null,
+     "unit": "count",
+     "source": "goatcounter",
+     "note": "A guess: tibimundum.com has no visit tracking yet"
+    }
+   ]
+  }
+ ]
+}
