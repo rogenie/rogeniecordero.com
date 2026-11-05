@@ -224,7 +224,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       const g = el('td', tr);
       if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
       else el('span', g, i.title || (i.state === 'written' ? 'Written, publishes on its date' : '—'), 's-todo');
-      el('td', tr, HUBS[i.hub] || i.hub, 'hide-narrow');
+      el('td', tr, HUBS[i.cluster] || i.cluster || '', 'hide-narrow');
       el('span', el('td', tr), LABEL[i.state], 'pill s-' + i.state);
     });
     const c = k => items.filter(i => i.state === k).length;
@@ -233,7 +233,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     $('t-todo').textContent = c('todo');
     const next = items.find(i => i.date > today);
     $('t-next').textContent = next ? fmtShort(next.date) : 'None';
-    $('t-next-hub').textContent = next ? (HUBS[next.hub] || next.hub) : '';
+    $('t-next-hub').textContent = next ? (next.title || '') : '';
   }
 
   function drawWeeks(){
@@ -500,7 +500,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
       el('span', el('td', tr), RES[res], 'pill s-' + (res === 'published' ? 'live' : res));
       const g = el('td', tr);
       if (i.url){ const a = el('a', g, i.title); a.href = i.url; a.target = '_blank'; a.rel = 'noopener'; }
-      else el('span', g, HUBS[i.hub] || i.hub, 's-todo');
+      else el('span', g, i.title || HUBS[i.cluster] || '', 's-todo');
       el('td', tr, r && r.facts_checked != null ? String(r.facts_checked) + (r.removed ? ' (' + r.removed + ' removed)' : '') : '\u2014', 'num hide-narrow');
       yn(el('td', tr, null, 'hide-narrow'), r ? r.live_verified : null);
       yn(el('td', tr, null, 'hide-narrow'), r ? r.social_caption : null);
