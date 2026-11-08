@@ -14,10 +14,10 @@
    "note": "Added Nov 7. Footer on every page links Facebook, Instagram and Google."
   },
   {
-   "step": "Services page with starting prices",
+   "step": "Services page",
    "area": "Website",
    "status": "done",
-   "note": "Added to the menu Nov 7; 7 service groups and 18 starting prices."
+   "note": "In the menu since Nov 7. Price table hidden for now (approved prices kept in the site script, can be switched back on)."
   },
   {
    "step": "Automatic articles every other day",
@@ -95,7 +95,7 @@
    "step": "Price menu approved by the owner",
    "area": "Business",
    "status": "done",
-   "note": "Approved Nov 7. Starting prices live on /services/#prices and the homepage; articles may cite one in the call to action."
+   "note": "Approved Nov 7; prices are not shown on the site for now."
   }
  ]
 }
