@@ -58,8 +58,8 @@
   {
    "step": "Facebook (and Yelp) connected to Trustindex",
    "area": "Reviews",
-   "status": "todo",
-   "note": "Connect platforms > Search in Trustindex."
+   "status": "blocked",
+   "note": "Trustindex > Connect platforms > Review platforms > Facebook reviews > Add. Needs a Facebook login that is admin of the page (brother)."
   },
   {
    "step": "Google Search Console + sitemap submitted",
@@ -70,8 +70,8 @@
   {
    "step": "Bing Webmaster Tools + sitemap submitted",
    "area": "SEO",
-   "status": "todo",
-   "note": "Most important for ChatGPT search, which relies on Bing. Can import from Search Console."
+   "status": "blocked",
+   "note": "bing.com/webmasters > Import from Google Search Console. Any Google login works; planned for when brother is home. Most important for ChatGPT search."
   },
   {
    "step": "Bing Places and Apple Business Connect",
