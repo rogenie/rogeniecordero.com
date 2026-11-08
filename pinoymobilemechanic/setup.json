@@ -64,8 +64,8 @@
   {
    "step": "Google Search Console + sitemap submitted",
    "area": "SEO",
-   "status": "todo",
-   "note": "Submit https://pinoymobilemechanic.com/sitemap.xml."
+   "status": "done",
+   "note": "Verified by DNS (domain property) and sitemap submitted Nov 7. Keep the DNS record."
   },
   {
    "step": "Bing Webmaster Tools + sitemap submitted",
