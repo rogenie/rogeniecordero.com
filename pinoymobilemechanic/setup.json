@@ -82,8 +82,8 @@
   {
    "step": "Visit tracking",
    "area": "SEO",
-   "status": "todo",
-   "note": "Optional: create pinoymobilemechanic.goatcounter.com and ask Claude to add it, like Parva Regina."
+   "status": "done",
+   "note": "GoatCounter on every page since Nov 7. For the dashboard counts, turn on \"Allow adding visitor counts on your website\" in GoatCounter site settings."
   },
   {
    "step": "Price menu approved by the owner",

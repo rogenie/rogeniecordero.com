@@ -57,6 +57,11 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 .s-todo,.s-upcoming{color:var(--muted)}
 .s-blocked{color:var(--warn)}
 .s-missed{color:var(--down)}
+.vrows{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) 4rem;gap:10px;align-items:center;font-size:14px;color:var(--fg)}
+.vrow .bar{height:8px;border-radius:4px;background:var(--accent);margin-top:4px;min-width:2px}
+.vrow .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vrow .num{font-family:var(--mono);text-align:right}
 @media (max-width:640px){.hide-narrow{display:none}}
 </style>
 </head>
@@ -75,6 +80,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
   <div class="hazard" aria-hidden="true"></div>
 
   <section class="totals" aria-label="Headline figures">
+    <div class="tot"><div class="lab">Visits, all time</div><div class="big" id="t-visits">&mdash;</div><div class="small">GoatCounter, since Nov 7</div></div>
     <div class="tot"><div class="lab">Articles live</div><div class="big" id="t-live">&mdash;</div><div class="small">On pinoymobilemechanic.com/blog</div></div>
     <div class="tot" id="tile-missed"><div class="lab">Missed runs</div><div class="big" id="t-missed">&mdash;</div><div class="small">Publish days with no article</div></div>
     <div class="tot"><div class="lab">Next article</div><div class="big" id="t-next">&mdash;</div><div class="small" id="t-next-topic">&nbsp;</div></div>
@@ -100,6 +106,12 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
   </section>
 
   <section class="panel">
+    <h2>Visits by page</h2>
+    <p class="note" id="v-note">All-time counts since tracking started November 7, 2026</p>
+    <div id="v-body" class="note">Loading&hellip;</div>
+  </section>
+
+  <section class="panel">
       <h2>Articles</h2>
       <p class="note" id="a-note">Loading&hellip;</p>
       <div class="scroll"><table id="arts"><thead><tr><th>Date</th><th>Article</th><th>Status</th></tr></thead><tbody></tbody></table></div>
@@ -113,6 +125,7 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
 
 <script>
 (function(){
+  const GC = 'https://pinoymobilemechanic.goatcounter.com';
   const STATUS = ['https://pinoymobilemechanic.com/status.json', 'https://raw.githubusercontent.com/rogenie/pinoy-mobile-mechanic/main/status.json'];
   const FIRST_RUN = '2026-11-08';   // first scheduled publish day (even-numbered dates)
   const today = new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'});
@@ -189,8 +202,41 @@ td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:now
     throw last;
   }
 
+  async function count(path){
+    const r = await fetch(GC + '/counter/' + encodeURIComponent(path) + '.json');
+    if (r.status === 404) return 0;
+    if (!r.ok) throw new Error(r.status);
+    const j = await r.json();
+    return Number(String(j.count).replace(/[^0-9]/g, '')) || 0;
+  }
+
+  async function drawVisits(s){
+    const body = $('v-body');
+    try {
+      const total = await count('TOTAL');
+      $('t-visits').textContent = new Intl.NumberFormat('en-US').format(total);
+      const pages = [{label:'Homepage', path:'/'}, {label:'Guides list', path:'/blog/'}, {label:'Why us', path:'/why-us/'}, {label:'Reviews', path:'/reviews/'}];
+      (s ? s.articles : []).forEach(a => pages.push({label:a.title, path:new URL(a.url).pathname}));
+      const vals = await Promise.all(pages.map(p => count(p.path).catch(() => null)));
+      body.textContent = ''; body.className = '';
+      const max = Math.max(1, ...vals.filter(v => v != null));
+      const list = el('div', body, null, 'vrows');
+      pages.map((p, i) => ({p, v:vals[i]})).sort((a,b) => (b.v || 0) - (a.v || 0)).forEach(({p, v}) => {
+        const row = el('div', list, null, 'vrow');
+        const left = el('div', row);
+        el('div', left, p.label, 't').title = p.path;
+        el('div', left, null, 'bar').style.width = (v == null ? 0 : (v / max) * 100) + '%';
+        el('div', row, v == null ? '—' : String(v), 'num');
+      });
+      el('p', body, 'Full detail, including where visitors came from, is at pinoymobilemechanic.goatcounter.com.', 'note');
+    } catch (e) {
+      $('t-visits').textContent = 'Off';
+      body.textContent = 'Visit counts aren’t public yet, so this page can’t show them. In GoatCounter, open Settings, then Site settings, and turn on “Allow adding visitor counts on your website.”';
+    }
+  }
+
   $('stamp').textContent = 'As of ' + fmtDay(today);
-  getStatus().then(drawArticles).catch(() => { const n = $('a-note'); n.textContent = 'Article data didn’t load from pinoymobilemechanic.com. Reload the page to try again.'; n.classList.add('err'); });
+  getStatus().then(s => { drawArticles(s); drawVisits(s); }, e => { drawVisits(null); throw e; }).catch(() => { const n = $('a-note'); n.textContent = 'Article data didn’t load from pinoymobilemechanic.com. Reload the page to try again.'; n.classList.add('err'); });
   fetch('setup.json', {cache:'no-store'}).then(r => r.json()).then(drawSetup).catch(() => { const n = $('setup-note'); n.textContent = 'The checklist didn’t load. Reload the page to try again.'; n.classList.add('err'); });
 })();
 </script>
