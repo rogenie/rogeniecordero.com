@@ -40,8 +40,8 @@
   {
    "step": "Hide home address on Google profile",
    "area": "Google",
-   "status": "blocked",
-   "note": "Edit profile > Location: hide the Dauntless St address, add the 20 service areas from the Local SEO kit. Needs the Google account that owns the profile (brother)."
+   "status": "done",
+   "note": "Home address hidden on Nov 7, 2026. Service areas should list San Diego County and the 20 cities from the Local SEO kit."
   },
   {
    "step": "Google 'Ask for reviews' link",
