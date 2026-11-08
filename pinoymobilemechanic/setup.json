@@ -34,14 +34,14 @@
   {
    "step": "Hide home address on Google profile",
    "area": "Google",
-   "status": "todo",
-   "note": "Edit profile > Location: hide the Dauntless St address, add the 20 service areas from the Local SEO kit."
+   "status": "blocked",
+   "note": "Edit profile > Location: hide the Dauntless St address, add the 20 service areas from the Local SEO kit. Needs the Google account that owns the profile (brother)."
   },
   {
    "step": "Google 'Ask for reviews' link",
    "area": "Reviews",
-   "status": "todo",
-   "note": "Send it to Claude to add a 'Leave a Google review' button on /reviews/."
+   "status": "blocked",
+   "note": "Send it to Claude to add a 'Leave a Google review' button on /reviews/. Needs the Google account that owns the profile (brother)."
   },
   {
    "step": "Trustindex connected to Google",
