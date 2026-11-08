@@ -46,8 +46,8 @@
   {
    "step": "Google 'Ask for reviews' link",
    "area": "Reviews",
-   "status": "blocked",
-   "note": "Send it to Claude to add a 'Leave a Google review' button on /reviews/. Needs the Google account that owns the profile (brother)."
+   "status": "done",
+   "note": "https://g.page/r/CS9dYPHDmOvAEBM/review is on the Reviews page Google button since Nov 7, 2026. Share it with customers after each job."
   },
   {
    "step": "Trustindex connected to Google",
