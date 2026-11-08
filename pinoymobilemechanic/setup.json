@@ -1,0 +1,95 @@
+{
+ "updated": "2026-11-07",
+ "steps": [
+  {
+   "step": "Website live with booking button",
+   "area": "Website",
+   "status": "done",
+   "note": "pinoymobilemechanic.com, Book now goes to the Google Calendar booking page."
+  },
+  {
+   "step": "Menu: Why us, Guides, Reviews",
+   "area": "Website",
+   "status": "done",
+   "note": "Added Nov 7. Footer on every page links Facebook, Instagram and Google."
+  },
+  {
+   "step": "Automatic articles every other day",
+   "area": "Content",
+   "status": "done",
+   "note": "Pinoy Mobile Mechanic article publisher task, 4:53 AM PT on even-numbered dates. First article Nov 7."
+  },
+  {
+   "step": "Sitemap, robots.txt, llms.txt and structured data",
+   "area": "SEO",
+   "status": "done",
+   "note": "Rebuilt on every publish. AI crawlers (ChatGPT, Gemini, Perplexity, Claude) allowed."
+  },
+  {
+   "step": "Google Business Profile created",
+   "area": "Google",
+   "status": "done",
+   "note": "Linked from every page footer and the homepage schema."
+  },
+  {
+   "step": "Hide home address on Google profile",
+   "area": "Google",
+   "status": "todo",
+   "note": "Edit profile > Location: hide the Dauntless St address, add the 20 service areas from the Local SEO kit."
+  },
+  {
+   "step": "Google 'Ask for reviews' link",
+   "area": "Reviews",
+   "status": "todo",
+   "note": "Send it to Claude to add a 'Leave a Google review' button on /reviews/."
+  },
+  {
+   "step": "Trustindex connected to Google",
+   "area": "Reviews",
+   "status": "done",
+   "note": "Connected Nov 7; the first Google review hadn't synced yet. Trial is 7 days: check what the free plan keeps."
+  },
+  {
+   "step": "Trustindex widget on the Reviews page",
+   "area": "Reviews",
+   "status": "blocked",
+   "note": "Waiting for reviews to sync. Then Create a review widget and send Claude the embed code."
+  },
+  {
+   "step": "Facebook (and Yelp) connected to Trustindex",
+   "area": "Reviews",
+   "status": "todo",
+   "note": "Connect platforms > Search in Trustindex."
+  },
+  {
+   "step": "Google Search Console + sitemap submitted",
+   "area": "SEO",
+   "status": "todo",
+   "note": "Submit https://pinoymobilemechanic.com/sitemap.xml."
+  },
+  {
+   "step": "Bing Webmaster Tools + sitemap submitted",
+   "area": "SEO",
+   "status": "todo",
+   "note": "Most important for ChatGPT search, which relies on Bing. Can import from Search Console."
+  },
+  {
+   "step": "Bing Places and Apple Business Connect",
+   "area": "Listings",
+   "status": "todo",
+   "note": "Use the exact name, phone and hours from the Local SEO kit."
+  },
+  {
+   "step": "Visit tracking",
+   "area": "SEO",
+   "status": "todo",
+   "note": "Optional: create pinoymobilemechanic.goatcounter.com and ask Claude to add it, like Parva Regina."
+  },
+  {
+   "step": "Price menu approved by the owner",
+   "area": "Business",
+   "status": "blocked",
+   "note": "Draft menu is ready; once approved, prices can go on the site and in articles."
+  }
+ ]
+}

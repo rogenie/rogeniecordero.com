@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pinoy Mobile Mechanic Dashboard</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: headline totals, quick links, then articles and the setup checklist. Colors follow pinoymobilemechanic.com: signal red on cool grey. */
+:root{
+  --bg:#EDEEF0; --surface:#F8F9FA; --line:#CDD1D6; --fg:#16181C; --muted:#4B535C;
+  --accent:#C41E24; --accent-text:#A3171C; --soft:#DEE1E5;
+  --up:#2F7D4F; --down:#B3322A; --warn:#9A5B22;
+  --display:"Archivo",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#15181C; --surface:#1D2228; --line:#2E353C; --fg:#ECEEF0; --muted:#A0A9B2;
+  --accent:#DC2B31; --accent-text:#F0666A; --soft:#242A30; --up:#8FC7A3; --down:#FF8A80; --warn:#E2B548; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
+[hidden]{display:none!important}
+a{color:var(--accent-text)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-left,0px)) 56px;display:flex;flex-direction:column;gap:24px}
+header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between}
+.brand{display:flex;gap:14px;align-items:center;min-width:0}
+.brand img{width:56px;height:56px;flex:none}
+h1{font:800 28px/1.1 var(--display);margin:0;text-transform:uppercase;letter-spacing:-.03em}
+h2{font:700 18px/1.2 var(--display);margin:0}
+.sub{color:var(--muted);margin:4px 0 0}
+.stamp{color:var(--muted);font:13px var(--mono)}
+.hazard{height:7px;background:repeating-linear-gradient(-45deg,var(--accent) 0 10px,transparent 10px 20px)}
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,160px),1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.tot{background:var(--surface);padding:16px 18px;min-width:0}
+.tot .lab{font:600 11px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tot .big{font:500 28px/1.2 var(--mono);font-variant-numeric:tabular-nums;margin-top:4px}
+.tot .small{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.tot.alert .big{color:var(--down)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;min-width:0}
+.note{color:var(--muted);font-size:13px;margin:4px 0 12px}
+.err{color:var(--down)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.links a{display:inline-flex;align-items:center;min-height:40px;padding:0 14px;border:1px solid var(--line);border-radius:3px;text-decoration:none;color:var(--fg);font:700 13px var(--display);text-transform:uppercase;letter-spacing:.02em}
+.links a:hover{border-color:var(--accent);color:var(--accent-text)}
+.scroll{overflow:auto;max-height:30rem}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{text-align:left;font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);position:sticky;top:0;background:var(--surface);padding:8px 10px;border-bottom:1px solid var(--line)}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill{display:inline-block;padding:0 9px;border-radius:999px;border:1px solid currentColor;font-size:12px;white-space:nowrap}
+.s-done,.s-live{color:var(--up)}
+.s-todo,.s-upcoming{color:var(--muted)}
+.s-blocked{color:var(--warn)}
+.s-missed{color:var(--down)}
+@media (max-width:640px){.hide-narrow{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <img src="logo.png" alt="Pinoy Mobile Mechanic logo" width="56" height="56">
+      <div>
+        <h1>Pinoy Mobile Mechanic</h1>
+        <p class="sub">Website, SEO and reviews dashboard for pinoymobilemechanic.com</p>
+      </div>
+    </div>
+    <div class="stamp" id="stamp"></div>
+  </header>
+  <div class="hazard" aria-hidden="true"></div>
+
+  <section class="totals" aria-label="Headline figures">
+    <div class="tot"><div class="lab">Articles live</div><div class="big" id="t-live">&mdash;</div><div class="small">On pinoymobilemechanic.com/blog</div></div>
+    <div class="tot" id="tile-missed"><div class="lab">Missed runs</div><div class="big" id="t-missed">&mdash;</div><div class="small">Publish days with no article</div></div>
+    <div class="tot"><div class="lab">Next article</div><div class="big" id="t-next">&mdash;</div><div class="small" id="t-next-topic">&nbsp;</div></div>
+    <div class="tot"><div class="lab">Topics in queue</div><div class="big" id="t-queue">&mdash;</div><div class="small" id="t-queue-sub">&nbsp;</div></div>
+    <div class="tot"><div class="lab">Reviews on site</div><div class="big" id="t-reviews">&mdash;</div><div class="small" id="t-reviews-sub">&nbsp;</div></div>
+    <div class="tot"><div class="lab">Setup done</div><div class="big" id="t-setup">&mdash;</div><div class="small">Google, Bing, reviews, tracking</div></div>
+  </section>
+
+  <section class="panel">
+    <h2>Quick links</h2>
+    <div class="links">
+      <a href="https://pinoymobilemechanic.com/" target="_blank" rel="noopener">Website</a>
+      <a href="https://pinoymobilemechanic.com/blog/" target="_blank" rel="noopener">Guides</a>
+      <a href="https://pinoymobilemechanic.com/reviews/" target="_blank" rel="noopener">Reviews page</a>
+      <a href="https://www.google.com/maps/place/PINOY+MOBILE+MECHANIC/@32.924324,-117.1217935,17z/data=!3m1!4b1!4m6!3m5!1s0x80dbf9764482941b:0xc0eb98c3f1605d2f!8m2!3d32.9243195!4d-117.1192186!16s%2Fg%2F11p2llr00w" target="_blank" rel="noopener">Google profile</a>
+      <a href="https://business.google.com/" target="_blank" rel="noopener">Manage Google profile</a>
+      <a href="https://admin.trustindex.io/" target="_blank" rel="noopener">Trustindex</a>
+      <a href="https://search.google.com/search-console" target="_blank" rel="noopener">Search Console</a>
+      <a href="https://www.bing.com/webmasters" target="_blank" rel="noopener">Bing Webmaster</a>
+      <a href="https://www.facebook.com/Pinoymobilemechanic" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://instagram.com/pinoy_mobile_mechanic" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </section>
+
+  <section class="panel">
+      <h2>Articles</h2>
+      <p class="note" id="a-note">Loading&hellip;</p>
+      <div class="scroll"><table id="arts"><thead><tr><th>Date</th><th>Article</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+  </section>
+  <section class="panel">
+      <h2>Setup checklist</h2>
+      <p class="note" id="setup-note">Loading&hellip;</p>
+      <div class="scroll"><table id="setup"><thead><tr><th>Step</th><th>Status</th><th class="hide-narrow">Note</th></tr></thead><tbody></tbody></table></div>
+  </section>
+</div>
+
+<script>
+(function(){
+  const STATUS = ['https://pinoymobilemechanic.com/status.json', 'https://raw.githubusercontent.com/rogenie/pinoy-mobile-mechanic/main/status.json'];
+  const FIRST_RUN = '2026-11-08';   // first scheduled publish day (even-numbered dates)
+  const today = new Date().toLocaleDateString('en-CA',{timeZone:'America/Los_Angeles'});
+  const hourPT = Number(new Date().toLocaleString('en-US',{timeZone:'America/Los_Angeles',hour:'numeric',hour12:false})) % 24;
+  const $ = id => document.getElementById(id);
+  const el = (tag, parent, text, cls) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; if (parent) parent.appendChild(e); return e; };
+  const day = s => new Date(s + 'T00:00:00Z');
+  const iso = d => d.toISOString().slice(0,10);
+  const fmtDay = s => day(s).toLocaleDateString('en-US',{timeZone:'UTC',weekday:'short',month:'short',day:'numeric'});
+  const fmtShort = s => day(s).toLocaleDateString('en-US',{timeZone:'UTC',month:'short',day:'numeric'});
+  const isRunDay = s => { const d = Number(s.slice(8,10)); return d % 2 === 0 && d <= 30; };
+
+  function runDays(from, to){
+    const out = [];
+    for (let d = day(from); iso(d) <= to; d = new Date(d.getTime() + 864e5)) if (isRunDay(iso(d))) out.push(iso(d));
+    return out;
+  }
+  function nextRunDay(){
+    let d = day(today);
+    if (isRunDay(today) && hourPT < 5) return today;
+    for (let i = 0; i < 4; i++){ d = new Date(d.getTime() + 864e5); if (isRunDay(iso(d))) return iso(d); }
+    return null;
+  }
+
+  function drawArticles(s){
+    const tb = document.querySelector('#arts tbody'); tb.textContent = '';
+    const byDate = new Set(s.articles.map(a => a.date));
+    const lastDue = (isRunDay(today) && hourPT < 9) ? iso(new Date(day(today).getTime() - 864e5)) : today;
+    const missed = today >= FIRST_RUN ? runDays(FIRST_RUN, lastDue).filter(d => !byDate.has(d)) : [];
+    const rows = s.articles.map(a => ({date:a.date, a, st:'live'})).concat(missed.map(d => ({date:d, st:'missed'})));
+    const nxt = nextRunDay();
+    if (nxt) rows.push({date:nxt, st:'upcoming'});
+    rows.sort((x,y) => x.date < y.date ? 1 : -1).forEach(r => {
+      const tr = el('tr', tb);
+      el('td', tr, fmtDay(r.date), 'num');
+      const td = el('td', tr);
+      if (r.a){ const a = el('a', td, r.a.title); a.href = r.a.url; a.target = '_blank'; a.rel = 'noopener'; }
+      else if (r.st === 'upcoming') el('span', td, s.next_topic ? 'Next topic: ' + s.next_topic : 'Next article', 's-todo');
+      else el('span', td, 'No article went out', 's-missed');
+      el('span', el('td', tr), r.st === 'live' ? 'Live' : r.st === 'missed' ? 'Missed' : 'Next up', 'pill s-' + r.st);
+    });
+    $('t-live').textContent = s.articles.length;
+    $('t-missed').textContent = missed.length;
+    $('tile-missed').classList.toggle('alert', missed.length > 0);
+    $('t-next').textContent = nxt ? fmtShort(nxt) : '—';
+    $('t-next-topic').textContent = s.next_topic || 'Queue is empty';
+    $('t-queue').textContent = s.queue_left;
+    $('t-queue-sub').textContent = 'About ' + Math.round(s.queue_left * 2 / 30) + ' months of articles';
+    $('t-reviews').textContent = s.review_widget ? 'Widget' : s.reviews_on_site;
+    $('t-reviews-sub').textContent = s.review_widget ? 'Trustindex widget is live' : (s.google_review_link ? 'Google review button is live' : 'Widget not added yet');
+    $('a-note').textContent = s.schedule + '. Missed means a publish day passed with no article; the task will catch up on its next run, or ask Claude to publish now.';
+  }
+
+  function drawSetup(data){
+    const tb = document.querySelector('#setup tbody'); tb.textContent = '';
+    const order = {blocked:0, todo:1, done:2};
+    [...data.steps].sort((a,b) => (order[a.status] ?? 3) - (order[b.status] ?? 3)).forEach(r => {
+      const tr = el('tr', tb);
+      el('td', tr, r.step);
+      el('span', el('td', tr), r.status === 'done' ? 'Done' : r.status === 'blocked' ? 'Waiting' : 'To do', 'pill s-' + r.status);
+      el('td', tr, r.note, 'hide-narrow');
+    });
+    const done = data.steps.filter(r => r.status === 'done').length;
+    $('t-setup').textContent = done + ' of ' + data.steps.length;
+    $('setup-note').textContent = 'Updated ' + fmtDay(data.updated) + '. Waiting items need something from you or your brother first. Ask Claude to tick off steps as you finish them.';
+  }
+
+  async function getStatus(){
+    let last;
+    for (const u of STATUS){
+      try { const r = await fetch(u, {cache:'no-store'}); if (!r.ok) throw new Error(r.status); return await r.json(); }
+      catch (e) { last = e; }
+    }
+    throw last;
+  }
+
+  $('stamp').textContent = 'As of ' + fmtDay(today);
+  getStatus().then(drawArticles).catch(() => { const n = $('a-note'); n.textContent = 'Article data didn’t load from pinoymobilemechanic.com. Reload the page to try again.'; n.classList.add('err'); });
+  fetch('setup.json', {cache:'no-store'}).then(r => r.json()).then(drawSetup).catch(() => { const n = $('setup-note'); n.textContent = 'The checklist didn’t load. Reload the page to try again.'; n.classList.add('err'); });
+})();
+</script>
+</body>
+</html>
