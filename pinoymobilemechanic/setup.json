@@ -58,8 +58,8 @@
   {
    "step": "Trustindex widget on the Reviews page",
    "area": "Reviews",
-   "status": "blocked",
-   "note": "Waiting for reviews to sync. Then Create a review widget and send Claude the embed code."
+   "status": "done",
+   "note": "Widget live at the top of /reviews/ since Nov 7, 2026. New Google reviews show up automatically."
   },
   {
    "step": "Facebook (and Yelp) connected to Trustindex",
