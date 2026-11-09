@@ -1,6 +1,6 @@
 {
- "generatedAt": "2026-11-07T21:00:03-08:00",
- "date": "2026-11-07",
+ "generatedAt": "2026-11-08T21:00:03-08:00",
+ "date": "2026-11-08",
  "windowDays": 30,
  "accounts": {
   "tiktok_9nthdimension": {
@@ -98,14 +98,18 @@
     "2026-11-07": {
      "f": 998,
      "v": 38236
+    },
+    "2026-11-08": {
+     "f": 1000,
+     "v": 37168
     }
    },
-   "followers": 998,
-   "views": 38236,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T19:18:00",
-   "lastPostStatus": "AWAITING_CONFIRMATION",
-   "nextPostAt": "2026-11-08T09:15:00"
+   "followers": 1000,
+   "views": 37168,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T19:12:00",
+   "lastPostStatus": "PUBLISHED",
+   "nextPostAt": "2026-11-09T09:09:00"
   },
   "facebook_9nthdimension": {
    "brand": "@9nthdimension",
@@ -202,14 +206,18 @@
     "2026-11-07": {
      "f": 790,
      "v": 510
+    },
+    "2026-11-08": {
+     "f": 803,
+     "v": 531
     }
    },
-   "followers": 790,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 510,
-   "lastPostAt": "2026-11-07T17:25:00",
+   "followers": 803,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 531,
+   "lastPostAt": "2026-11-08T17:40:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T07:42:00"
+   "nextPostAt": "2026-11-09T07:22:00"
   },
   "youtube_9nthdimension": {
    "brand": "@9nthdimension",
@@ -306,14 +314,18 @@
     "2026-11-07": {
      "f": 173,
      "v": 4328
+    },
+    "2026-11-08": {
+     "f": 175,
+     "v": 4161
     }
    },
-   "followers": 173,
-   "views": 4328,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T17:18:00",
+   "followers": 175,
+   "views": 4161,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T17:10:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T10:23:00"
+   "nextPostAt": "2026-11-09T10:02:00"
   },
   "tiktok_natalnotes": {
    "brand": "@natalnotes",
@@ -410,14 +422,18 @@
     "2026-11-07": {
      "f": 123,
      "v": 23006
+    },
+    "2026-11-08": {
+     "f": 122,
+     "v": 22530
     }
    },
-   "followers": 123,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 23006,
-   "lastPostAt": "2026-11-07T17:59:00",
-   "lastPostStatus": "AWAITING_CONFIRMATION",
-   "nextPostAt": "2026-11-08T10:02:00"
+   "followers": 122,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 22530,
+   "lastPostAt": "2026-11-08T18:11:00",
+   "lastPostStatus": "PUBLISHED",
+   "nextPostAt": "2026-11-09T10:14:00"
   },
   "youtube_natalnotes": {
    "brand": "@natalnotes",
@@ -513,14 +529,18 @@
     "2026-11-07": {
      "f": 427,
      "v": 7072
+    },
+    "2026-11-08": {
+     "f": 426,
+     "v": 6562
     }
    },
-   "followers": 427,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 7072,
-   "lastPostAt": "2026-11-07T16:00:00",
+   "followers": 426,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 6562,
+   "lastPostAt": "2026-11-08T16:19:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T10:21:00"
+   "nextPostAt": "2026-11-09T10:32:00"
   },
   "tiktok_parvaregina": {
    "brand": "@parvaregina",
@@ -617,14 +637,18 @@
     "2026-11-07": {
      "f": 5180,
      "v": 19531
+    },
+    "2026-11-08": {
+     "f": 5179,
+     "v": 16936
     }
    },
-   "followers": 5180,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 19531,
-   "lastPostAt": "2026-11-07T19:57:00",
-   "lastPostStatus": "AWAITING_CONFIRMATION",
-   "nextPostAt": "2026-11-08T08:57:00"
+   "followers": 5179,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 16936,
+   "lastPostAt": "2026-11-08T19:43:00",
+   "lastPostStatus": "PUBLISHED",
+   "nextPostAt": null
   },
   "facebook_parvaregina": {
    "brand": "@parvaregina",
@@ -721,14 +745,18 @@
     "2026-11-07": {
      "f": 17,
      "v": 11
+    },
+    "2026-11-08": {
+     "f": 17,
+     "v": 11
     }
    },
    "followers": 17,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
+   "updatedAt": "2026-11-08T21:00:03-08:00",
    "views": 11,
-   "lastPostAt": "2026-11-07T17:44:00",
+   "lastPostAt": "2026-11-08T17:41:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T17:41:00"
+   "nextPostAt": null
   },
   "youtube_parvaregina": {
    "brand": "@parvaregina",
@@ -825,14 +853,18 @@
     "2026-11-07": {
      "f": 34,
      "v": 782
+    },
+    "2026-11-08": {
+     "f": 34,
+     "v": 716
     }
    },
    "followers": 34,
-   "views": 782,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T11:08:00",
+   "views": 716,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T10:47:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T10:47:00"
+   "nextPostAt": null
   },
   "tiktok_tibimundum": {
    "brand": "@tibimundum",
@@ -929,14 +961,18 @@
     "2026-11-07": {
      "f": 3821,
      "v": 4831
+    },
+    "2026-11-08": {
+     "f": 3821,
+     "v": 4690
     }
    },
    "followers": 3821,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 4831,
-   "lastPostAt": "2026-11-07T18:19:00",
-   "lastPostStatus": "AWAITING_CONFIRMATION",
-   "nextPostAt": "2026-11-08T12:28:00"
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 4690,
+   "lastPostAt": "2026-11-08T18:11:00",
+   "lastPostStatus": "PUBLISHED",
+   "nextPostAt": "2026-11-10T21:15:00"
   },
   "facebook_tibimundum": {
    "brand": "@tibimundum",
@@ -1033,14 +1069,18 @@
     "2026-11-07": {
      "f": 24,
      "v": 37
+    },
+    "2026-11-08": {
+     "f": 24,
+     "v": 35
     }
    },
    "followers": 24,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 37,
-   "lastPostAt": "2026-11-07T19:54:00",
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 35,
+   "lastPostAt": "2026-11-08T19:46:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T14:03:00"
+   "nextPostAt": "2026-11-10T21:15:00"
   },
   "youtube_tibimundum": {
    "brand": "@tibimundum",
@@ -1137,14 +1177,18 @@
     "2026-11-07": {
      "f": 56,
      "v": 17401
+    },
+    "2026-11-08": {
+     "f": 56,
+     "v": 15432
     }
    },
    "followers": 56,
-   "views": 17401,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T20:49:00",
+   "views": 15432,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T20:41:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T14:58:00"
+   "nextPostAt": "2026-11-10T21:15:00"
   },
   "tiktok_teachings.of.jesuschrist": {
    "brand": "@teachings.of.jesuschrist",
@@ -1241,14 +1285,18 @@
     "2026-11-07": {
      "f": 19,
      "v": 5726
+    },
+    "2026-11-08": {
+     "f": 19,
+     "v": 5540
     }
    },
    "followers": 19,
-   "views": 5726,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T07:39:00",
-   "lastPostStatus": "AWAITING_CONFIRMATION",
-   "nextPostAt": "2026-11-08T07:22:00"
+   "views": 5540,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T07:22:00",
+   "lastPostStatus": "ERROR",
+   "nextPostAt": "2026-11-09T10:00:00"
   },
   "facebook_teachings.of.jesuschrist": {
    "brand": "@teachings.of.jesuschrist",
@@ -1345,14 +1393,18 @@
     "2026-11-07": {
      "f": 34,
      "v": 57
+    },
+    "2026-11-08": {
+     "f": 35,
+     "v": 54
     }
    },
-   "followers": 34,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 57,
-   "lastPostAt": "2026-11-07T08:24:00",
+   "followers": 35,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 54,
+   "lastPostAt": "2026-11-08T08:07:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T08:07:00"
+   "nextPostAt": "2026-11-09T11:59:00"
   },
   "youtube_teachings.of.jesuschrist": {
    "brand": "@teachings.of.jesuschrist",
@@ -1449,14 +1501,18 @@
     "2026-11-07": {
      "f": 42,
      "v": 3957
+    },
+    "2026-11-08": {
+     "f": 42,
+     "v": 3587
     }
    },
    "followers": 42,
-   "views": 3957,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T07:59:00",
+   "views": 3587,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T07:42:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T07:42:00"
+   "nextPostAt": "2026-11-09T16:02:00"
   },
   "tiktok_computatio": {
    "brand": "@computatio",
@@ -1552,14 +1608,18 @@
     "2026-11-07": {
      "f": 54,
      "v": 1569
+    },
+    "2026-11-08": {
+     "f": 55,
+     "v": 1665
     }
    },
-   "followers": 54,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 1569,
-   "lastPostAt": "2026-11-07T17:41:00",
-   "lastPostStatus": "AWAITING_CONFIRMATION",
-   "nextPostAt": "2026-11-08T07:43:00"
+   "followers": 55,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 1665,
+   "lastPostAt": "2026-11-08T17:23:00",
+   "lastPostStatus": "PUBLISHED",
+   "nextPostAt": "2026-11-09T07:21:00"
   },
   "facebook_computatio": {
    "brand": "@computatio",
@@ -1656,14 +1716,18 @@
     "2026-11-07": {
      "f": 1301,
      "v": 9
+    },
+    "2026-11-08": {
+     "f": 1301,
+     "v": 7
     }
    },
    "followers": 1301,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "views": 9,
-   "lastPostAt": "2026-11-07T17:41:00",
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "views": 7,
+   "lastPostAt": "2026-11-08T20:10:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T12:01:00"
+   "nextPostAt": "2026-11-09T11:57:00"
   },
   "youtube_computatio": {
    "brand": "@computatio",
@@ -1758,14 +1822,18 @@
     "2026-11-07": {
      "f": 8,
      "v": 668
+    },
+    "2026-11-08": {
+     "f": 8,
+     "v": 639
     }
    },
    "followers": 8,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T17:41:00",
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T19:06:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T09:30:00",
-   "views": 668
+   "nextPostAt": "2026-11-09T09:22:00",
+   "views": 639
   },
   "facebook_natalnotes": {
    "brand": "@natalnotes",
@@ -1861,14 +1929,18 @@
     "2026-11-07": {
      "f": 41,
      "v": 100
+    },
+    "2026-11-08": {
+     "f": 41,
+     "v": 89
     }
    },
-   "views": 100,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
+   "views": 89,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
    "followers": 41,
-   "lastPostAt": "2026-11-07T16:49:00",
+   "lastPostAt": "2026-11-08T17:14:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T10:53:00"
+   "nextPostAt": "2026-11-09T10:46:00"
   },
   "tiktok_thatmommatho": {
    "brand": "@thatmommatho",
@@ -1965,11 +2037,15 @@
     "2026-11-07": {
      "f": 13170,
      "v": 700
+    },
+    "2026-11-08": {
+     "f": 13170,
+     "v": 748
     }
    },
    "followers": 13170,
-   "views": 700,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
+   "views": 748,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
    "lastPostAt": null,
    "lastPostStatus": null,
    "nextPostAt": null
@@ -2069,11 +2145,15 @@
     "2026-11-07": {
      "f": 19,
      "v": 13
+    },
+    "2026-11-08": {
+     "f": 19,
+     "v": 12
     }
    },
    "followers": 19,
-   "views": 13,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
+   "views": 12,
+   "updatedAt": "2026-11-08T21:00:03-08:00",
    "lastPostAt": null,
    "lastPostStatus": null,
    "nextPostAt": null
@@ -2150,10 +2230,13 @@
     },
     "2026-11-07": {
      "f": 136
+    },
+    "2026-11-08": {
+     "f": 136
     }
    },
    "followers": 136,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
+   "updatedAt": "2026-11-08T21:00:03-08:00",
    "lastPostAt": null,
    "lastPostStatus": null,
    "nextPostAt": null
@@ -2230,13 +2313,16 @@
     },
     "2026-11-07": {
      "f": 9
+    },
+    "2026-11-08": {
+     "f": 9
     }
    },
    "followers": 9,
-   "updatedAt": "2026-11-07T21:00:03-08:00",
-   "lastPostAt": "2026-11-07T18:59:00",
+   "updatedAt": "2026-11-08T21:00:03-08:00",
+   "lastPostAt": "2026-11-08T18:51:00",
    "lastPostStatus": "PUBLISHED",
-   "nextPostAt": "2026-11-08T13:08:00"
+   "nextPostAt": "2026-11-10T21:15:00"
   },
   "instagram_thatmommatho": {
    "brand": "@thatmommatho",
