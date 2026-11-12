@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>9nth Dimension SEO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one column. Headline tiles, then pace chart (published vs. plan), then rung coverage, then the article log and the queue. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --line:#d9dee7; --grid:#e8ecf2; --fg:#131a2a; --muted:#5b6578;
+  --accent:#2a4bd7; --pace:#8b93a3;
+  --good:#17794a; --warn:#9a6a00; --bad:#b3322a;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --grid:#222a3a; --fg:#e8ecf4; --muted:#98a3b8;
+  --accent:#8aa2ff; --pace:#6c768a;
+  --good:#55cf92; --warn:#e2b548; --bad:#ff8a80; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121b; --surface:#171d2a; --line:#2a3345; --grid:#222a3a; --fg:#e8ecf4; --muted:#98a3b8;
+  --accent:#8aa2ff; --pace:#6c768a;
+  --good:#55cf92; --warn:#e2b548; --bad:#ff8a80; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.55 var(--body)}
+.wrap{max-width:980px;margin:0 auto;padding:24px 16px 56px}
+a{color:var(--accent)}
+header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+h1{font:700 1.9rem/1.15 var(--display);margin:0}
+h2{font:700 1.15rem/1.3 var(--display);margin:0 0 4px}
+.sub{color:var(--muted);font-size:.9rem}
+.back{font-size:.9rem;text-decoration:none}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.tile,.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.tile{padding:14px 16px}
+.tile .label{color:var(--muted);font-size:.8rem;font-weight:500}
+.tile .value{font:700 2rem/1.1 var(--display);margin:6px 0 2px;font-variant-numeric:tabular-nums}
+.tile .value.small{font-size:1.25rem;padding:6px 0 3px}
+.tile .note{color:var(--muted);font-size:.8rem}
+.status{display:inline-flex;align-items:center;gap:5px;font-size:.8rem;font-weight:600}
+.status svg{flex:none}
+.good{color:var(--good)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+.panel{padding:16px 18px;margin-bottom:16px}
+.panel-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.legend{display:flex;gap:14px;font-size:.8rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--fg);color:var(--bg);font-size:.8rem;padding:6px 9px;border-radius:6px;white-space:nowrap;transform:translate(-50%,-110%);opacity:0;transition:opacity .1s}
+.tip.on{opacity:1}
+table{width:100%;border-collapse:collapse;font-size:.9rem}
+th{text-align:left;color:var(--muted);font-weight:500;font-size:.8rem;border-bottom:1px solid var(--line);padding:6px 8px}
+td{border-bottom:1px solid var(--grid);padding:9px 8px;vertical-align:top}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:var(--mono);font-size:.85rem}
+.rung-chip{display:inline-block;font-size:.75rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.table-scroll{overflow-x:auto}
+ol.queue{margin:0;padding-left:20px}
+ol.queue li{padding:5px 0}
+.foot{color:var(--muted);font-size:.8rem;margin-top:8px}
+.error{color:var(--bad)}
+@media (max-width:560px){h1{font-size:1.5rem}.tile .value{font-size:1.6rem}.hide-sm{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>9nth Dimension SEO</h1>
+      <div class="sub">Articles published on <a id="siteLink" href="https://9nthdimension.com/">9nthdimension.com</a></div>
+    </div>
+    <a class="back" href="/9nthdimension/">&larr; Control Center</a>
+  </header>
+
+  <div id="error" class="panel error" hidden></div>
+
+  <section class="tiles" aria-label="Headline numbers">
+    <div class="tile"><div class="label">Articles published</div><div class="value" id="kTotal">–</div><div class="note" id="kTotalNote">&nbsp;</div></div>
+    <div class="tile"><div class="label">Last 30 days</div><div class="value" id="k30">–</div><div class="note">Plan: about 15</div></div>
+    <div class="tile"><div class="label">Since last article</div><div class="value" id="kSince">–</div><div class="note" id="kSinceStatus">&nbsp;</div></div>
+    <div class="tile"><div class="label">Next article</div><div class="value small" id="kNext">–</div><div class="note">Every other day, 5:37 AM PT</div></div>
+    <div class="tile"><div class="label">Questions in queue</div><div class="value" id="kQueue">–</div><div class="note" id="kQueueStatus">&nbsp;</div></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2 id="paceTitle">Published vs. plan</h2>
+        <div class="sub">Running total of articles against one every other day, to the Feb 14, 2027 goal date</div>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span><svg width="18" height="4"><line x1="0" y1="2" x2="18" y2="2" stroke="var(--accent)" stroke-width="2.5"/></svg>Published</span>
+        <span><svg width="18" height="4"><line x1="0" y1="2" x2="18" y2="2" stroke="var(--pace)" stroke-width="2" stroke-dasharray="4 3"/></svg>Plan</span>
+      </div>
+    </div>
+    <div class="chart" id="paceChart"><div class="tip" id="paceTip"></div></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2 id="rungTitle">Coverage by rung</h2>
+        <div class="sub">Articles on each rung of the Spiritual Ladder</div>
+      </div>
+    </div>
+    <div class="chart" id="rungChart"><div class="tip" id="rungTip"></div></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Published articles</h2></div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Date</th><th>Article</th><th>Rung</th><th class="num hide-sm">Words</th><th class="num hide-sm">FAQs</th></tr></thead>
+        <tbody id="articleRows"><tr><td colspan="5" class="sub">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Up next</h2></div>
+    <ol class="queue" id="queue"></ol>
+  </section>
+
+  <p class="foot" id="foot">&nbsp;</p>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var SOURCES = [
+    "https://raw.githubusercontent.com/rogenie/9nthdimension-site/main/docs/articles.json",
+    "https://9nthdimension.com/articles.json"
+  ];
+  var GOAL_DATE = "2027-02-14";
+  var TZ = "America/Los_Angeles";
+  var NS = "http://www.w3.org/2000/svg";
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  function $(id){ return document.getElementById(id); }
+  function esc(s){ return String(s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]; }); }
+  function dayNum(iso){ return Date.UTC(+iso.slice(0,4), +iso.slice(5,7)-1, +iso.slice(8,10)) / 864e5; }
+  function isoOf(n){ return new Date(n*864e5).toISOString().slice(0,10); }
+  function fmt(iso){ return MONTHS[+iso.slice(5,7)-1] + " " + (+iso.slice(8,10)); }
+  function fmtYear(iso){ return fmt(iso) + ", " + iso.slice(0,4); }
+
+  function ptNow(){
+    var parts = new Intl.DateTimeFormat("en-CA",{timeZone:TZ,year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(new Date());
+    var o = {}; parts.forEach(function(p){ o[p.type] = p.value; });
+    return { iso: o.year+"-"+o.month+"-"+o.day, minutes: (+o.hour % 24)*60 + (+o.minute) };
+  }
+
+  var ICONS = {
+    good: '<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M4.8 8.3l2.2 2.2 4.2-4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    warn: '<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1.5l7 12.5H1z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M8 6.2v3.6M8 11.8v.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    bad: '<svg width="13" height="13" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="7" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 5.5l5 5M10.5 5.5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+  };
+  function status(kind, text){ return '<span class="status '+kind+'">'+ICONS[kind]+esc(text)+'</span>'; }
+
+  function el(tag, attrs, parent){
+    var n = document.createElementNS(NS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(n);
+    return n;
+  }
+  function text(parent, x, y, s, attrs){
+    var t = el("text", Object.assign({x:x, y:y, fill:"var(--muted)", "font-size":12, "font-family":"IBM Plex Sans, system-ui, sans-serif"}, attrs||{}), parent);
+    t.textContent = s; return t;
+  }
+  function showTip(tip, box, x, y, html){
+    tip.innerHTML = html; tip.style.left = x + "px"; tip.style.top = y + "px"; tip.classList.add("on");
+  }
+
+  function nextRun(now){
+    var start = dayNum(now.iso);
+    for (var i = 0; i < 4; i++){
+      var iso = isoOf(start + i), d = +iso.slice(8,10);
+      if (d % 2 === 1 && (i > 0 || now.minutes < 5*60+37)) return iso;
+    }
+    return null;
+  }
+
+  function render(data, sourceUrl){
+    var now = ptNow(), today = dayNum(now.iso);
+    var arts = data.articles.slice().sort(function(a,b){ return a.date < b.date ? 1 : -1; });
+    var rungs = data.rungs;
+    var byRung = {}; rungs.forEach(function(r){ byRung[r.slug] = r; });
+
+    // tiles
+    $("kTotal").textContent = arts.length;
+    $("kTotalNote").textContent = arts.length ? "Since " + fmtYear(arts[arts.length-1].date) : "None yet";
+    $("k30").textContent = arts.filter(function(a){ return today - dayNum(a.date) < 30; }).length;
+    if (arts.length){
+      var since = today - dayNum(arts[0].date);
+      $("kSince").textContent = since === 0 ? "Today" : since + (since === 1 ? " day" : " days");
+      $("kSinceStatus").innerHTML = since <= 2 ? status("good","On schedule") : since === 3 ? status("warn","Due today") : status("bad","Behind: check the scheduled task");
+    }
+    var nr = nextRun(now);
+    $("kNext").textContent = nr ? (nr === now.iso ? "Today" : new Date(nr+"T12:00:00Z").toLocaleDateString("en-US",{weekday:"short",timeZone:"UTC"}) + ", " + fmt(nr)) : "–";
+    var todo = data.backlog ? data.backlog.todo : 0;
+    $("kQueue").textContent = todo;
+    $("kQueueStatus").innerHTML = todo >= 10 ? status("good", "About " + (todo*2) + " days of articles") : todo >= 5 ? status("warn","Add questions soon") : status("bad","Queue almost empty");
+
+    renderPace(arts, today);
+    renderRungs(arts, rungs);
+
+    // table
+    $("articleRows").innerHTML = arts.length ? arts.map(function(a){
+      var r = byRung[a.rung];
+      return "<tr><td style='white-space:nowrap'>"+fmt(a.date)+"</td><td><a href='"+esc(a.url)+"'>"+esc(a.title)+"</a></td><td><span class='rung-chip'>"+r.number+" · "+esc(r.name)+"</span></td><td class='num hide-sm'>"+a.words.toLocaleString()+"</td><td class='num hide-sm'>"+a.faq+"</td></tr>";
+    }).join("") : "<tr><td colspan='5' class='sub'>No articles yet.</td></tr>";
+
+    $("queue").innerHTML = data.backlog && data.backlog.next.length ? data.backlog.next.map(function(b){
+      var r = byRung[b.rung];
+      return "<li>"+esc(b.q)+" <span class='rung-chip'>"+(r ? r.number+" · "+esc(r.name) : esc(b.rung))+"</span></li>";
+    }).join("") : "<li class='sub'>The queue is empty. Send new questions to add.</li>";
+
+    $("siteLink").href = data.site;
+    var gen = new Date(data.generated);
+    $("foot").innerHTML = "Data from <a href='"+esc(sourceUrl)+"'>articles.json</a>, last rebuilt " + gen.toLocaleString("en-US",{timeZone:TZ,month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}) + " PT. The page reloads the data each time you open it.";
+  }
+
+  function renderPace(arts, today){
+    var box = $("paceChart"), tip = $("paceTip");
+    box.querySelectorAll("svg").forEach(function(s){ s.remove(); });
+    if (!arts.length) return;
+    var asc = arts.slice().reverse();
+    var start = dayNum(asc[0].date), end = Math.max(dayNum(GOAL_DATE), today);
+    var planTotal = Math.floor((dayNum(GOAL_DATE) - start) / 2) + 1;
+    var yMax = Math.max(planTotal, asc.length);
+    yMax = Math.ceil(yMax / 10) * 10;
+    var W = Math.max(320, Math.round(box.clientWidth)), H = W < 600 ? 240 : 300, L = 34, R = 78, T = 28, B = 30;
+    var X = function(d){ return L + (d - start) / (end - start) * (W - L - R); };
+    var Y = function(v){ return T + (1 - v / yMax) * (H - T - B); };
+    var svg = el("svg", {viewBox:"0 0 "+W+" "+H, role:"img", "aria-label":"Articles published over time compared with the plan of one every other day"}, null);
+    box.insertBefore(svg, tip);
+
+    // grid + y ticks
+    for (var v = 0; v <= yMax; v += 10){
+      el("line", {x1:L, x2:W-R, y1:Y(v), y2:Y(v), stroke: v === 0 ? "var(--line)" : "var(--grid)", "stroke-width":1}, svg);
+      text(svg, L-8, Y(v)+4, v, {"text-anchor":"end"});
+    }
+    // x ticks: first of each month
+    var d0 = new Date(start*864e5);
+    for (var m = new Date(Date.UTC(d0.getUTCFullYear(), d0.getUTCMonth()+1, 1)); m.getTime()/864e5 <= end; m = new Date(Date.UTC(m.getUTCFullYear(), m.getUTCMonth()+1, 1))){
+      var mx = X(m.getTime()/864e5);
+      el("line", {x1:mx, x2:mx, y1:H-B, y2:H-B+4, stroke:"var(--line)"}, svg);
+      text(svg, mx, H-B+18, MONTHS[m.getUTCMonth()] + (m.getUTCMonth()===0 ? " " + m.getUTCFullYear() : ""), {"text-anchor":"middle"});
+    }
+    // plan line (dashed)
+    el("line", {x1:X(start), y1:Y(1), x2:X(dayNum(GOAL_DATE)), y2:Y(planTotal), stroke:"var(--pace)", "stroke-width":2, "stroke-dasharray":"5 4"}, svg);
+    text(svg, X(dayNum(GOAL_DATE))+6, Y(planTotal)+4, planTotal + " planned", {fill:"var(--muted)"});
+    // today marker
+    if (today <= end){
+      el("line", {x1:X(today), x2:X(today), y1:T, y2:H-B, stroke:"var(--line)", "stroke-dasharray":"2 3"}, svg);
+      text(svg, X(today) + (X(today) - L < 30 ? 4 : 0), T-10, "Today", {"text-anchor": X(today) - L < 30 ? "start" : "middle", "font-size":11});
+    }
+    // actual step line
+    var pts = [], count = 0;
+    asc.forEach(function(a){ var d = dayNum(a.date); if (pts.length) pts.push([X(d), Y(count)]); count++; pts.push([X(d), Y(count)]); });
+    pts.push([X(today), Y(count)]);
+    el("path", {d:"M"+pts.map(function(p){return p[0].toFixed(1)+" "+p[1].toFixed(1);}).join("L"), fill:"none", stroke:"var(--accent)", "stroke-width":2.5, "stroke-linejoin":"round"}, svg);
+    // points + hover
+    count = 0;
+    asc.forEach(function(a){
+      count++;
+      var cx = X(dayNum(a.date)), cy = Y(count), n = count;
+      el("circle", {cx:cx, cy:cy, r:4.5, fill:"var(--accent)", stroke:"var(--surface)", "stroke-width":2}, svg);
+      var hit = el("circle", {cx:cx, cy:cy, r:14, fill:"transparent", style:"cursor:default"}, svg);
+      hit.addEventListener("mouseenter", function(){
+        var bb = svg.getBoundingClientRect(), s = bb.width / W;
+        var planNow = Math.floor((dayNum(a.date) - start) / 2) + 1;
+        showTip(tip, box, cx*s, cy*s, "<strong>"+fmt(a.date)+"</strong> · article "+n+" of "+planNow+" planned<br>"+esc(a.title));
+      });
+      hit.addEventListener("mouseleave", function(){ tip.classList.remove("on"); });
+    });
+    text(svg, pts[pts.length-1][0]+8, pts[pts.length-1][1]+4, count + " published", {fill:"var(--fg)", "font-weight":600});
+    var planToday = Math.min(planTotal, Math.floor((today - start) / 2) + 1);
+    var diff = count - planToday;
+    $("paceTitle").textContent = diff >= 0 ? (diff === 0 ? "On pace with the plan" : diff + " ahead of plan") : Math.abs(diff) + " behind plan";
+  }
+
+  function renderRungs(arts, rungs){
+    var box = $("rungChart"), tip = $("rungTip");
+    box.querySelectorAll("svg").forEach(function(s){ s.remove(); });
+    var counts = rungs.map(function(r){ return arts.filter(function(a){ return a.rung === r.slug; }).length; });
+    var max = Math.max(4, Math.max.apply(null, counts));
+    var W = Math.max(320, Math.round(box.clientWidth)), rowH = 34, L = W < 600 ? 112 : 150, R = 36, H = rungs.length * rowH + 6;
+    var svg = el("svg", {viewBox:"0 0 "+W+" "+H, role:"img", "aria-label":"Number of articles on each rung"}, null);
+    box.insertBefore(svg, tip);
+    rungs.forEach(function(r, i){
+      var y = i * rowH + 4, c = counts[i];
+      text(svg, 0, y + 19, r.number + " · " + r.name, {fill:"var(--fg)", "font-size":13});
+      el("rect", {x:L, y:y+6, width:W-L-R, height:18, rx:4, fill:"var(--grid)"}, svg);
+      var w = c ? Math.max(6, (W-L-R) * c / max) : 0;
+      if (w) el("rect", {x:L, y:y+6, width:w, height:18, rx:4, fill:"var(--accent)"}, svg);
+      text(svg, L + w + 8, y + 19, c, {fill:"var(--fg)", "font-weight":600, "font-size":13});
+      var hit = el("rect", {x:0, y:y, width:W, height:rowH, fill:"transparent"}, svg);
+      hit.addEventListener("mouseenter", function(){
+        var bb = svg.getBoundingClientRect(), s = bb.width / W;
+        showTip(tip, box, (L + Math.max(w, 40)/2)*s, (y+6)*s, "<strong>Rung "+r.number+": "+esc(r.name)+"</strong> · "+c+(c===1?" article":" articles"));
+      });
+      hit.addEventListener("mouseleave", function(){ tip.classList.remove("on"); });
+    });
+    var empty = rungs.filter(function(r, i){ return counts[i] === 0; }).length;
+    $("rungTitle").textContent = empty ? empty + " of " + rungs.length + " rungs still have no articles" : "Every rung has articles";
+  }
+
+  function load(i){
+    if (i >= SOURCES.length){
+      var e = $("error"); e.hidden = false;
+      e.textContent = "Couldn't load the article data. Check your connection and reload the page.";
+      return;
+    }
+    fetch(SOURCES[i] + "?t=" + Date.now(), {cache:"no-store"})
+      .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(d){
+        render(d, SOURCES[i]);
+        var w = window.innerWidth, timer;
+        window.addEventListener("resize", function(){
+          if (Math.abs(window.innerWidth - w) < 20) return;
+          w = window.innerWidth; clearTimeout(timer);
+          timer = setTimeout(function(){ render(d, SOURCES[i]); }, 150);
+        });
+      })
+      .catch(function(){ load(i + 1); });
+  }
+  load(0);
+})();
+</script>
+</body>
+</html>
