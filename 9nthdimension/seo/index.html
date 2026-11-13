@@ -61,6 +61,27 @@ ol.queue{margin:0;padding-left:20px}
 ol.queue li{padding:5px 0}
 .foot{color:var(--muted);font-size:.8rem;margin-top:8px}
 .error{color:var(--bad)}
+.section-title{font:700 1.3rem/1.3 var(--display);margin:28px 0 4px}
+.section-sub{color:var(--muted);font-size:.9rem;margin:0 0 12px}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.grid2 .panel{margin-bottom:0}
+.grid2+.panel,.grid2+.grid2{margin-top:16px}
+.mini{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:14px}
+.mini div{background:var(--surface);padding:10px 12px}
+.mini .label{color:var(--muted);font-size:.75rem;font-weight:500}
+.mini .value{font:700 1.4rem/1.2 var(--display);font-variant-numeric:tabular-nums}
+.pos{display:inline-block;min-width:3.2em;text-align:center;font-size:.75rem;font-weight:600;border-radius:999px;padding:1px 7px;border:1px solid currentColor}
+.pos.top3,.pos.top10{color:var(--good)}.pos.page2{color:var(--warn)}.pos.deep{color:var(--muted)}
+.bars{display:grid;gap:10px}
+.bar-row{display:grid;grid-template-columns:7.5em minmax(0,1fr) 4.5em;gap:10px;align-items:center;font-size:.9rem}
+.bar-track{height:14px;border-radius:4px;background:var(--grid);overflow:hidden}
+.bar-fill{height:100%;background:var(--accent);border-radius:4px}
+.bar-row .num{text-align:right;font-family:var(--mono);font-size:.85rem;font-variant-numeric:tabular-nums}
+.empty{color:var(--muted);font-size:.9rem;padding:8px 0}
+.connect{border-style:dashed}
+.connect ol{margin:8px 0 0;padding-left:20px}
+td.wrap-url{overflow-wrap:anywhere}
+@media (max-width:720px){.grid2{grid-template-columns:minmax(0,1fr)}.mini{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){h1{font-size:1.5rem}.tile .value{font-size:1.6rem}.hide-sm{display:none}}
 </style>
 </head>
@@ -83,6 +104,68 @@ ol.queue li{padding:5px 0}
     <div class="tile"><div class="label">Next article</div><div class="value small" id="kNext">–</div><div class="note">Every other day, 5:37 AM PT</div></div>
     <div class="tile"><div class="label">Questions in queue</div><div class="value" id="kQueue">–</div><div class="note" id="kQueueStatus">&nbsp;</div></div>
   </section>
+
+  <h2 class="section-title">How people find the site</h2>
+  <p class="section-sub" id="statsSub">Google Search and visitor numbers, refreshed every morning.</p>
+
+  <section class="panel connect" id="connectPanel" hidden>
+    <h2>Connect Google to fill this section</h2>
+    <div class="sub" id="connectWhy"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2>Google Search</h2>
+        <div class="sub" id="gscRange">Last 28 days</div>
+      </div>
+      <div class="legend" aria-hidden="true">
+        <span><svg width="18" height="4"><line x1="0" y1="2" x2="18" y2="2" stroke="var(--accent)" stroke-width="2.5"/></svg>Clicks</span>
+        <span><svg width="18" height="4"><line x1="0" y1="2" x2="18" y2="2" stroke="var(--pace)" stroke-width="2"/></svg>Times shown</span>
+      </div>
+    </div>
+    <div class="mini" aria-label="Search totals">
+      <div><div class="label">Clicks</div><div class="value" id="sClicks">–</div></div>
+      <div><div class="label">Times shown</div><div class="value" id="sImpr">–</div></div>
+      <div><div class="label">Click rate</div><div class="value" id="sCtr">–</div></div>
+      <div><div class="label">Avg. position</div><div class="value" id="sPos">–</div></div>
+    </div>
+    <div class="chart" id="searchChart"><div class="tip" id="searchTip"></div></div>
+  </section>
+
+  <div class="grid2">
+    <section class="panel">
+      <div class="panel-head"><div><h2>Keywords people searched</h2><div class="sub">Searches where the site showed up in Google</div></div></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Keyword</th><th class="num">Clicks</th><th class="num hide-sm">Shown</th><th class="num">Rank</th></tr></thead>
+        <tbody id="kwRows"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><h2>Pages ranking in Google</h2><div class="sub">Which pages appear in search, and where</div></div></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Page</th><th class="num">Clicks</th><th class="num hide-sm">Shown</th><th class="num">Rank</th></tr></thead>
+        <tbody id="pageRows"><tr><td colspan="4" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+    </section>
+  </div>
+
+  <div class="grid2">
+    <section class="panel">
+      <div class="panel-head"><div><h2>Devices</h2><div class="sub" id="devSub">Share of visits</div></div></div>
+      <div class="bars" id="devBars"><div class="empty">Loading…</div></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><div><h2>Top referrers</h2><div class="sub">Where visitors came from, last 28 days</div></div></div>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Source</th><th class="hide-sm">Type</th><th class="num">Visits</th></tr></thead>
+        <tbody id="refRows"><tr><td colspan="3" class="empty">Loading…</td></tr></tbody>
+      </table></div>
+    </section>
+  </div>
+
+  <h2 class="section-title">Publishing</h2>
+  <p class="section-sub">Articles against the every-other-day plan.</p>
 
   <section class="panel">
     <div class="panel-head">
@@ -307,6 +390,119 @@ ol.queue li{padding:5px 0}
     $("rungTitle").textContent = empty ? empty + " of " + rungs.length + " rungs still have no articles" : "Every rung has articles";
   }
 
+
+  // ---------------- search & visitor stats (stats.json, written daily by the seo-stats GitHub Action) ----------------
+  var titleByUrl = {};
+  function nf(n){ return n == null ? "–" : Number(n).toLocaleString("en-US"); }
+  function pct(x){ return x == null ? "–" : (x*100).toFixed(x < 0.1 ? 1 : 0) + "%"; }
+  function rankChip(p){
+    if (p == null) return "";
+    var cls = p <= 3 ? "top3" : p <= 10 ? "top10" : p <= 20 ? "page2" : "deep";
+    var tip = p <= 10 ? "On page 1 of Google" : p <= 20 ? "On page 2 of Google" : "Page 3 or deeper";
+    return "<span class='pos "+cls+"' title='"+tip+"'>#"+(Math.round(p*10)/10)+"</span>";
+  }
+  function emptyRow(cols, msg){ return "<tr><td colspan='"+cols+"' class='empty'>"+esc(msg)+"</td></tr>"; }
+  function shortUrl(u){ try { var x = new URL(u); return x.pathname === "/" ? "Home page" : decodeURIComponent(x.pathname); } catch(e){ return u; } }
+  var SRC_TYPE = {organic:"Search", referral:"Link", "(none)":"Direct", social:"Social", email:"Email", cpc:"Ads", "organic-social":"Social"};
+
+  function renderStats(st){
+    var g = st.searchConsole || {}, a = st.analytics || {};
+    var notes = [];
+    if (!g.connected) notes.push("<strong>Search Console:</strong> " + esc(g.reason || "not connected"));
+    if (!a.connected) notes.push("<strong>Google Analytics:</strong> " + esc(a.reason || "not connected"));
+    $("connectPanel").hidden = !notes.length;
+    $("connectWhy").innerHTML = notes.join("<br>") + (notes.length ? "<br>Keywords and ranking pages come from Search Console; devices and referrers from Google Analytics. Each part fills in once its source is connected." : "");
+    $("statsSub").textContent = "Google Search and visitor numbers, last updated " + new Date(st.generated).toLocaleString("en-US",{timeZone:TZ,month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}) + " PT.";
+
+    // Search Console
+    if (g.connected){
+      var t = g.totals || {};
+      $("gscRange").textContent = fmt(g.start) + " to " + fmtYear(g.end) + " (Google reports search data 2 to 3 days late)";
+      $("sClicks").textContent = nf(t.clicks); $("sImpr").textContent = nf(t.impressions);
+      $("sCtr").textContent = t.impressions ? pct(t.ctr) : "–"; $("sPos").textContent = t.impressions ? (Math.round(t.position*10)/10) : "–";
+      renderSearchChart(g.daily || []);
+      $("kwRows").innerHTML = (g.queries||[]).length ? g.queries.map(function(r){
+        return "<tr><td>"+esc(r.query)+"</td><td class='num'>"+nf(r.clicks)+"</td><td class='num hide-sm'>"+nf(r.impressions)+"</td><td class='num'>"+rankChip(r.position)+"</td></tr>";
+      }).join("") : emptyRow(4, "No search keywords yet. Google usually starts showing a new site within a few weeks.");
+      $("pageRows").innerHTML = (g.pages||[]).length ? g.pages.map(function(r){
+        var label = titleByUrl[r.page] || shortUrl(r.page);
+        return "<tr><td class='wrap-url'><a href='"+esc(r.page)+"'>"+esc(label)+"</a></td><td class='num'>"+nf(r.clicks)+"</td><td class='num hide-sm'>"+nf(r.impressions)+"</td><td class='num'>"+rankChip(r.position)+"</td></tr>";
+      }).join("") : emptyRow(4, "No pages showing in Google yet.");
+    } else {
+      $("gscRange").textContent = "Not connected yet";
+      $("kwRows").innerHTML = emptyRow(4, "Appears once Search Console is connected.");
+      $("pageRows").innerHTML = emptyRow(4, "Appears once Search Console is connected.");
+      renderSearchChart([]);
+    }
+
+    // Devices: visits from Analytics; if Analytics isn't connected, clicks from Google Search
+    var dev = [], devLabel = "";
+    if (a.connected && (a.devices||[]).length){ dev = a.devices.map(function(r){ return {name:r.deviceCategory, n:r.sessions}; }); devLabel = "Share of visits, last 28 days"; }
+    else if (g.connected && (g.devices||[]).length){ dev = g.devices.map(function(r){ return {name:r.device, n:r.clicks || r.impressions}; }); devLabel = "Share of Google Search clicks (Analytics not connected)"; }
+    $("devSub").textContent = devLabel || "Share of visits";
+    var devTotal = dev.reduce(function(s,r){ return s + (r.n||0); }, 0);
+    $("devBars").innerHTML = devTotal ? dev.map(function(r){
+      var share = r.n / devTotal, name = String(r.name).toLowerCase(); name = name.charAt(0).toUpperCase() + name.slice(1);
+      return "<div class='bar-row'><span>"+esc(name)+"</span><div class='bar-track'><div class='bar-fill' style='width:"+(share*100).toFixed(1)+"%'></div></div><span class='num'>"+Math.round(share*100)+"%</span></div>";
+    }).join("") : "<div class='empty'>"+(a.connected || g.connected ? "No visits recorded yet." : "Appears once Google Analytics is connected.")+"</div>";
+
+    // Referrers
+    $("refRows").innerHTML = a.connected ? ((a.sources||[]).length ? a.sources.map(function(r){
+      var src = r.sessionSource === "(direct)" ? "Direct (typed or bookmarked)" : r.sessionSource;
+      return "<tr><td>"+esc(src)+"</td><td class='hide-sm'><span class='rung-chip'>"+esc(SRC_TYPE[r.sessionMedium] || r.sessionMedium)+"</span></td><td class='num'>"+nf(r.sessions)+"</td></tr>";
+    }).join("") : emptyRow(3, "No visits recorded yet.")) : emptyRow(3, "Appears once Google Analytics is connected.");
+  }
+
+  function renderSearchChart(daily){
+    var box = $("searchChart"), tip = $("searchTip");
+    box.querySelectorAll("svg,.empty").forEach(function(s){ s.remove(); });
+    if (daily.length < 2){
+      var e = document.createElement("div"); e.className = "empty";
+      e.textContent = daily.length ? "The daily chart appears once there are two days of search data." : "Daily clicks and impressions appear here once Search Console has data.";
+      box.insertBefore(e, tip); return;
+    }
+    var W = Math.max(320, Math.round(box.clientWidth)), H = W < 600 ? 170 : 200, L = 40, R = 12, T = 12, B = 26;
+    var maxI = Math.max(1, Math.max.apply(null, daily.map(function(d){ return d.impressions; })));
+    var step = Math.pow(10, Math.floor(Math.log10(maxI))); var yMax = Math.ceil(maxI/step)*step;
+    var X = function(i){ return L + i/(daily.length-1)*(W-L-R); }, Y = function(v){ return T + (1 - v/yMax)*(H-T-B); };
+    var svg = el("svg", {viewBox:"0 0 "+W+" "+H, role:"img", "aria-label":"Daily Google Search impressions and clicks"}, null);
+    box.insertBefore(svg, tip);
+    [0, yMax/2, yMax].forEach(function(v){
+      el("line", {x1:L, x2:W-R, y1:Y(v), y2:Y(v), stroke: v === 0 ? "var(--line)" : "var(--grid)"}, svg);
+      text(svg, L-6, Y(v)+4, nf(Math.round(v)), {"text-anchor":"end", "font-size":11});
+    });
+    text(svg, L, H-6, fmt(daily[0].date), {"font-size":11});
+    text(svg, W-R, H-6, fmt(daily[daily.length-1].date), {"font-size":11, "text-anchor":"end"});
+    var line = function(key){ return "M" + daily.map(function(d,i){ return X(i).toFixed(1)+" "+Y(d[key]).toFixed(1); }).join("L"); };
+    el("path", {d: line("impressions") + "L"+X(daily.length-1)+" "+Y(0)+"L"+X(0)+" "+Y(0)+"Z", fill:"var(--pace)", opacity:.15}, svg);
+    el("path", {d: line("impressions"), fill:"none", stroke:"var(--pace)", "stroke-width":2}, svg);
+    el("path", {d: line("clicks"), fill:"none", stroke:"var(--accent)", "stroke-width":2.5}, svg);
+    var last = daily[daily.length-1];
+    el("circle", {cx:X(daily.length-1), cy:Y(last.clicks), r:4, fill:"var(--accent)", stroke:"var(--surface)", "stroke-width":2}, svg);
+    daily.forEach(function(d, i){
+      var w = (W-L-R)/(daily.length-1);
+      var hit = el("rect", {x:X(i)-w/2, y:T, width:w, height:H-T-B, fill:"transparent"}, svg);
+      hit.addEventListener("mouseenter", function(){
+        var s = svg.getBoundingClientRect().width / W;
+        showTip(tip, box, X(i)*s, Y(d.impressions)*s, "<strong>"+fmt(d.date)+"</strong> · "+nf(d.clicks)+" clicks · shown "+nf(d.impressions)+" times");
+      });
+      hit.addEventListener("mouseleave", function(){ tip.classList.remove("on"); });
+    });
+  }
+
+  var statsData = null;
+  function loadStats(){
+    fetch("stats.json?t=" + Date.now(), {cache:"no-store"})
+      .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(d){ statsData = d; renderStats(d); })
+      .catch(function(){
+        renderStats({generated: new Date().toISOString(),
+          searchConsole:{connected:false, reason:"Not set up yet: the daily pull has not run."},
+          analytics:{connected:false, reason:"Not set up yet: the daily pull has not run."}});
+        $("statsSub").textContent = "Google Search and visitor numbers will appear here once Google is connected.";
+      });
+  }
+
   function load(i){
     if (i >= SOURCES.length){
       var e = $("error"); e.hidden = false;
@@ -316,16 +512,19 @@ ol.queue li{padding:5px 0}
     fetch(SOURCES[i] + "?t=" + Date.now(), {cache:"no-store"})
       .then(function(r){ if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function(d){
+        (d.articles||[]).forEach(function(a){ titleByUrl[a.url] = a.title; });
+        if (statsData) renderStats(statsData);
         render(d, SOURCES[i]);
         var w = window.innerWidth, timer;
         window.addEventListener("resize", function(){
           if (Math.abs(window.innerWidth - w) < 20) return;
           w = window.innerWidth; clearTimeout(timer);
-          timer = setTimeout(function(){ render(d, SOURCES[i]); }, 150);
+          timer = setTimeout(function(){ render(d, SOURCES[i]); if (statsData) renderSearchChart((statsData.searchConsole||{}).daily || []); }, 150);
         });
       })
       .catch(function(){ load(i + 1); });
   }
+  loadStats();
   load(0);
 })();
 </script>

@@ -1,0 +1,40 @@
+name: SEO stats (9nth Dimension)
+
+# Pulls Search Console and Google Analytics numbers for 9nthdimension.com once a day
+# and saves them to 9nthdimension/seo/stats.json for the SEO dashboard.
+on:
+  schedule:
+    - cron: "17 14 * * *"   # 14:17 UTC, about 6:17 AM Pacific
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-stats
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install google-auth requests
+      - name: Pull numbers
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON }}
+          GSC_SITE: ${{ vars.GSC_SITE }}
+          GA4_PROPERTY_ID: ${{ vars.GA4_PROPERTY_ID }}
+        run: python .github/scripts/seo_stats.py
+      - name: Save to the site
+        run: |
+          git config user.name "seo-stats bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add 9nthdimension/seo/stats.json
+          if git diff --cached --quiet; then echo "No change."; exit 0; fi
+          git commit -m "SEO stats $(date -u +%Y-%m-%d)"
+          for i in 1 2 3; do git pull --rebase -q && git push -q && exit 0; sleep 5; done
+          exit 1
