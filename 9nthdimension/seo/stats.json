@@ -1,0 +1,11 @@
+{
+ "generated": "2026-11-13T20:55:08+00:00",
+ "searchConsole": {
+  "connected": false,
+  "reason": "No Google service account key is set."
+ },
+ "analytics": {
+  "connected": false,
+  "reason": "No Google Analytics property ID or service account key is set."
+ }
+}
