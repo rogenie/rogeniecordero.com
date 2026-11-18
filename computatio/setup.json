@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28",
+ "updated": "2026-11-17",
  "steps": [
   {
    "step": "Contact form connected (Formspree)",
@@ -13,14 +13,14 @@
    "site": "computatio.io",
    "area": "Conversion",
    "status": "done",
-   "note": "Live Oct 19."
+   "note": "Live Oct 19. Still linked from the home page buttons (Nov 17). Calendly display name and a \"How did you hear about us?\" question still to fix."
   },
   {
    "step": "Stripe checkout buttons",
    "site": "computatio.io",
    "area": "Conversion",
    "status": "done",
-   "note": "Simple Return, Self-Employed Return, Monthly Books."
+   "note": "Simple Return, Self-Employed Return, Monthly Books. The Monthly Books page still said \"150 transactions / 3 accounts\" on Nov 17, but the Oct 24 decision is 2 bank accounts and 2 credit cards. Fix the page and the Stripe description."
   },
   {
    "step": "Sitemap and robots.txt",
@@ -48,7 +48,7 @@
    "site": "computatio.io",
    "area": "Technical SEO",
    "status": "done",
-   "note": "Lists all 6 pages: home, three services, privacy, terms."
+   "note": "Lists all 10 pages, including About, Founder, How we work and Free guide. robots.txt allows Google, Bing and the main AI search crawlers. Checked Nov 17."
   },
   {
    "step": "Visit tracking (GoatCounter)",
@@ -93,11 +93,39 @@
    "note": "Submitted Oct 25; read successfully, 6 pages found."
   },
   {
+   "step": "AI search crawler access",
+   "site": "computatio.io",
+   "area": "AI search",
+   "status": "done",
+   "note": "robots.txt explicitly allows OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Claude-SearchBot, Claude-User, Googlebot and Bingbot (checked Nov 17)."
+  },
+  {
+   "step": "About, founder and How we work pages",
+   "site": "computatio.io",
+   "area": "AI search",
+   "status": "done",
+   "note": "/about/, /about/rogenie/ and /how-we-work/ are in the sitemap (Nov 17). Schema markup not checked from here."
+  },
+  {
+   "step": "Computatio Answers (Q&A pages)",
+   "site": "computatio.io",
+   "area": "AI search",
+   "status": "todo",
+   "note": "Publishes Tue/Thu automatically. /answers/ isn't live yet; first answer is due Nov 19."
+  },
+  {
+   "step": "Bing Webmaster Tools",
+   "site": "computatio.io",
+   "area": "AI search",
+   "status": "todo",
+   "note": "Rogenie: import the site from Search Console."
+  },
+  {
    "step": "Google Business Profile",
    "site": "computatio.io",
    "area": "Local",
    "status": "todo",
-   "note": "Rogenie: create at business.google.com as a service-area business; hide the address."
+   "note": "Rogenie: create at business.google.com as a service-area business; hide the address. Also Bing Places and Clutch listings."
   }
  ]
 }

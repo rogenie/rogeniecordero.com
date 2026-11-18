@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-24",
+ "updated": "2026-11-17",
  "months": [
   {
    "month": "2026-11",
@@ -11,7 +11,7 @@
      "label": "Paying monthly clients",
      "group": "Revenue",
      "target": 1,
-     "actual": null,
+     "actual": 0,
      "unit": "count",
      "source": "stripe",
      "note": "Signed Monthly Books clients at month end"
@@ -21,7 +21,7 @@
      "label": "Contracted MRR",
      "group": "Revenue",
      "target": 500,
-     "actual": null,
+     "actual": 0,
      "unit": "usd",
      "source": "stripe",
      "note": "Monthly Books is $500/mo; one-time work excluded"
