@@ -22,7 +22,7 @@
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
 a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
-.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 64px;display:flex;flex-direction:column;gap:28px}
+.wrap{max-width:none;margin:0;padding:28px clamp(16px,3vw,40px) 64px;display:flex;flex-direction:column;gap:28px}
 header{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between}
 h1{font:700 32px/1.1 var(--display);margin:0}
 h2{font:700 20px/1.2 var(--display);margin:0}
@@ -30,7 +30,7 @@ h3{font:700 16px/1.25 var(--display);margin:0}
 .sub,.muted{color:var(--muted)}
 .sub{margin:6px 0 0;font-size:14px}
 .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
-.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .kpi{background:var(--surface);padding:16px 18px}
 .kpi .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .kpi .big{font:500 30px/1.15 var(--mono);margin-top:4px}
@@ -69,7 +69,7 @@ tr.total td{background:var(--sunk);font-weight:600}
 .pick select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .chips button{font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:99px;padding:5px 12px;cursor:pointer}
 .chips button[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.streams{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:16px}
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr));gap:16px}
 @media (max-width:620px){.streams{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.prob{grid-template-columns:1fr}}
 .stream{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
 .stream .top{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
@@ -81,7 +81,8 @@ tr.total td{background:var(--sunk);font-weight:600}
 @media (max-width:620px){.cols{grid-template-columns:1fr}}
 .cols h4{margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-li{display:grid;grid-template-columns:52px 1fr;gap:8px;font-size:13.5px;line-height:1.35}
+li{display:grid;grid-template-columns:52px 1fr auto;gap:8px;font-size:13.5px;line-height:1.35}
+li .vc{font:12px var(--mono);color:var(--muted);padding-top:1px;text-align:right}
 li .dt{font:12px var(--mono);color:var(--muted);padding-top:1px}
 li.miss .ti{color:var(--down)}
 li.today .ti::after{content:" · due today";color:var(--warn);font-size:12px}
@@ -95,7 +96,7 @@ footer{font-size:12px;color:var(--muted);line-height:1.6}
 .divider{border:0;border-top:2px solid var(--line);margin:4px 0}
 tr.click{cursor:pointer}tr.click:hover td{background:var(--sunk)}
 td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var(--up)}
-.nets{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--line)}
+.nets{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line)}
 .net{background:var(--surface);padding:14px 16px}
 .net .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .net .f{font:500 26px/1.2 var(--mono);display:block;margin-top:2px}
@@ -112,9 +113,8 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
   </header>
 
   <section>
-    <div class="sechead"><h2>All brands</h2><span class="muted" style="font-size:13px">Click a row to open that brand below</span></div>
+    <div class="sechead"><h2>All brands</h2></div>
     <div class="kpis" id="kpis"></div>
-    <div class="panel scroll"><table id="overview"></table></div>
   </section>
 
   <hr class="divider">
@@ -127,6 +127,11 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
   <section>
     <div class="sechead"><h2>Problems</h2><span class="muted" style="font-size:13px">Failed or missing social posts and article publishes</span></div>
     <div class="panel" id="problems"></div>
+  </section>
+
+  <section>
+    <div class="sechead"><h2>Website visits</h2><span class="muted" style="font-size:13px" id="visitSrc">GoatCounter</span></div>
+    <div class="panel" id="visits" style="overflow:hidden"></div>
   </section>
 
   <section>
@@ -151,6 +156,22 @@ const sign=n=>n==null?"":(n>0?"+":n<0?"−":"±")+Math.abs(n).toLocaleString("en
 const cls=n=>n>0?"up":n<0?"down":"flat";
 const md=s=>{if(!s)return"";const d=new Date(s+"T12:00:00");return d.toLocaleDateString("en-US",{month:"short",day:"numeric"})};
 const when=s=>{const d=new Date(s);return isNaN(d)?s:d.toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})};
+// GoatCounter sites. Computatio and BookByte share one counter (paths start with the host).
+const GC={"ÆTAS":{code:"parvaregina",site:"aetasliveforever.com",note:"Counter also holds the old parvaregina.com visits."},
+  "Tibi Mundum":{code:"tibimundum",site:"tibimundum.com"},
+  "Computatio":{code:"computatio",site:"computatio.io",host:true,shared:"BookByte"},
+  "BookByte":{code:"computatio",site:"bookbytellc.com",host:true,shared:"Computatio"},
+  "Pinoy Mobile Mechanic":{code:"pinoymobilemechanic",site:"pinoymobilemechanic.com"}};
+const NOVISIT={"9nth Dimension":"9nthdimension.com uses Google Analytics, which this page can't read.","Purogé":"puroge.com has no visit counter yet."};
+const isoDay=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toLocaleDateString("en-CA",{timeZone:"America/Los_Angeles"})};
+const gcCache={};
+function gcCount(code,path,days){
+  const k=code+"|"+path+"|"+(days||"");if(gcCache[k])return gcCache[k];
+  const qs=days?`?start=${isoDay(days)}&end=${isoDay(0)}`:"";
+  return gcCache[k]=fetch(`https://${code}.goatcounter.com/counter/${encodeURIComponent(path)}.json${qs}`)
+    .then(r=>r.status===404?0:r.ok?r.json().then(j=>Number(String(j.count).replace(/[^0-9]/g,""))||0):null).catch(()=>null);
+}
+const pagePath=(g,url)=>{try{const u=new URL(url);return g.host?u.host+u.pathname:u.pathname}catch(e){return null}};
 const byOrder=(a,b)=>(ORDER.indexOf(a)+1||99)-(ORDER.indexOf(b)+1||99);
 
 function acctNums(a){
@@ -191,15 +212,15 @@ function render(art,soc){
   const high=probs.filter(p=>p.severity==="high").length;
   $("#kpis").innerHTML=`
     <div class="kpi"><div class="lab">Followers, business brands</div><div class="big num">${fmt(sum("f"))}</div><div class="small"><span class="${cls(sum("f7"))}">${sign(sum("f7"))}</span> in 7 days · <span class="${cls(sum("f30"))}">${sign(sum("f30"))}</span> in 30</div></div>
+    <div class="kpi"><div class="lab">Website visits, all time</div><div class="big num" id="kv">…</div><div class="small" id="kv7">tracked sites</div></div>
     <div class="kpi"><div class="lab">Articles live, last 7 days</div><div class="big num">${sum("pub7")}</div><div class="small">across ${art.streams.length} publishing streams</div></div>
     <div class="kpi"><div class="lab">Articles in queue</div><div class="big num">${sum("queued")}</div><div class="small">scheduled, not yet live</div></div>
     <div class="kpi ${probs.length?"alert":""}"><div class="lab">Open problems</div><div class="big num">${probs.length}</div><div class="small">${high} urgent</div></div>`;
-  $("#overview").innerHTML=`<thead><tr><th>Brand</th><th>Followers</th><th>7 days</th><th>30 days</th><th>Articles this week</th><th>In queue</th><th>Problems</th></tr></thead><tbody>${
-    names.map(n=>{const x=B[n];const hp=x.probs.filter(p=>p.severity==="high").length;return`<tr class="click" data-b="${esc(n)}" tabindex="0">
-      <td><b>${esc(n)}</b>${x.personal?'<span class="badge">personal</span>':""}</td>
-      ${x.hasSoc?`<td class="num">${fmt(x.f)}</td><td class="num ${cls(x.f7)}">${sign(x.f7)}</td><td class="num ${cls(x.f30)}">${sign(x.f30)}</td>`:`<td class="na" colspan="3" style="text-align:right">not in Metricool</td>`}
-      ${x.streams.length?`<td class="num">${x.pub7}</td><td class="num">${x.queued}</td>`:`<td class="na" colspan="2" style="text-align:right">no articles</td>`}
-      <td class="pr ${x.probs.length?"bad":"good"}">${x.probs.length?`${x.probs.length}${hp?` <span style="font-size:12px">(${hp} urgent)</span>`:""}`:"✓"}</td></tr>`}).join("")}</tbody>`;
+  (async()=>{const codes=[...new Set(Object.values(GC).map(g=>g.code))];
+    const all=await Promise.all(codes.map(c=>gcCount(c,"TOTAL")));const wk=await Promise.all(codes.map(c=>gcCount(c,"TOTAL",7)));
+    const ok=all.filter(v=>v!=null);
+    $("#kv").textContent=ok.length?fmt(ok.reduce((a,b)=>a+b,0)):"—";
+    $("#kv7").textContent=ok.length?`${fmt(wk.filter(v=>v!=null).reduce((a,b)=>a+b,0))} in 7 days · ${ok.length} of ${codes.length} sites' counters`:"couldn't read the visit counters";})();
 
   // ---------- brand picker ----------
   let pick=new URLSearchParams(location.search).get("brand");
@@ -207,8 +228,6 @@ function render(art,soc){
   $("#brandSel").innerHTML=names.map(n=>`<option value="${esc(n)}"${n===pick?" selected":""}>${esc(n)}</option>`).join("");
   const choose=n=>{pick=n;$("#brandSel").value=n;const u=new URL(location);u.searchParams.set("brand",n);history.replaceState(null,"",u);drawBrand()};
   $("#brandSel").onchange=e=>choose(e.target.value);
-  $("#overview").onclick=e=>{const r=e.target.closest("tr.click");if(r){choose(r.dataset.b);$(".brandbar").scrollIntoView({behavior:"smooth"})}};
-  $("#overview").onkeydown=e=>{if(e.key==="Enter"){const r=e.target.closest("tr.click");if(r)choose(r.dataset.b)}};
 
   const kindLabel={failed:"Social post failed",empty:"No social posts",missed:"Article missed",held:"Article held",check:"Check failed"};
   function drawBrand(){
@@ -221,6 +240,18 @@ function render(art,soc){
         <div class="meta"><span class="tag">${esc(kindLabel[p.kind]||p.kind)}</span><br>${esc(md(p.date))} · ${esc(p.network)}</div>
         <div><div>${esc(p.text)}</div>${p.fix?`<div class="fix">${esc(p.fix)}</div>`:""}</div>
       </div>`).join("")}</div>`:`<div class="ok">No problems for ${esc(pick)}. Every due article is live and no social post failed.</div>`;
+    // visits
+    const g=GC[pick];
+    if(!g){$("#visits").innerHTML=`<div style="padding:18px;color:var(--muted)">${esc(NOVISIT[pick]||"No website for this brand.")}</div>`;$("#visitSrc").textContent=""}
+    else{
+      $("#visitSrc").innerHTML=`GoatCounter · <a href="https://${g.code}.goatcounter.com">open full stats</a>`;
+      $("#visits").innerHTML=`<div class="nets">${[["All time",0],["Last 30 days",30],["Last 7 days",7]].map(([l,d])=>`<div class="net"><div class="lab">${l}</div><span class="f" data-v="${d}">…</span></div>`).join("")}</div>
+        <div id="vnote" style="padding:10px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)">${g.shared?`${esc(g.site)} shares one counter with ${esc(g.shared)}, so these totals cover both sites. Per-article counts below are this site only.`:esc(g.note||g.site)}</div>`;
+      const me=pick;
+      document.querySelectorAll("#visits [data-v]").forEach(async el=>{const d=+el.dataset.v;const v=await gcCount(g.code,"TOTAL",d||undefined);
+        if(pick!==me)return;el.textContent=v==null?"—":fmt(v);
+        if(v==null&&d===0)$("#vnote").innerHTML=`Couldn't read the ${esc(g.code)} counter. If this keeps showing, open GoatCounter → Settings → Site settings and turn on “Allow adding visitor counts on your website.”`});
+    }
     // social
     $("#social").innerHTML=x.hasSoc?`<div class="nets">${NETS.map(n=>x.accounts.find(a=>a.network===n)).filter(Boolean).map(a=>`
       <div class="net"><div class="lab">${esc(a.network)}</div><a class="f" href="${esc(a.url)}">${fmt(a.now)}</a>
@@ -233,7 +264,7 @@ function render(art,soc){
     $("#streams").innerHTML=x.streams.length?x.streams.map(s=>{
       if(s.error)return`<div class="panel stream"><h3>${esc(s.stream)}</h3><div class="err">${esc(s.error)}</div></div>`;
       const c=s.counts;
-      const li=(i,link)=>`<li class="${i.status==="missed"?"miss":i.status==="due_today"?"today":""}"><span class="dt">${esc(md(i.date))}</span><span class="ti">${link&&i.url?`<a href="${esc(i.url)}">${esc(i.title)}</a>`:esc(i.title)}</span></li>`;
+      const li=(i,link)=>`<li class="${i.status==="missed"?"miss":i.status==="due_today"?"today":""}"><span class="dt">${esc(md(i.date))}</span><span class="ti">${link&&i.url?`<a href="${esc(i.url)}">${esc(i.title)}</a>`:esc(i.title)}</span><span class="vc"${link&&i.url&&GC[s.brand]?` data-u="${esc(i.url)}" title="visits"`:""}></span></li>`;
       return`<div class="panel stream">
         <div class="top"><h3>${esc(s.stream)}</h3><span class="cad">${esc(s.cadence||"")}</span></div>
         <div class="stats"><span><b>${c.published}</b> live</span><span><b>${c.published_7d}</b> this week</span><span><b>${c.queued}</b> in queue</span>${c.missed?`<span class="bad"><b>${c.missed}</b> missed</span>`:""}${c.held?`<span class="bad"><b>${c.held}</b> held</span>`:""}</div>
@@ -241,10 +272,13 @@ function render(art,soc){
           <div><h4>Published</h4><ol>${s.published.map(i=>li(i,true)).join("")||'<li class="more">None yet</li>'}</ol>${c.published>s.published.length?`<div class="more">+ ${c.published-s.published.length} older</div>`:""}</div>
           <div><h4>In queue</h4><ol>${s.queue.map(i=>li(i,false)).join("")||'<li class="miss"><span></span><span class="ti">Queue is empty</span></li>'}</ol>${c.queued>s.queue.length?`<div class="more">+ ${c.queued-s.queue.length} more</div>`:""}</div>
         </div></div>`}).join(""):`<div class="panel" style="padding:18px;color:var(--muted)">${esc(pick)} has no article publishing.</div>`;
+    const gg=GC[pick],me2=pick;
+    if(gg)document.querySelectorAll("#streams .vc[data-u]").forEach(async el=>{const pth=pagePath(gg,el.dataset.u);if(!pth)return;
+      const v=await gcCount(gg.code,pth);if(pick===me2&&v!=null)el.textContent=fmt(v)+" views"});
   }
   drawBrand();
 
-  $("#foot").innerHTML=`Followers come from Metricool's daily counts. Articles come from each site's own publishing calendar, read without changing anything. A "missed" article is one scheduled before today that isn't live.`;
+  $("#foot").innerHTML=`Visits come from each site's GoatCounter. Followers come from Metricool's daily counts. Articles come from each site's own publishing calendar, read without changing anything. A "missed" article is one scheduled before today that isn't live.`;
 }
 load();
 </script>
