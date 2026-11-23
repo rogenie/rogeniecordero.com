@@ -195,7 +195,7 @@ def natal():
         g = lambda k: (re.search(rf"[{{ ]{k}: ([^,}}]+)", line) or [None, ""])[1].strip()
         if g("status") == "published":
             continue
-        k, on, slug, month, sign = g("kind"), g("on"), g("slug"), g("month"), g("sign")
+        k, on, slug, month, sign = g("kind"), g("date") or g("on"), g("slug"), g("month"), g("sign")
         if site + path(k, slug, month, sign) in seen:
             continue
         mname = f"{MONTH_NAMES[int(month[5:7]) - 1]} {month[:4]}" if month else ""

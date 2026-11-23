@@ -273,7 +273,7 @@ async function natalLive(){
   for(const line of cal.split("\n")){if(!line.startsWith("- {"))continue;
     const g=k=>((line.match(new RegExp(`[{ ]${k}: ([^,}]+)`))||[])[1]||"").trim();
     if(g("status")==="published")continue;
-    const k=g("kind"),on=g("on"),slug=g("slug"),month=g("month"),sign=g("sign");
+    const k=g("kind"),on=g("date")||g("on"),slug=g("slug"),month=g("month"),sign=g("sign");
     if(seen.has(site+nnPath(k,slug,month,sign)))continue;
     const title=k==="forecast"?`${cap(sign)} sidereal horoscope, ${monthName(month)}`:k==="overview"?`Vedic astrology ${monthName(month)}: monthly overview`:cap(slug.replace(/-/g," "));
     items.push({date:on,title,status:on<today?"missed":on===today?(hour>=9?"missed":"due_today"):"queued",url:null,note:on<today?"Overdue: the next run publishes it and the rest slide":null})}
