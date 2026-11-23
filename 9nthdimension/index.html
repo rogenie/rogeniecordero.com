@@ -103,6 +103,7 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
 .net .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .net .f{font:500 26px/1.2 var(--mono);display:block;margin-top:2px}
 .net .h{font-size:12px;color:var(--muted)}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
@@ -131,7 +132,7 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
     <div class="panel" id="problems"></div>
   </section>
 
-  <section>
+  <section id="visitsSec">
     <div class="sechead"><h2>Website visits</h2><span class="muted" style="font-size:13px" id="visitSrc">GoatCounter</span></div>
     <div class="panel" id="visits" style="overflow:hidden"></div>
   </section>
@@ -244,8 +245,8 @@ function render(art,soc){
       </div>`).join("")}</div>`:`<div class="ok">No problems for ${esc(pick)}. Every due article is live and no social post failed.</div>`;
     // visits
     const g=GC[pick];
-    if(!g){$("#visits").innerHTML=`<div style="padding:18px;color:var(--muted)">${esc(NOVISIT[pick]||"No website for this brand.")}</div>`;$("#visitSrc").textContent=""}
-    else{
+    $("#visitsSec").hidden=!g;
+    if(g){
       $("#visitSrc").innerHTML=`GoatCounter · <a href="https://${g.code}.goatcounter.com">open full stats</a>`;
       $("#visits").innerHTML=`<div class="nets">${[["All time",0],["Last 30 days",30],["Last 7 days",7]].map(([l,d])=>`<div class="net"><div class="lab">${l}</div><span class="f" data-v="${d}">…</span></div>`).join("")}</div>
         <div id="vnote" style="padding:10px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)">${g.shared?`${esc(g.site)} shares one counter with ${esc(g.shared)}, so these totals cover both sites. Per-article counts below are this site only.`:esc(g.note||g.site)}</div>`;
