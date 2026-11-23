@@ -77,7 +77,9 @@ tr.total td{background:var(--sunk);font-weight:600}
 .stats{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
 .stats b{font:500 15px var(--mono);color:var(--fg)}
 .stats .bad b{color:var(--down)}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.cols h4.bad{color:var(--down)}
+li .why{display:block;font-size:12px;color:var(--muted)}
 @media (max-width:620px){.cols{grid-template-columns:1fr}}
 .cols h4{margin:0 0 6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
@@ -270,6 +272,7 @@ function render(art,soc){
         <div class="stats"><span><b>${c.published}</b> live</span><span><b>${c.published_7d}</b> this week</span><span><b>${c.queued}</b> in queue</span>${c.missed?`<span class="bad"><b>${c.missed}</b> missed</span>`:""}${c.held?`<span class="bad"><b>${c.held}</b> held</span>`:""}</div>
         <div class="cols">
           <div><h4>Published</h4><ol>${s.published.map(i=>li(i,true)).join("")||'<li class="more">None yet</li>'}</ol>${c.published>s.published.length?`<div class="more">+ ${c.published-s.published.length} older</div>`:""}</div>
+          <div><h4 class="${s.problems.length?"bad":""}">Missed${s.problems.length?` (${s.problems.length})`:""}</h4><ol>${[...s.problems].reverse().map(i=>`<li class="miss"><span class="dt">${esc(md(i.date))}</span><span class="ti">${esc(i.slot?"Nothing went live":i.title)}<span class="why">${i.status==="held"?"Held"+(i.note?": "+esc(i.note):""):"Scheduled, not published"}</span></span><span></span></li>`).join("")||'<li class="more"><span></span><span>None missed</span></li>'}</ol></div>
           <div><h4>In queue</h4><ol>${s.queue.map(i=>li(i,false)).join("")||'<li class="miss"><span></span><span class="ti">Queue is empty</span></li>'}</ol>${c.queued>s.queue.length?`<div class="more">+ ${c.queued-s.queue.length} more</div>`:""}</div>
         </div></div>`}).join(""):`<div class="panel" style="padding:18px;color:var(--muted)">${esc(pick)} has no article publishing.</div>`;
     const gg=GC[pick],me2=pick;
