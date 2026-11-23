@@ -88,6 +88,18 @@ li.today .ti::after{content:" · due today";color:var(--warn);font-size:12px}
 .more{font-size:12px;color:var(--muted)}
 .err{color:var(--down)}
 footer{font-size:12px;color:var(--muted);line-height:1.6}
+
+.brandbar{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 18px;position:sticky;top:0;z-index:5}
+.brandbar .pick select{font:700 18px var(--display);min-width:280px;padding:8px 36px 8px 12px}
+.brandbar .sum{font-size:13px;color:var(--muted)}
+.divider{border:0;border-top:2px solid var(--line);margin:4px 0}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--sunk)}
+td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var(--up)}
+.nets{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--line)}
+.net{background:var(--surface);padding:14px 16px}
+.net .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.net .f{font:500 26px/1.2 var(--mono);display:block;margin-top:2px}
+.net .h{font-size:12px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -99,20 +111,31 @@ footer{font-size:12px;color:var(--muted);line-height:1.6}
     </div>
   </header>
 
-  <div class="kpis" id="kpis"></div>
+  <section>
+    <div class="sechead"><h2>All brands</h2><span class="muted" style="font-size:13px">Click a row to open that brand below</span></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="panel scroll"><table id="overview"></table></div>
+  </section>
 
-  <section id="problems-sec">
-    <div class="sechead"><h2>Problems</h2><span class="muted" style="font-size:13px">Failed or missing social posts and article publishes, by brand</span></div>
+  <hr class="divider">
+
+  <div class="brandbar">
+    <label class="pick"><span>Brand</span> <select id="brandSel" aria-label="Brand"></select></label>
+    <span class="sum" id="brandSum"></span>
+  </div>
+
+  <section>
+    <div class="sechead"><h2>Problems</h2><span class="muted" style="font-size:13px">Failed or missing social posts and article publishes</span></div>
     <div class="panel" id="problems"></div>
   </section>
 
   <section>
-    <div class="sechead"><h2>Social following</h2><span class="muted" style="font-size:13px">Followers now · change over 7 days · 30-day change in the total column</span></div>
-    <div class="panel scroll"><table id="social"></table></div>
+    <div class="sechead"><h2>Social following</h2><span class="muted" style="font-size:13px">Followers now · change over 7 and 30 days</span></div>
+    <div class="panel" id="social" style="overflow:hidden"></div>
   </section>
 
   <section>
-    <div class="sechead"><h2>Articles</h2><label class="pick">Brand <select id="brandSel"></select></label></div>
+    <div class="sechead"><h2>Articles</h2></div>
     <div class="streams" id="streams"></div>
   </section>
 
@@ -128,6 +151,7 @@ const sign=n=>n==null?"":(n>0?"+":n<0?"−":"±")+Math.abs(n).toLocaleString("en
 const cls=n=>n>0?"up":n<0?"down":"flat";
 const md=s=>{if(!s)return"";const d=new Date(s+"T12:00:00");return d.toLocaleDateString("en-US",{month:"short",day:"numeric"})};
 const when=s=>{const d=new Date(s);return isNaN(d)?s:d.toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})};
+const byOrder=(a,b)=>(ORDER.indexOf(a)+1||99)-(ORDER.indexOf(b)+1||99);
 
 function acctNums(a){
   const h=a.history||{},ds=Object.keys(h).sort();if(!ds.length)return{};
@@ -145,79 +169,82 @@ async function load(){
 
 function render(art,soc){
   $("#fresh").innerHTML=`Articles checked ${esc(when(art.generated))} · Social checked ${esc(when(soc.generated))} · Pacific time`;
-  // ---- problems: social (from social.json) + article misses/holds (from articles.json)
+
+  // ---------- gather per-brand data ----------
   const probs=[...(soc.problems||[])];
   for(const s of art.streams){
     if(s.error){probs.push({brand:s.brand,date:art.today,network:s.stream,severity:"medium",kind:"check",text:`Couldn't read the ${s.stream.toLowerCase()} calendar: ${s.error}`});continue}
-    for(const p of s.problems||[]){
-      probs.push({brand:s.brand,date:p.date,network:s.stream,severity:p.status==="missed"?"high":"medium",kind:p.status,
-        text:(p.slot?p.title:(p.status==="missed"?"Didn't go live: ":"Held: ")+p.title)+(p.note?` (${p.note})`:"")});
-    }
+    for(const p of s.problems||[]) probs.push({brand:s.brand,date:p.date,network:s.stream,severity:p.status==="missed"?"high":"medium",kind:p.status,
+      text:(p.slot?p.title:(p.status==="missed"?"Didn't go live: ":"Held: ")+p.title)+(p.note?` (${p.note})`:"")});
   }
+  const B={};
+  const ensure=n=>B[n]=B[n]||{name:n,accounts:[],personal:false,streams:[],probs:[],f:0,f7:0,f30:0,hasSoc:false,pub7:0,queued:0,live:0};
+  for(const b of soc.brands||[]){const x=ensure(b.brand);x.personal=!!b.personal;x.note=b.note;
+    for(const a of b.accounts){const v=acctNums(a);x.accounts.push({...a,...v});x.f+=v.now;x.f7+=v.d7;x.f30+=v.d30;x.hasSoc=true}}
+  for(const s of art.streams){const x=ensure(s.brand);x.streams.push(s);if(s.counts){x.pub7+=s.counts.published_7d;x.queued+=s.counts.queued;x.live+=s.counts.published}}
+  for(const p of probs)ensure(p.brand).probs.push(p);
+  const names=Object.keys(B).sort(byOrder);
+  const biz=names.map(n=>B[n]).filter(x=>!x.personal);
+  const sum=k=>biz.reduce((t,x)=>t+x[k],0);
+
+  // ---------- top: all brands ----------
+  const high=probs.filter(p=>p.severity==="high").length;
+  $("#kpis").innerHTML=`
+    <div class="kpi"><div class="lab">Followers, business brands</div><div class="big num">${fmt(sum("f"))}</div><div class="small"><span class="${cls(sum("f7"))}">${sign(sum("f7"))}</span> in 7 days · <span class="${cls(sum("f30"))}">${sign(sum("f30"))}</span> in 30</div></div>
+    <div class="kpi"><div class="lab">Articles live, last 7 days</div><div class="big num">${sum("pub7")}</div><div class="small">across ${art.streams.length} publishing streams</div></div>
+    <div class="kpi"><div class="lab">Articles in queue</div><div class="big num">${sum("queued")}</div><div class="small">scheduled, not yet live</div></div>
+    <div class="kpi ${probs.length?"alert":""}"><div class="lab">Open problems</div><div class="big num">${probs.length}</div><div class="small">${high} urgent</div></div>`;
+  $("#overview").innerHTML=`<thead><tr><th>Brand</th><th>Followers</th><th>7 days</th><th>30 days</th><th>Articles this week</th><th>In queue</th><th>Problems</th></tr></thead><tbody>${
+    names.map(n=>{const x=B[n];const hp=x.probs.filter(p=>p.severity==="high").length;return`<tr class="click" data-b="${esc(n)}" tabindex="0">
+      <td><b>${esc(n)}</b>${x.personal?'<span class="badge">personal</span>':""}</td>
+      ${x.hasSoc?`<td class="num">${fmt(x.f)}</td><td class="num ${cls(x.f7)}">${sign(x.f7)}</td><td class="num ${cls(x.f30)}">${sign(x.f30)}</td>`:`<td class="na" colspan="3" style="text-align:right">not in Metricool</td>`}
+      ${x.streams.length?`<td class="num">${x.pub7}</td><td class="num">${x.queued}</td>`:`<td class="na" colspan="2" style="text-align:right">no articles</td>`}
+      <td class="pr ${x.probs.length?"bad":"good"}">${x.probs.length?`${x.probs.length}${hp?` <span style="font-size:12px">(${hp} urgent)</span>`:""}`:"✓"}</td></tr>`}).join("")}</tbody>`;
+
+  // ---------- brand picker ----------
+  let pick=new URLSearchParams(location.search).get("brand");
+  if(!B[pick])pick=names.find(n=>B[n].probs.length)||names[0];
+  $("#brandSel").innerHTML=names.map(n=>`<option value="${esc(n)}"${n===pick?" selected":""}>${esc(n)}</option>`).join("");
+  const choose=n=>{pick=n;$("#brandSel").value=n;const u=new URL(location);u.searchParams.set("brand",n);history.replaceState(null,"",u);drawBrand()};
+  $("#brandSel").onchange=e=>choose(e.target.value);
+  $("#overview").onclick=e=>{const r=e.target.closest("tr.click");if(r){choose(r.dataset.b);$(".brandbar").scrollIntoView({behavior:"smooth"})}};
+  $("#overview").onkeydown=e=>{if(e.key==="Enter"){const r=e.target.closest("tr.click");if(r)choose(r.dataset.b)}};
+
   const kindLabel={failed:"Social post failed",empty:"No social posts",missed:"Article missed",held:"Article held",check:"Check failed"};
-  const byBrand={};probs.forEach(p=>(byBrand[p.brand]=byBrand[p.brand]||[]).push(p));
-  const brands=Object.keys(byBrand).sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b));
-  $("#problems").innerHTML=brands.length?brands.map(b=>{
-    const list=byBrand[b].sort((x,y)=>(x.severity===y.severity?0:x.severity==="high"?-1:1)||String(y.date).localeCompare(x.date));
-    return `<div class="pgroup"><h3>${esc(b)} <span class="count">${list.length}</span></h3>${list.map(p=>`
+  function drawBrand(){
+    const x=B[pick];
+    $("#brandSum").innerHTML=[x.hasSoc?`${fmt(x.f)} followers`:null,x.streams.length?`${x.live} articles live · ${x.queued} queued`:null,`${x.probs.length} problem${x.probs.length===1?"":"s"}`].filter(Boolean).join(" · ");
+    // problems
+    const list=[...x.probs].sort((a,b)=>(a.severity===b.severity?0:a.severity==="high"?-1:1)||String(b.date).localeCompare(a.date));
+    $("#problems").innerHTML=list.length?`<div class="pgroup">${list.map(p=>`
       <div class="prob ${p.severity==="high"?"high":""}">
         <div class="meta"><span class="tag">${esc(kindLabel[p.kind]||p.kind)}</span><br>${esc(md(p.date))} · ${esc(p.network)}</div>
         <div><div>${esc(p.text)}</div>${p.fix?`<div class="fix">${esc(p.fix)}</div>`:""}</div>
-      </div>`).join("")}</div>`}).join(""):`<div class="ok">No problems found. Every due article is live and no social post failed.</div>`;
-
-  // ---- social table
-  const rows=[];let tot=0,tot7=0,tot30=0;const netTot={};
-  const sb=[...(soc.brands||[])].sort((a,b)=>ORDER.indexOf(a.brand)-ORDER.indexOf(b.brand));
-  for(const b of sb){
-    if(!b.accounts.length)continue;
-    let bt=0,b7=0,b30=0;const cells=NETS.map(n=>{
-      const a=b.accounts.find(x=>x.network===n);if(!a)return`<td class="na">—</td>`;
-      const v=acctNums(a);bt+=v.now;b7+=v.d7;b30+=v.d30;
-      if(!b.personal){netTot[n]=netTot[n]||{now:0,d7:0};netTot[n].now+=v.now;netTot[n].d7+=v.d7}
-      return`<td><a class="f" href="${esc(a.url)}" title="${esc(a.handle)} · as of ${esc(md(v.asOf))}">${fmt(v.now)}</a><div class="ch ${cls(v.d7)}">${sign(v.d7)} 7d</div></td>`});
-    if(!b.personal){tot+=bt;tot7+=b7;tot30+=b30}
-    rows.push(`<tr><td><b>${esc(b.brand)}</b>${b.personal?'<span class="badge">personal</span>':""}</td>${cells.join("")}
-      <td><span class="f">${fmt(bt)}</span><div class="ch ${cls(b7)}">${sign(b7)} 7d</div><div class="ch ${cls(b30)}">${sign(b30)} 30d</div></td></tr>`);
-  }
-  const noSoc=sb.filter(b=>!b.accounts.length).map(b=>b.brand);
-  $("#social").innerHTML=`<thead><tr><th>Brand</th>${NETS.map(n=>`<th>${n}</th>`).join("")}<th>Total</th></tr></thead><tbody>${rows.join("")}
-    <tr class="total"><td>All business brands</td>${NETS.map(n=>netTot[n]?`<td><span class="f">${fmt(netTot[n].now)}</span><div class="ch ${cls(netTot[n].d7)}">${sign(netTot[n].d7)} 7d</div></td>`:`<td class="na">—</td>`).join("")}
-    <td><span class="f">${fmt(tot)}</span><div class="ch ${cls(tot7)}">${sign(tot7)} 7d</div><div class="ch ${cls(tot30)}">${sign(tot30)} 30d</div></td></tr>
-    ${noSoc.length?`<tr><td colspan="6" class="na" style="text-align:left">Not in Metricool, so no follower counts: ${esc(noSoc.join(", "))}</td></tr>`:""}</tbody>`;
-
-  // ---- KPIs
-  const pub7=art.streams.reduce((n,s)=>n+(s.counts?.published_7d||0),0);
-  const queued=art.streams.reduce((n,s)=>n+(s.counts?.queued||0),0);
-  const high=probs.filter(p=>p.severity==="high").length;
-  $("#kpis").innerHTML=`
-    <div class="kpi"><div class="lab">Followers, business brands</div><div class="big num">${fmt(tot)}</div><div class="small"><span class="${cls(tot7)}">${sign(tot7)}</span> in 7 days · <span class="${cls(tot30)}">${sign(tot30)}</span> in 30</div></div>
-    <div class="kpi"><div class="lab">Articles live, last 7 days</div><div class="big num">${pub7}</div><div class="small">across ${art.streams.length} publishing streams</div></div>
-    <div class="kpi"><div class="lab">Articles in queue</div><div class="big num">${queued}</div><div class="small">scheduled, not yet live</div></div>
-    <div class="kpi ${probs.length?"alert":""}"><div class="lab">Open problems</div><div class="big num">${probs.length}</div><div class="small">${high} urgent</div></div>`;
-
-  // ---- articles
-  const artBrands=[...new Set(art.streams.map(s=>s.brand))].sort((a,b)=>ORDER.indexOf(a)-ORDER.indexOf(b));
-  let pick=new URLSearchParams(location.search).get("brand")||"All";
-  if(pick!=="All"&&!artBrands.includes(pick))pick="All";
-  $("#brandSel").innerHTML=["All",...artBrands].map(b=>`<option value="${esc(b)}"${b===pick?" selected":""}>${b==="All"?"All brands":esc(b)}</option>`).join("");
-  const drawStreams=()=>{
-    $("#streams").innerHTML=art.streams.filter(s=>pick==="All"||s.brand===pick).map(s=>{
-      if(s.error)return`<div class="panel stream"><h3>${esc(s.brand)} · ${esc(s.stream)}</h3><div class="err">${esc(s.error)}</div></div>`;
+      </div>`).join("")}</div>`:`<div class="ok">No problems for ${esc(pick)}. Every due article is live and no social post failed.</div>`;
+    // social
+    $("#social").innerHTML=x.hasSoc?`<div class="nets">${NETS.map(n=>x.accounts.find(a=>a.network===n)).filter(Boolean).map(a=>`
+      <div class="net"><div class="lab">${esc(a.network)}</div><a class="f" href="${esc(a.url)}">${fmt(a.now)}</a>
+        <div class="h">${esc(a.handle)} · as of ${esc(md(a.asOf))}</div>
+        <div class="ch num"><span class="${cls(a.d7)}">${sign(a.d7)}</span> 7d · <span class="${cls(a.d30)}">${sign(a.d30)}</span> 30d</div></div>`).join("")}
+      <div class="net" style="background:var(--sunk)"><div class="lab">Total</div><span class="f">${fmt(x.f)}</span><div class="h">all networks</div>
+        <div class="ch num"><span class="${cls(x.f7)}">${sign(x.f7)}</span> 7d · <span class="${cls(x.f30)}">${sign(x.f30)}</span> 30d</div></div></div>`
+      :`<div class="empty" style="padding:18px;color:var(--muted)">${esc(x.note||"No social accounts")} for ${esc(pick)}.</div>`;
+    // articles
+    $("#streams").innerHTML=x.streams.length?x.streams.map(s=>{
+      if(s.error)return`<div class="panel stream"><h3>${esc(s.stream)}</h3><div class="err">${esc(s.error)}</div></div>`;
       const c=s.counts;
       const li=(i,link)=>`<li class="${i.status==="missed"?"miss":i.status==="due_today"?"today":""}"><span class="dt">${esc(md(i.date))}</span><span class="ti">${link&&i.url?`<a href="${esc(i.url)}">${esc(i.title)}</a>`:esc(i.title)}</span></li>`;
       return`<div class="panel stream">
-        <div class="top"><h3>${esc(s.brand)} · ${esc(s.stream)}</h3><span class="cad">${esc(s.cadence||"")}</span></div>
+        <div class="top"><h3>${esc(s.stream)}</h3><span class="cad">${esc(s.cadence||"")}</span></div>
         <div class="stats"><span><b>${c.published}</b> live</span><span><b>${c.published_7d}</b> this week</span><span><b>${c.queued}</b> in queue</span>${c.missed?`<span class="bad"><b>${c.missed}</b> missed</span>`:""}${c.held?`<span class="bad"><b>${c.held}</b> held</span>`:""}</div>
         <div class="cols">
           <div><h4>Published</h4><ol>${s.published.map(i=>li(i,true)).join("")||'<li class="more">None yet</li>'}</ol>${c.published>s.published.length?`<div class="more">+ ${c.published-s.published.length} older</div>`:""}</div>
           <div><h4>In queue</h4><ol>${s.queue.map(i=>li(i,false)).join("")||'<li class="miss"><span></span><span class="ti">Queue is empty</span></li>'}</ol>${c.queued>s.queue.length?`<div class="more">+ ${c.queued-s.queue.length} more</div>`:""}</div>
-        </div></div>`}).join("");
-  };
-  drawStreams();
-  $("#brandSel").onchange=e=>{pick=e.target.value;
-    const u=new URL(location);pick==="All"?u.searchParams.delete("brand"):u.searchParams.set("brand",pick);history.replaceState(null,"",u);drawStreams()};
+        </div></div>`}).join(""):`<div class="panel" style="padding:18px;color:var(--muted)">${esc(pick)} has no article publishing.</div>`;
+  }
+  drawBrand();
 
-  $("#foot").innerHTML=`Followers come from Metricool's daily counts; each number links to the account and shows its as-of date on hover. Articles come from each site's own publishing calendar, read without changing anything. A "missed" article is one scheduled before today that isn't live. Refreshed daily by the "All Brands Dashboard refresh" scheduled task.`;
+  $("#foot").innerHTML=`Followers come from Metricool's daily counts. Articles come from each site's own publishing calendar, read without changing anything. A "missed" article is one scheduled before today that isn't live.`;
 }
 load();
 </script>
