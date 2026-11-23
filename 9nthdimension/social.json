@@ -1,0 +1,362 @@
+{
+ "generated": "2026-11-22T16:45-08:00",
+ "source": "Metricool (follower counts are Metricool's daily values; each account shows the day of its latest count)",
+ "brands": [
+  {
+   "brand": "9nth Dimension",
+   "metricool_id": 6498271,
+   "accounts": [
+    {
+     "network": "TikTok",
+     "handle": "@pixiebygrace",
+     "url": "https://www.tiktok.com/@pixiebygrace",
+     "history": {
+      "2026-10-23": 962,
+      "2026-11-15": 1021,
+      "2026-11-21": 1024
+     },
+     "as_of": "2026-11-21"
+    },
+    {
+     "network": "Facebook",
+     "handle": "9nth Dimension",
+     "url": "https://facebook.com/1079782558559640",
+     "history": {
+      "2026-10-23": 634,
+      "2026-11-15": 811,
+      "2026-11-20": 814
+     },
+     "as_of": "2026-11-20"
+    },
+    {
+     "network": "YouTube",
+     "handle": "9nth Dimension",
+     "url": "https://www.youtube.com/channel/UCpPybTYxCFYDLs8522Y6ZXw",
+     "history": {
+      "2026-10-23": 173,
+      "2026-11-15": 184,
+      "2026-11-22": 204
+     },
+     "as_of": "2026-11-22"
+    }
+   ]
+  },
+  {
+   "brand": "Teachings of Jesus",
+   "metricool_id": 6804322,
+   "accounts": [
+    {
+     "network": "TikTok",
+     "handle": "@teachings.of.jesuschrist",
+     "url": "https://www.tiktok.com/@teachings.of.jesuschrist",
+     "history": {
+      "2026-10-23": 17,
+      "2026-11-15": 19,
+      "2026-11-21": 19
+     },
+     "as_of": "2026-11-21"
+    },
+    {
+     "network": "Facebook",
+     "handle": "Teachings of Jesus",
+     "url": "https://facebook.com/1047000655164951",
+     "history": {
+      "2026-10-23": 30,
+      "2026-11-15": 35,
+      "2026-11-20": 35
+     },
+     "as_of": "2026-11-20"
+    },
+    {
+     "network": "YouTube",
+     "handle": "Teachings of Jesus",
+     "url": "https://www.youtube.com/channel/UChbRgO5L5TlZYLYY-IxaLgg",
+     "history": {
+      "2026-10-23": 40,
+      "2026-11-15": 45,
+      "2026-11-22": 46
+     },
+     "as_of": "2026-11-22"
+    }
+   ]
+  },
+  {
+   "brand": "Natal Notes",
+   "metricool_id": 7263055,
+   "accounts": [
+    {
+     "network": "TikTok",
+     "handle": "@natalnotes",
+     "url": "https://www.tiktok.com/@natalnotes",
+     "history": {
+      "2026-10-23": 108,
+      "2026-11-15": 144,
+      "2026-11-21": 152
+     },
+     "as_of": "2026-11-21"
+    },
+    {
+     "network": "Facebook",
+     "handle": "Natal Notes",
+     "url": "https://facebook.com/845874061938683",
+     "history": {
+      "2026-10-23": 27,
+      "2026-11-15": 44,
+      "2026-11-20": 47
+     },
+     "as_of": "2026-11-20"
+    },
+    {
+     "network": "YouTube",
+     "handle": "Natal Notes",
+     "url": "https://www.youtube.com/channel/UCrTdxWYXHs6xyHX8adUuMjQ",
+     "history": {
+      "2026-10-23": 427,
+      "2026-11-15": 426,
+      "2026-11-22": 425
+     },
+     "as_of": "2026-11-22"
+    }
+   ]
+  },
+  {
+   "brand": "ÆTAS",
+   "metricool_id": 2896902,
+   "accounts": [
+    {
+     "network": "TikTok",
+     "handle": "@aetasliveforever",
+     "url": "https://www.tiktok.com/@aetasliveforever",
+     "history": {
+      "2026-10-23": 5164,
+      "2026-11-15": 5169,
+      "2026-11-21": 5163
+     },
+     "as_of": "2026-11-21"
+    },
+    {
+     "network": "Facebook",
+     "handle": "ÆTAS",
+     "url": "https://facebook.com/1061971567007754",
+     "history": {
+      "2026-10-23": 17,
+      "2026-11-15": 17,
+      "2026-11-20": 17
+     },
+     "as_of": "2026-11-20"
+    },
+    {
+     "network": "YouTube",
+     "handle": "ÆTAS",
+     "url": "https://www.youtube.com/channel/UCuZGjyGUYZ6MOizRz-trvPw",
+     "history": {
+      "2026-10-23": 34,
+      "2026-11-15": 34,
+      "2026-11-22": 34
+     },
+     "as_of": "2026-11-22"
+    }
+   ]
+  },
+  {
+   "brand": "Tibi Mundum",
+   "metricool_id": 6757880,
+   "accounts": [
+    {
+     "network": "TikTok",
+     "handle": "@tibimundum",
+     "url": "https://www.tiktok.com/@tibimundum",
+     "history": {
+      "2026-10-23": 3831,
+      "2026-11-15": 3818,
+      "2026-11-21": 3815
+     },
+     "as_of": "2026-11-21"
+    },
+    {
+     "network": "Facebook",
+     "handle": "Tibi Mundum",
+     "url": "https://facebook.com/105737005945152",
+     "history": {
+      "2026-10-23": 22,
+      "2026-11-15": 24,
+      "2026-11-20": 24
+     },
+     "as_of": "2026-11-20"
+    },
+    {
+     "network": "YouTube",
+     "handle": "Tibi Mundum",
+     "url": "https://www.youtube.com/channel/UCklCCWOFeuLpS0FKg8tDhBg",
+     "history": {
+      "2026-10-23": 55,
+      "2026-11-15": 56,
+      "2026-11-22": 56
+     },
+     "as_of": "2026-11-22"
+    },
+    {
+     "network": "Instagram",
+     "handle": "@tibimundum_",
+     "url": "https://www.instagram.com/tibimundum_/",
+     "history": {
+      "2026-10-23": 8,
+      "2026-11-15": 9,
+      "2026-11-20": 9
+     },
+     "as_of": "2026-11-20"
+    }
+   ]
+  },
+  {
+   "brand": "Computatio",
+   "metricool_id": 6431543,
+   "accounts": [
+    {
+     "network": "TikTok",
+     "handle": "@computatio",
+     "url": "https://www.tiktok.com/@computatio",
+     "history": {
+      "2026-10-28": 50,
+      "2026-11-15": 57,
+      "2026-11-21": 57
+     },
+     "as_of": "2026-11-21"
+    },
+    {
+     "network": "Facebook",
+     "handle": "Computatio",
+     "url": "https://facebook.com/1705264186367152",
+     "history": {
+      "2026-10-23": 1303,
+      "2026-11-15": 1297,
+      "2026-11-20": 1297
+     },
+     "as_of": "2026-11-20"
+    },
+    {
+     "network": "YouTube",
+     "handle": "Computatio",
+     "url": "https://www.youtube.com/channel/UCPZvUDZOWJPIjMSNWfvnz2A",
+     "history": {
+      "2026-10-23": 8,
+      "2026-11-15": 8,
+      "2026-11-22": 8
+     },
+     "as_of": "2026-11-22"
+    }
+   ]
+  },
+  {
+   "brand": "thatmommatho",
+   "metricool_id": 6431526,
+   "personal": true,
+   "accounts": [
+    {
+     "network": "TikTok",
+     "handle": "@thatmommatho",
+     "url": "https://www.tiktok.com/@thatmommatho",
+     "history": {
+      "2026-10-23": 13172,
+      "2026-11-15": 13166,
+      "2026-11-21": 13166
+     },
+     "as_of": "2026-11-21"
+    },
+    {
+     "network": "Facebook",
+     "handle": "thatmommatho",
+     "url": "https://facebook.com/396525723718095",
+     "history": {
+      "2026-10-23": 19,
+      "2026-11-15": 19,
+      "2026-11-20": 19
+     },
+     "as_of": "2026-11-20"
+    },
+    {
+     "network": "YouTube",
+     "handle": "thatmommatho",
+     "url": "https://www.youtube.com/channel/UCfHv2Os9Y6FtrJ5h-LVOaHw",
+     "history": {
+      "2026-10-23": 136,
+      "2026-11-15": 136,
+      "2026-11-22": 136
+     },
+     "as_of": "2026-11-22"
+    }
+   ]
+  },
+  {
+   "brand": "BookByte",
+   "accounts": [],
+   "note": "No social accounts in Metricool"
+  },
+  {
+   "brand": "Purogé",
+   "accounts": [],
+   "note": "No social accounts in Metricool"
+  },
+  {
+   "brand": "Pinoy Mobile Mechanic",
+   "accounts": [],
+   "note": "No social accounts in Metricool"
+  }
+ ],
+ "problems": [
+  {
+   "brand": "Tibi Mundum",
+   "date": "2026-11-22",
+   "network": "All",
+   "severity": "high",
+   "kind": "failed",
+   "text": "London itinerary (8:01 AM) failed on all 4 networks: Instagram and Facebook couldn't download the media, YouTube upload failed, TikTok rejected the file type.",
+   "fix": "These are leftover September posts from the old PC engine whose Cloudinary media is gone. Delete the old queued posts in Metricool so only the new cloud social engine posts."
+  },
+  {
+   "brand": "Teachings of Jesus",
+   "date": "2026-11-19",
+   "network": "TikTok",
+   "severity": "high",
+   "kind": "failed",
+   "text": "5 TikTok posts failed Nov 15-19 with \"The post has high spamming risk.\"",
+   "fix": "Reconnect TikTok in Metricool and post a few manually to clear the flag."
+  },
+  {
+   "brand": "Teachings of Jesus",
+   "date": "2026-11-20",
+   "network": "All",
+   "severity": "high",
+   "kind": "empty",
+   "text": "Nothing published or scheduled on any network since Nov 19 (checked through Nov 26).",
+   "fix": "No automation is making Teachings of Jesus posts. Its project manager needs to restart the content run."
+  },
+  {
+   "brand": "ÆTAS",
+   "date": "2026-11-17",
+   "network": "All",
+   "severity": "high",
+   "kind": "empty",
+   "text": "No social posts published or scheduled from Nov 17 through Nov 26 on TikTok, Facebook or YouTube.",
+   "fix": "No social automation exists for ÆTAS since the rebrand. Articles are publishing; social is not."
+  },
+  {
+   "brand": "Natal Notes",
+   "date": "2026-11-21",
+   "network": "TikTok · Facebook · YouTube",
+   "severity": "medium",
+   "kind": "failed",
+   "text": "The weekly video run on Nov 21 failed (usage limit reached), so daily videos for the coming week were not made.",
+   "fix": "Carousels are still posting. Re-run \"@natalnotes weekly videos + report\" or wait for Nov 28."
+  },
+  {
+   "brand": "Computatio",
+   "date": "2026-11-22",
+   "network": "YouTube",
+   "severity": "medium",
+   "kind": "empty",
+   "text": "Last post was Nov 21; nothing posted on Nov 22. Only YouTube posts; TikTok and Facebook get nothing.",
+   "fix": "Old Oct queue is running out. Those posts also link to calendly.com/rogeniecpa, not calendly.com/computatio."
+  }
+ ]
+}

@@ -1,0 +1,1247 @@
+{
+ "generated": "2026-11-22T16:25-08:00",
+ "today": "2026-11-22",
+ "streams": [
+  {
+   "brand": "9nth Dimension",
+   "stream": "Articles",
+   "cadence": "Odd days of the month, 5:37 AM Pacific",
+   "counts": {
+    "published": 5,
+    "queued": 34,
+    "missed": 1,
+    "held": 0,
+    "published_7d": 2
+   },
+   "published": [
+    {
+     "date": "2026-11-21",
+     "title": "Who decided which books are in the Bible?",
+     "status": "published",
+     "url": "https://9nthdimension.com/ladder/foundations/who-decided-which-books-are-in-the-bible/"
+    },
+    {
+     "date": "2026-11-17",
+     "title": "What are the Dead Sea Scrolls and what do they tell us about the Bible?",
+     "status": "published",
+     "url": "https://9nthdimension.com/ladder/awakening/what-are-the-dead-sea-scrolls/"
+    },
+    {
+     "date": "2026-11-15",
+     "title": "Who were the Nephilim in Genesis 6?",
+     "status": "published",
+     "url": "https://9nthdimension.com/ladder/awakening/who-were-the-nephilim/"
+    },
+    {
+     "date": "2026-11-13",
+     "title": "What is the Book of Enoch and why isn't it in the Bible?",
+     "status": "published",
+     "url": "https://9nthdimension.com/ladder/awakening/what-is-the-book-of-enoch/"
+    },
+    {
+     "date": "2026-11-11",
+     "title": "What to do when prayer feels dry",
+     "status": "published",
+     "url": "https://9nthdimension.com/ladder/healing/what-to-do-when-prayer-feels-dry/"
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-23",
+     "title": "What is Isaiah 53 about? The suffering servant and how it's read",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-11-25",
+     "title": "Why do Catholic and Protestant Bibles have different books?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-11-27",
+     "title": "Who is the Angel of the LORD in the Old Testament?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-11-29",
+     "title": "What does Psalm 22 say, and why do Christians read it as a prophecy?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-01",
+     "title": "Does Jude really quote the Book of Enoch?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-03",
+     "title": "What are the lost books the Bible mentions, like the Book of Jasher?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-05",
+     "title": "Who was Melchizedek?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-07",
+     "title": "What is the Gospel of Thomas and why was it left out?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-09",
+     "title": "What is the divine council in Psalm 82?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-11",
+     "title": "How to read Bible prophecy without falling for date-setting",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-13",
+     "title": "What is the Book of Jubilees?",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-15",
+     "title": "What does Micah 5:2 say about Bethlehem?",
+     "status": "queued",
+     "url": null
+    }
+   ],
+   "problems": [
+    {
+     "date": "2026-11-19",
+     "title": "No article went live on this scheduled day",
+     "status": "missed",
+     "url": null,
+     "slot": true
+    }
+   ],
+   "next": {
+    "date": "2026-11-23",
+    "title": "What is Isaiah 53 about? The suffering servant and how it's read",
+    "status": "queued",
+    "url": null
+   }
+  },
+  {
+   "brand": "ÆTAS",
+   "stream": "Articles",
+   "cadence": "Daily. Mon/Fri: evergreen and trending articles across Body, Beauty and Longevity. Wed: research news when the scout finds one. Every other day, and any Mon/Wed/Fri left open: a Hair article (_src/TOPICS.md, \"Daily Hair\").",
+   "counts": {
+    "published": 18,
+    "queued": 18,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 7
+   },
+   "published": [
+    {
+     "date": "2026-11-22",
+     "title": "Pumpkin seed oil for hair: what the study showed",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/pumpkin-seed-oil-hair/",
+     "note": null
+    },
+    {
+     "date": "2026-11-21",
+     "title": "Spironolactone for female pattern hair loss: the evidence",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/spironolactone-hair-loss-women/",
+     "note": null
+    },
+    {
+     "date": "2026-11-21",
+     "title": "Hair thinning in perimenopause: causes and what helps",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/hair-thinning-perimenopause/",
+     "note": "Catch-up: originally scheduled 2026-11-20; earlier runs missed it, published 2026-11-21."
+    },
+    {
+     "date": "2026-11-21",
+     "title": "Thyroid and hair loss: which tests to ask about",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/thyroid-hair-loss/",
+     "note": "Catch-up: originally scheduled 2026-11-19; earlier runs missed it, published 2026-11-21."
+    },
+    {
+     "date": "2026-11-21",
+     "title": "Biotin for hair: does it work, and the lab-test warning",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/biotin-for-hair/",
+     "note": "Catch-up: originally scheduled 2026-11-18; earlier runs missed it, published 2026-11-21."
+    },
+    {
+     "date": "2026-11-17",
+     "title": "Telogen effluvium: sudden hair shedding after stress, illness or surgery",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/telogen-effluvium/",
+     "note": null
+    },
+    {
+     "date": "2026-11-16",
+     "title": "Deep sleep after 35: what changes and what helps",
+     "status": "published",
+     "url": "https://aetasliveforever.com/foundations/deep-sleep-after-35/",
+     "note": null
+    },
+    {
+     "date": "2026-11-15",
+     "title": "Iron, ferritin and hair loss: what your labs mean",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/iron-ferritin-hair-loss/",
+     "note": null
+    },
+    {
+     "date": "2026-11-15",
+     "title": "Minoxidil for women: topical vs oral, what the trials show",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/minoxidil-for-women/",
+     "note": "Catch-up: originally dated 2026-11-14 (missed run); published 2026-11-15."
+    },
+    {
+     "date": "2026-11-13",
+     "title": "NMN and NAD+ supplements: what human trials show",
+     "status": "published",
+     "url": "https://aetasliveforever.com/supplements/nmn-nad-supplements-women/",
+     "note": null
+    },
+    {
+     "date": "2026-11-13",
+     "title": "Rosemary oil for hair growth: what the one trial really found",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/rosemary-oil-hair-growth/",
+     "note": "Catch-up: originally dated 2026-11-12 (missed run); published 2026-11-13."
+    },
+    {
+     "date": "2026-11-11",
+     "title": "Hair loss in women: the most common causes and how to tell them apart",
+     "status": "published",
+     "url": "https://aetasliveforever.com/hair/female-hair-loss-causes/",
+     "note": null
+    },
+    {
+     "date": "2026-11-10",
+     "title": "Strength training for bone density around menopause",
+     "status": "published",
+     "url": "https://aetasliveforever.com/bones/strength-training-bone-density-menopause/",
+     "note": "Catch-up for Nov 9 (no run published it); published Nov 10."
+    },
+    {
+     "date": "2026-11-06",
+     "title": "Urolithin A: what the human trials show",
+     "status": "published",
+     "url": "https://aetasliveforever.com/supplements/urolithin-a-evidence/",
+     "note": null
+    },
+    {
+     "date": "2026-11-04",
+     "title": "VO2 max for women: why it matters and how to raise it",
+     "status": "published",
+     "url": "https://aetasliveforever.com/fitness/vo2-max-women/",
+     "note": "Scheduled Nov 2; scheduled runs on Nov 2-4 could not push to the repo, so caught up on Nov 4 from an interactive session."
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-23",
+     "title": "Zone 2 cardio for women: what it is and how much",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-24",
+     "title": "Laser caps and combs (LLLT) for hair loss: do they work?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-25",
+     "title": "PRP for hair loss in women: what studies show",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-26",
+     "title": "Saw palmetto for women's hair loss: what the evidence says",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-27",
+     "title": "Collagen supplements for skin: what trials show",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-28",
+     "title": "Vitamin D and hair loss: is there a link?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-29",
+     "title": "Peppermint oil for hair growth: mice, not women",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-30",
+     "title": "Protein for women over 40: how much, from official sources",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-01",
+     "title": "Caffeine shampoo and hair loss: lab results vs real scalps",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-02",
+     "title": "Collagen supplements for hair: is there any evidence?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-03",
+     "title": "Zinc and hair loss: deficiency, testing and too much zinc",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-04",
+     "title": "Microneedling for skin over 40: what studies show",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-23",
+    "title": "Zone 2 cardio for women: what it is and how much",
+    "status": "queued",
+    "url": null,
+    "note": null
+   }
+  },
+  {
+   "brand": "Tibi Mundum",
+   "stream": "PTO guides",
+   "cadence": "Every other day (odd days of the month), 6:17 AM Pacific, published by the 'Tibimundum guides publisher' scheduled task following _guides/PUBLISHING.md. Topics follow _guides/TOPICS.md.",
+   "counts": {
+    "published": 9,
+    "queued": 11,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 3
+   },
+   "published": [
+    {
+     "date": "2026-11-21",
+     "title": "How to Plan PTO When It Accrues Every Paycheck",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/plan-pto-that-accrues/",
+     "note": null
+    },
+    {
+     "date": "2026-11-21",
+     "title": "Federal Holidays 2027, With Observed Dates",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/federal-holidays-2027/",
+     "note": null
+    },
+    {
+     "date": "2026-11-17",
+     "title": "10 PTO Days in 2027: How to Get the Most Time Off",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/10-pto-days-2027/",
+     "note": null
+    },
+    {
+     "date": "2026-11-15",
+     "title": "Long Weekends in 2027 and How to Stretch Them",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/long-weekends-2027/",
+     "note": null
+    },
+    {
+     "date": "2026-11-13",
+     "title": "Thanksgiving 2027: 9 Days Off for 4 PTO Days",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/thanksgiving-pto/",
+     "note": null
+    },
+    {
+     "date": "2026-11-11",
+     "title": "15 PTO Days in 2027: The Plan With the Most Days Off",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/15-pto-days-2027/",
+     "note": null
+    },
+    {
+     "date": "2026-11-09",
+     "title": "Christmas to New Year's 2026: Most Days Off for PTO",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/christmas-new-year-pto-2026/",
+     "note": null
+    },
+    {
+     "date": "2026-11-07",
+     "title": "Best Days to Take Off in 2027 (Exact Dates)",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/best-days-to-take-off-2027/",
+     "note": null
+    },
+    {
+     "date": "2026-11-05",
+     "title": "How to Maximize PTO in 2027: Every Bridge Day",
+     "status": "published",
+     "url": "https://tibimundum.com/guides/maximize-pto-2027/",
+     "note": null
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-23",
+     "title": "What Is a Bridge Day? One PTO Day, Four Days Off",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-25",
+     "title": "Floating Holidays: How They Work and When to Use Them",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-27",
+     "title": "How Many PTO Days Does the Average American Get?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-29",
+     "title": "Only 6 Company Holidays? Maximize PTO in 2027 Anyway",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-01",
+     "title": "20 PTO Days in 2027: The Best Plan",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-03",
+     "title": "Use-It-or-Lose-It PTO: Never Forfeit a Day",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-05",
+     "title": "Veterans Day 2027 Is a Thursday: Take Friday Off",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-07",
+     "title": "When to Request PTO for the Holidays (and Get a Yes)",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-09",
+     "title": "PTO Planning on a 4x10 or Shift Schedule",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-11",
+     "title": "12 PTO Days in 2027: The Best Way to Use Them",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-13",
+     "title": "Best PTO Planners Compared: Free vs Paid (2027)",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-23",
+    "title": "What Is a Bridge Day? One PTO Day, Four Days Off",
+    "status": "queued",
+    "url": null,
+    "note": null
+   }
+  },
+  {
+   "brand": "Tibi Mundum",
+   "stream": "Itineraries",
+   "cadence": "even days of the month, 6:47 AM Pacific",
+   "counts": {
+    "published": 4,
+    "queued": 16,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 4
+   },
+   "published": [
+    {
+     "date": "2026-11-22",
+     "title": "14 Days on New Zealand's South Island",
+     "status": "published",
+     "url": "https://tibimundum.com/itineraries/new-zealand-south-island-14-days/",
+     "note": null
+    },
+    {
+     "date": "2026-11-21",
+     "title": "10 Days in Japan: Tokyo and Kyoto",
+     "status": "published",
+     "url": "https://tibimundum.com/itineraries/japan-10-days/",
+     "note": null
+    },
+    {
+     "date": "2026-11-21",
+     "title": "5 Days in Mexico City",
+     "status": "published",
+     "url": "https://tibimundum.com/itineraries/mexico-city-5-days/",
+     "note": null
+    },
+    {
+     "date": "2026-11-21",
+     "title": "7 Days in Lisbon",
+     "status": "published",
+     "url": "https://tibimundum.com/itineraries/lisbon-7-days/",
+     "note": null
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-24",
+     "title": "5 Days in San Juan, Puerto Rico",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-26",
+     "title": "7 Days in Rome",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-28",
+     "title": "10 Days in Peru: Cusco and Machu Picchu",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-30",
+     "title": "14 Days in Thailand",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-02",
+     "title": "5 Days in Montreal",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-04",
+     "title": "7 Days in Marrakech and the Atlas",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-06",
+     "title": "10 Days in Iceland",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-08",
+     "title": "14 Days in Greece: Athens and the Islands",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-10",
+     "title": "5 Days in New Orleans",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-12",
+     "title": "7 Days in Costa Rica",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-14",
+     "title": "10 Days in Andalusia: Seville and Granada",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-16",
+     "title": "14 Days in Vietnam",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-24",
+    "title": "5 Days in San Juan, Puerto Rico",
+    "status": "queued",
+    "url": null,
+    "note": null
+   }
+  },
+  {
+   "brand": "Computatio",
+   "stream": "Answers",
+   "cadence": "Tue and Thu, 4:37 AM Pacific",
+   "counts": {
+    "published": 1,
+    "queued": 23,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 1
+   },
+   "published": [
+    {
+     "date": "2026-11-19",
+     "title": "How do I catch up on months of bookkeeping before taxes?",
+     "status": "published",
+     "url": "https://computatio.io/answers/how-to-catch-up-on-bookkeeping/",
+     "note": null
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-24",
+     "title": "How do I know if my agency is actually profitable?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-26",
+     "title": "Why doesn't my bank balance match QuickBooks?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-01",
+     "title": "How do I manage cash flow when clients pay late?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-03",
+     "title": "When should a small business owner stop doing their own books?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-08",
+     "title": "Bookkeeper, software or AI bookkeeping: which is right for a small agency?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-10",
+     "title": "What should a small business do to close its books at year-end?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-15",
+     "title": "How much does a bookkeeper cost for a small business?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-17",
+     "title": "What should a monthly bookkeeping service include?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-22",
+     "title": "What should I ask before hiring a bookkeeper?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-24",
+     "title": "Is AI bookkeeping safe and accurate?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-29",
+     "title": "What does bookkeeping look like for a marketing or design agency?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2027-01-05",
+     "title": "Do I need to send 1099s to my contractors for 2026?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-24",
+    "title": "How do I know if my agency is actually profitable?",
+    "status": "queued",
+    "url": null,
+    "note": null
+   }
+  },
+  {
+   "brand": "BookByte",
+   "stream": "Guides",
+   "cadence": "Weekdays: evergreen Mon/Wed/Fri, AI updates Tue/Thu (see _src/TOPICS.md)",
+   "counts": {
+    "published": 22,
+    "queued": 26,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 5
+   },
+   "published": [
+    {
+     "date": "2026-11-20",
+     "title": "AI for invoices and payment reminders: prompts that work",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/ai-invoices-payment-reminders/",
+     "note": null
+    },
+    {
+     "date": "2026-11-19",
+     "title": "Excel Copilot clean data: fix bank exports before you sort",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/excel-copilot-clean-data-bank-exports/",
+     "note": null
+    },
+    {
+     "date": "2026-11-18",
+     "title": "ChatGPT vs. Claude vs. Gemini for bookkeeping (2026)",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/chatgpt-vs-claude-vs-gemini-bookkeeping/",
+     "note": "Retitled from 'ChatGPT vs. Claude vs. Gemini for bookkeeping tasks: a 2026 test' (68 chars, and implied a test we didn't run); now a test the reader runs."
+    },
+    {
+     "date": "2026-11-17",
+     "title": "ChatGPT for Google Sheets: build a monthly expense summary",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/chatgpt-google-sheets-expense-summary/",
+     "note": "Substitute for 'Gemini's new small-business finance tools: what to check' (moved 2026-11-17 to 2026-12-01: not confirmed live on Google's pages). Availability (GA on all plans, May 5 update) from openai.com; Sheets click path, publisher and permissions from the Google Workspace Marketplace listing. help.openai.com and Microsoft Marketplace pages failed to fetch, so Excel steps are kept general."
+    },
+    {
+     "date": "2026-11-16",
+     "title": "How to do your own bookkeeping when you're self-employed",
+     "status": "published",
+     "url": "https://bookbytellc.com/bookkeeping/do-your-own-bookkeeping/",
+     "note": null
+    },
+    {
+     "date": "2026-11-13",
+     "title": "How to use AI to read your profit and loss statement",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/read-profit-and-loss-with-ai/",
+     "note": null
+    },
+    {
+     "date": "2026-11-12",
+     "title": "QuickBooks AI report insights: use them before month-end",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/quickbooks-report-insights-reconciliation-ai/",
+     "note": null
+    },
+    {
+     "date": "2026-11-11",
+     "title": "How to catch up on months of bookkeeping with AI",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/catch-up-bookkeeping-with-ai/",
+     "note": null
+    },
+    {
+     "date": "2026-11-10",
+     "title": "QuickBooks in ChatGPT or Claude: check invoices first",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/quickbooks-chatgpt-claude-invoices/",
+     "note": null
+    },
+    {
+     "date": "2026-11-09",
+     "title": "Chart of accounts with AI: build yours (free template)",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/chart-of-accounts-with-ai/",
+     "note": null
+    },
+    {
+     "date": "2026-11-06",
+     "title": "How to keep your financial data safe when you use AI",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/financial-data-safety-ai/",
+     "note": null
+    },
+    {
+     "date": "2026-11-05",
+     "title": "Google Sheets canvas: build a cash flow what-if tool",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/google-sheets-canvas-cash-flow-planner/",
+     "note": "Drafted by the 2026-11-05 run, which stalled before pushing; finished and re-checked on Google, IRS and FTB pages 2026-11-05. Click path Insert > Create a canvas (also Tools > Create canvas, bottom-bar Canvas menu); plans per Google blog Aug 13; English, web only."
+    },
+    {
+     "date": "2026-11-04",
+     "title": "Separate business and personal expenses with AI",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/separate-business-personal-expenses-ai/",
+     "note": "Substitute (new evergreen guide) for the missed 2026-11-03 slot: the Gemini small-business finance tools guide was moved to 2026-11-17 because no Google page confirms it is live. Published in the 2026-11-04 evening catch-up from an interactive session."
+    },
+    {
+     "date": "2026-11-04",
+     "title": "AI receipt scanning: turn phone photos into bookkeeping records",
+     "status": "published",
+     "url": "https://bookbytellc.com/ai-accounting/ai-receipt-scanning/",
+     "note": null
+    },
+    {
+     "date": "2026-11-02",
+     "title": "S-corp vs. sole proprietor: when the switch pays off",
+     "status": "published",
+     "url": "https://bookbytellc.com/business-structure/s-corp-vs-sole-proprietor-california/",
+     "note": null
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-23",
+     "title": "How to use AI in Excel or Google Sheets for bookkeeping",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-24",
+     "title": "Claude Personal Finance: spot business costs",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-25",
+     "title": "Year-end bookkeeping checklist, with AI prompts for each step",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-26",
+     "title": "Excel Copilot accounting skills: check a reconciliation",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-27",
+     "title": "How to use AI to find missed deductions, and verify them",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-30",
+     "title": "The new $2,000 1099-NEC threshold for 2026, explained",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-01",
+     "title": "Gemini's new small-business finance tools: what to check",
+     "status": "queued",
+     "url": null,
+     "note": "Moved from 2026-10-29 (to 2026-11-10, then to the 2026-11-03 slot vacated by the IRIS guide at Rogenie's request): no Google page confirms the Gemini business hub and finance tools are live yet. The Oct 20 blog post only says they begin rolling out 'in the coming days', and Gemini release notes (latest 2026.10.13) don't list them. Xero's own pages (Oct 14/17) confirm the Xero connected app is live outside the EEA, UK, Switzerland and Nigeria. Re-check before publishing. Publish only once a Google page confirms it is live; otherwise move again. 2026-11-04 catch-up (scheduled runs on Nov 3-4 stalled before pushing): still not confirmed live. Google's Oct 20 post, re-checked Nov 4 evening, still says rolling out 'in the coming days' with no update. Moved to 2026-11-17, the next empty Tue/Thu at least 2 days out; substitute 'Separate business and personal expenses with AI' published 2026-11-04. 2026-11-17 run: still not confirmed live. Google's Oct 20 post, fetched Nov 17, still says rolling out 'in the coming days' with no update, and Gemini release notes still end at 2026.10.13. Moved to 2026-12-01, the next empty Tue/Thu at least 2 days out; substitute 'ChatGPT for Google Sheets: build a monthly expense summary' published 2026-11-17."
+    },
+    {
+     "date": "2026-12-02",
+     "title": "How to use AI to estimate quarterly taxes, and check the math",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-03",
+     "title": "AI credit card reconciliation: match your card statement to your books",
+     "status": "queued",
+     "url": null,
+     "note": "Evergreen follow-up to /ai-accounting/ai-bank-reconciliation/ (added 2026-11-17 to build the 'ai reconciliation' cluster Search Console shows impressions for). Same match-and-explain method for a credit card: statement as List A, card entries as List B; cover refunds and credits, payments to the card (a transfer, not an expense), interest and fees, charges posted after the closing date, and personal charges on a business card. Made-up example. Check with the statement balance and the software's reconcile screen. Link the bank reconciliation guide, the data safety guide and QuickBooks AI banking suggestions. Sources: IRS Publication 583 and the bookkeeping software vendor's own credit card reconciliation help page, both opened in the run."
+    },
+    {
+     "date": "2026-12-04",
+     "title": "AI mileage logs: what to track and what the IRS expects",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-07",
+     "title": "How to prepare for your tax appointment with AI",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-09",
+     "title": "Your Q4 estimated payment is due January 15, 2027: a checklist",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-23",
+    "title": "How to use AI in Excel or Google Sheets for bookkeeping",
+    "status": "queued",
+    "url": null,
+    "note": null
+   }
+  },
+  {
+   "brand": "Purogé",
+   "stream": "Journal",
+   "cadence": "Monday, Wednesday, Friday",
+   "counts": {
+    "published": 6,
+    "queued": 8,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 6
+   },
+   "published": [
+    {
+     "date": "2026-11-20",
+     "title": "How to Keep Linen From Wrinkling",
+     "status": "published",
+     "url": "https://puroge.com/journal/how-to-keep-linen-from-wrinkling/",
+     "note": null
+    },
+    {
+     "date": "2026-11-18",
+     "title": "Is Polyester Bad for You?",
+     "status": "published",
+     "url": "https://puroge.com/journal/is-polyester-bad-for-you/",
+     "note": null
+    },
+    {
+     "date": "2026-11-17",
+     "title": "Is Linen Good for Travel?",
+     "status": "published",
+     "url": "https://puroge.com/journal/is-linen-good-for-travel/",
+     "note": null
+    },
+    {
+     "date": "2026-11-17",
+     "title": "Are Linen Pants Appropriate for Work?",
+     "status": "published",
+     "url": "https://puroge.com/journal/are-linen-pants-appropriate-for-work/",
+     "note": null
+    },
+    {
+     "date": "2026-11-17",
+     "title": "Linen vs. Cotton: Which Is Better for Your Body and the Planet?",
+     "status": "published",
+     "url": "https://puroge.com/journal/linen-vs-cotton/",
+     "note": null
+    },
+    {
+     "date": "2026-11-17",
+     "title": "Why Humans Should Wear Sustainable Clothing",
+     "status": "published",
+     "url": "https://puroge.com/journal/why-humans-should-wear-sustainable-clothing/",
+     "note": null
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-23",
+     "title": "Is Linen See-Through? How to Choose the Right Weight",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-25",
+     "title": "The Best Fabric for Long Flights",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-27",
+     "title": "How to Wash and Care for Linen So It Lasts Decades",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-30",
+     "title": "Where Is Linen Made? Reading 'European Flax' and 'Made in USA' on a Label",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-02",
+     "title": "What Is Sustainable Clothing? A Plain Definition",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-04",
+     "title": "Cost Per Wear: How to Tell if Expensive Clothes Are Worth It",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-07",
+     "title": "Can You Wear Linen in Winter?",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-09",
+     "title": "Natural Fabrics for Sensitive Skin",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-23",
+    "title": "Is Linen See-Through? How to Choose the Right Weight",
+    "status": "queued",
+    "url": null,
+    "note": null
+   }
+  },
+  {
+   "brand": "Pinoy Mobile Mechanic",
+   "stream": "Blog",
+   "cadence": "Even days of the month, 4:53 AM Pacific",
+   "counts": {
+    "published": 7,
+    "queued": 56,
+    "missed": 1,
+    "held": 0,
+    "published_7d": 3
+   },
+   "published": [
+    {
+     "date": "2026-11-22",
+     "title": "Brakes Squeaking When Stopping? What It Means and What to Do",
+     "status": "published",
+     "url": "https://pinoymobilemechanic.com/blog/brakes-squeaking-when-stopping/"
+    },
+    {
+     "date": "2026-11-18",
+     "title": "Car Battery Keeps Dying Overnight? Why It Happens and What to Do",
+     "status": "published",
+     "url": "https://pinoymobilemechanic.com/blog/car-battery-keeps-dying/"
+    },
+    {
+     "date": "2026-11-16",
+     "title": "Alternator Replacement Cost: Price Ranges and Warning Signs",
+     "status": "published",
+     "url": "https://pinoymobilemechanic.com/blog/alternator-replacement-cost/"
+    },
+    {
+     "date": "2026-11-14",
+     "title": "Mobile Mechanic vs Repair Shop: Which Is Right for Your Car?",
+     "status": "published",
+     "url": "https://pinoymobilemechanic.com/blog/mobile-mechanic-vs-repair-shop/"
+    },
+    {
+     "date": "2026-11-12",
+     "title": "Check Engine Light Flashing? What It Means and What to Do",
+     "status": "published",
+     "url": "https://pinoymobilemechanic.com/blog/check-engine-light-flashing/"
+    },
+    {
+     "date": "2026-11-10",
+     "title": "Brake Pad Replacement Cost in San Diego: What to Expect",
+     "status": "published",
+     "url": "https://pinoymobilemechanic.com/blog/brake-pad-replacement-cost-san-diego/"
+    },
+    {
+     "date": "2026-11-07",
+     "title": "Car Won't Start but Clicks? What It Means and What to Do",
+     "status": "published",
+     "url": "https://pinoymobilemechanic.com/blog/car-wont-start-clicking-noise/"
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-24",
+     "title": "car overheating",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-11-26",
+     "title": "how to tell if it's the battery alternator or starter",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-11-28",
+     "title": "pre purchase car inspection san diego",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-11-30",
+     "title": "car ac blowing hot air",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-02",
+     "title": "grinding noise when braking",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-04",
+     "title": "battery light on while driving",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-06",
+     "title": "car shakes when braking",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-08",
+     "title": "starter replacement cost",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-10",
+     "title": "prius check hybrid system warning",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-12",
+     "title": "coolant leak under car",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-14",
+     "title": "squealing noise when starting car",
+     "status": "queued",
+     "url": null
+    },
+    {
+     "date": "2026-12-16",
+     "title": "burning smell from car",
+     "status": "queued",
+     "url": null
+    }
+   ],
+   "problems": [
+    {
+     "date": "2026-11-20",
+     "title": "No article went live on this scheduled day",
+     "status": "missed",
+     "url": null,
+     "slot": true
+    }
+   ],
+   "next": {
+    "date": "2026-11-24",
+    "title": "car overheating",
+    "status": "queued",
+    "url": null
+   }
+  }
+ ]
+}
