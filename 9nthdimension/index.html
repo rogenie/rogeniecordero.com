@@ -98,7 +98,7 @@ footer{font-size:12px;color:var(--muted);line-height:1.6}
 .divider{border:0;border-top:2px solid var(--line);margin:4px 0}
 tr.click{cursor:pointer}tr.click:hover td{background:var(--sunk)}
 td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var(--up)}
-.nets{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1px;background:var(--line)}
+.nets{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1px;background:var(--line)}
 .net{background:var(--surface);padding:14px 16px}
 .net .lab{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .net .f{font:500 26px/1.2 var(--mono);display:block;margin-top:2px}
@@ -149,7 +149,7 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
   <footer id="foot"></footer>
 </div>
 <script>
-const NETS=["TikTok","Facebook","YouTube","Instagram"];
+const NETS=["TikTok","Facebook","YouTube","Instagram","LinkedIn"];
 const ORDER=["9nth Dimension","Teachings of Jesus","Natal Notes","ÆTAS","Tibi Mundum","Computatio","BookByte","Purogé","Pinoy Mobile Mechanic","thatmommatho"];
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -231,7 +231,7 @@ function render(art,soc){
   const choose=n=>{pick=n;$("#brandSel").value=n;const u=new URL(location);u.searchParams.set("brand",n);history.replaceState(null,"",u);drawBrand()};
   $("#brandSel").onchange=e=>choose(e.target.value);
 
-  const kindLabel={failed:"Social post failed",empty:"No social posts",missed:"Article missed",held:"Article held",check:"Check failed"};
+  const kindLabel={failed:"Social post failed",empty:"No social posts",missed:"Article missed",held:"Article held",check:"Data not updating"};
   function drawBrand(){
     const x=B[pick];
     $("#brandSum").innerHTML=[x.hasSoc?`${fmt(x.f)} followers`:null,x.streams.length?`${x.live} articles live · ${x.queued} queued`:null,`${x.probs.length} problem${x.probs.length===1?"":"s"}`].filter(Boolean).join(" · ");
@@ -255,7 +255,7 @@ function render(art,soc){
         if(v==null&&d===0)$("#vnote").innerHTML=`Couldn't read the ${esc(g.code)} counter. If this keeps showing, open GoatCounter → Settings → Site settings and turn on “Allow adding visitor counts on your website.”`});
     }
     // social
-    $("#social").innerHTML=x.hasSoc?`<div class="nets">${NETS.map(n=>x.accounts.find(a=>a.network===n)).filter(Boolean).map(a=>`
+    $("#social").innerHTML=x.hasSoc?`<div class="nets">${NETS.map(n=>x.accounts.find(a=>a.network===n)||{network:n,missing:true}).map(a=>a.missing?`<div class="net"><div class="lab">${esc(a.network)}</div><span class="f" style="color:var(--muted)">—</span><div class="h">Not connected in Metricool</div></div>`:`
       <div class="net"><div class="lab">${esc(a.network)}</div><a class="f" href="${esc(a.url)}">${fmt(a.now)}</a>
         <div class="h">${esc(a.handle)} · as of ${esc(md(a.asOf))}</div>
         <div class="ch num"><span class="${cls(a.d7)}">${sign(a.d7)}</span> 7d · <span class="${cls(a.d30)}">${sign(a.d30)}</span> 30d</div></div>`).join("")}

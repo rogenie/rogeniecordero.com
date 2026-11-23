@@ -244,6 +244,17 @@
       "2026-11-22": 8
      },
      "as_of": "2026-11-22"
+    },
+    {
+     "network": "LinkedIn",
+     "handle": "Rogenie (personal profile)",
+     "url": "https://www.linkedin.com/",
+     "history": {
+      "2026-10-23": 2562,
+      "2026-11-07": 2561,
+      "2026-11-14": 2562
+     },
+     "as_of": "2026-11-14"
     }
    ]
   },
@@ -357,6 +368,15 @@
    "kind": "empty",
    "text": "Last post was Nov 21; nothing posted on Nov 22. Only YouTube posts; TikTok and Facebook get nothing.",
    "fix": "Old Oct queue is running out. Those posts also link to calendly.com/rogeniecpa, not calendly.com/computatio."
+  },
+  {
+   "brand": "Computatio",
+   "date": "2026-11-14",
+   "network": "LinkedIn",
+   "severity": "medium",
+   "kind": "check",
+   "text": "Metricool hasn't recorded a LinkedIn follower count since Nov 14.",
+   "fix": "Reconnect LinkedIn in Metricool (brand computatio_). It's linked to your personal profile, not a Computatio company page."
   }
  ]
 }
