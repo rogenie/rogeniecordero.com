@@ -42,45 +42,6 @@
    ]
   },
   {
-   "brand": "Teachings of Jesus",
-   "metricool_id": 6804322,
-   "accounts": [
-    {
-     "network": "TikTok",
-     "handle": "@teachings.of.jesuschrist",
-     "url": "https://www.tiktok.com/@teachings.of.jesuschrist",
-     "history": {
-      "2026-10-23": 17,
-      "2026-11-15": 19,
-      "2026-11-21": 19
-     },
-     "as_of": "2026-11-21"
-    },
-    {
-     "network": "Facebook",
-     "handle": "Teachings of Jesus",
-     "url": "https://facebook.com/1047000655164951",
-     "history": {
-      "2026-10-23": 30,
-      "2026-11-15": 35,
-      "2026-11-20": 35
-     },
-     "as_of": "2026-11-20"
-    },
-    {
-     "network": "YouTube",
-     "handle": "Teachings of Jesus",
-     "url": "https://www.youtube.com/channel/UChbRgO5L5TlZYLYY-IxaLgg",
-     "history": {
-      "2026-10-23": 40,
-      "2026-11-15": 45,
-      "2026-11-22": 46
-     },
-     "as_of": "2026-11-22"
-    }
-   ]
-  },
-  {
    "brand": "Natal Notes",
    "metricool_id": 7263055,
    "accounts": [
@@ -323,24 +284,6 @@
    "kind": "failed",
    "text": "London itinerary (8:01 AM) failed on all 4 networks: Instagram and Facebook couldn't download the media, YouTube upload failed, TikTok rejected the file type.",
    "fix": "These are leftover September posts from the old PC engine whose Cloudinary media is gone. Delete the old queued posts in Metricool so only the new cloud social engine posts."
-  },
-  {
-   "brand": "Teachings of Jesus",
-   "date": "2026-11-19",
-   "network": "TikTok",
-   "severity": "high",
-   "kind": "failed",
-   "text": "5 TikTok posts failed Nov 15-19 with \"The post has high spamming risk.\"",
-   "fix": "Reconnect TikTok in Metricool and post a few manually to clear the flag."
-  },
-  {
-   "brand": "Teachings of Jesus",
-   "date": "2026-11-20",
-   "network": "All",
-   "severity": "high",
-   "kind": "empty",
-   "text": "Nothing published or scheduled on any network since Nov 19 (checked through Nov 26).",
-   "fix": "No automation is making Teachings of Jesus posts. Its project manager needs to restart the content run."
   },
   {
    "brand": "ÆTAS",
