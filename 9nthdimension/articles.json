@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22T16:51-08:00",
+ "generated": "2026-11-22T18:02-08:00",
  "today": "2026-11-22",
  "streams": [
   {
@@ -1241,6 +1241,126 @@
     "title": "car overheating",
     "status": "queued",
     "url": null
+   }
+  },
+  {
+   "brand": "Natal Notes",
+   "stream": "Website",
+   "cadence": "One post every other day (content/calendar.yml)",
+   "counts": {
+    "published": 2,
+    "queued": 47,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 2
+   },
+   "published": [
+    {
+     "date": "2026-11-22",
+     "title": "Rahu Ketu Transit 2026 to 2028: Rahu in Capricorn, Ketu in Cancer",
+     "status": "published",
+     "url": "https://mynatalnotes.com/guides/rahu-ketu-transit-2026-2028/"
+    },
+    {
+     "date": "2026-11-22",
+     "title": "Virgo Sidereal Horoscope December 2026: Vedic Monthly Forecast",
+     "status": "published",
+     "url": "https://mynatalnotes.com/sidereal-horoscope/virgo/december-2026/"
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-24",
+     "title": "Sidereal vs tropical astrology",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-26",
+     "title": "Vedic astrology December 2026: monthly overview",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-28",
+     "title": "Jupiter transit 2027",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-30",
+     "title": "How to read a sidereal horoscope",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-02",
+     "title": "Saturn transit 2027 aries",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-04",
+     "title": "Vedic astrology January 2027: monthly overview",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-06",
+     "title": "Scorpio sidereal horoscope, January 2027",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-08",
+     "title": "Leo sidereal horoscope, January 2027",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-10",
+     "title": "Cancer sidereal horoscope, January 2027",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-12",
+     "title": "Pisces sidereal horoscope, January 2027",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-14",
+     "title": "Virgo sidereal horoscope, January 2027",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-16",
+     "title": "Aries sidereal horoscope, January 2027",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-24",
+    "title": "Sidereal vs tropical astrology",
+    "status": "queued",
+    "url": null,
+    "note": null
    }
   },
   {

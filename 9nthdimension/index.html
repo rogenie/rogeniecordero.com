@@ -169,7 +169,8 @@ const GC={"ÆTAS":{code:"parvaregina",site:"aetasliveforever.com",note:"Counter 
   "Tibi Mundum":{code:"tibimundum",site:"tibimundum.com"},
   "Computatio":{code:"computatio",site:"computatio.io",host:true,shared:"BookByte"},
   "BookByte":{code:"computatio",site:"bookbytellc.com",host:true,shared:"Computatio"},
-  "Pinoy Mobile Mechanic":{code:"pinoymobilemechanic",site:"pinoymobilemechanic.com"}};
+  "Pinoy Mobile Mechanic":{code:"pinoymobilemechanic",site:"pinoymobilemechanic.com"},
+  "Natal Notes":{code:"mynatalnotes",site:"mynatalnotes.com"}};
 const NOVISIT={"Intelligentia Antiqua":"intelligentiaantiqua.com has no visit counter (the site loads no analytics on purpose).","Satsplain":"satsplain.com has no visit counter (the site loads no analytics on purpose).","9nth Dimension":"9nthdimension.com uses Google Analytics, which this page can't read.","Purogé":"puroge.com has no visit counter yet."};
 const isoDay=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toLocaleDateString("en-CA",{timeZone:"America/Los_Angeles"})};
 const gcCache={};
@@ -256,6 +257,28 @@ async function astroLive(brand,repo,site,calPath){
       items.push({date:d,title:m[4],status:d<today?"missed":d===today?"due_today":"queued",url:null,note:d<today?"No publisher is scheduled for this site":null})}}catch(e){}}
   return trimStream({brand,stream:"Articles",cadence,items},today);
 }
+const MON=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const cap=w=>w.charAt(0).toUpperCase()+w.slice(1);
+const monthName=m=>`${MON[+m.slice(5,7)-1]} ${m.slice(0,4)}`;
+function nnPath(k,slug,month,sign){return k==="forecast"?`/sidereal-horoscope/${sign}/${MON[+month.slice(5,7)-1].toLowerCase()}-${month.slice(0,4)}/`:k==="overview"?`/vedic-astrology/${MON[+month.slice(5,7)-1].toLowerCase()}-${month.slice(0,4)}/`:`/guides/${slug}/`}
+async function natalLive(){
+  const {today,hour}=ptNow();const site="https://mynatalnotes.com";
+  const list=await fetch("https://api.github.com/repos/rogenie/natalnotes-site/contents/content/posts",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+  const mds=await Promise.all(list.filter(f=>f.name.endsWith(".md")).map(f=>fetchText(RAW("natalnotes-site","content/posts/"+f.name))));
+  const items=[],seen=new Set();
+  for(const t of mds){const g=k=>((t.match(new RegExp(`^${k}:\\s*["']?([^"'\\n]+)`,"m"))||[])[1]||"").trim();
+    const k=g("kind"),url=site+nnPath(k,g("slug"),g("month"),g("sign"));seen.add(url);
+    items.push({date:g("date"),title:g("title"),status:"published",url})}
+  const cal=await fetchText(RAW("natalnotes-site","content/calendar.yml"));
+  for(const line of cal.split("\n")){if(!line.startsWith("- {"))continue;
+    const g=k=>((line.match(new RegExp(`[{ ]${k}: ([^,}]+)`))||[])[1]||"").trim();
+    if(g("status")==="published")continue;
+    const k=g("kind"),on=g("on"),slug=g("slug"),month=g("month"),sign=g("sign");
+    if(seen.has(site+nnPath(k,slug,month,sign)))continue;
+    const title=k==="forecast"?`${cap(sign)} sidereal horoscope, ${monthName(month)}`:k==="overview"?`Vedic astrology ${monthName(month)}: monthly overview`:cap(slug.replace(/-/g," "));
+    items.push({date:on,title,status:on<today?"missed":on===today?(hour>=9?"missed":"due_today"):"queued",url:null,note:on<today?"Overdue: the next run publishes it and the rest slide":null})}
+  return trimStream({brand:"Natal Notes",stream:"Website",cadence:"One post every other day (content/calendar.yml)",items},today);
+}
 // Tibi Mundum's calendar is in a private repo, so its streams keep the last saved snapshot.
 async function liveArticles(snap){
   const jobs=[["9nth Dimension","Articles",nineLive],
@@ -265,6 +288,7 @@ async function liveArticles(snap){
     ["BookByte","Guides",()=>calStream("BookByte","Guides","bookbyte-site","_src/calendar.json","https://bookbytellc.com",6)],
     ["Purogé","Journal",()=>calStream("Purogé","Journal","puroge-site","content/calendar.json","https://puroge.com",5)],
     ["Pinoy Mobile Mechanic","Blog",pinoyLive],
+    ["Natal Notes","Website",natalLive],
     ["Intelligentia Antiqua","Articles",()=>astroLive("Intelligentia Antiqua","intelligentiaantiqua-site","https://intelligentiaantiqua.com","docs/content-calendar.md")],
     ["Satsplain","Articles",()=>astroLive("Satsplain","satsplain-site","https://satsplain.com",null)]];
   const old=(b,st)=>(snap.streams||[]).find(x=>x.brand===b&&x.stream===st);

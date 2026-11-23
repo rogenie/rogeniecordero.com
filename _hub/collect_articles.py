@@ -171,6 +171,41 @@ def astro(brand, repo, site, cal=None):
     return {"brand": brand, "stream": "Articles", "cadence": cadence, "items": out}
 
 
+MONTH_NAMES = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+
+
+def natal():
+    r = SRC / "natalnotes-site"
+    site = "https://mynatalnotes.com"
+    if not r.exists():
+        return {"brand": "Natal Notes", "stream": "Website", "error": "natalnotes-site not found"}
+    def path(k, slug, month, sign):
+        mm = f"{MONTH_NAMES[int(month[5:7]) - 1].lower()}-{month[:4]}" if month else ""
+        return f"/sidereal-horoscope/{sign}/{mm}/" if k == "forecast" else f"/vedic-astrology/{mm}/" if k == "overview" else f"/guides/{slug}/"
+    out, seen = [], set()
+    for f in sorted((r / "content/posts").glob("*.md")):
+        t = f.read_text()
+        g = lambda k: (re.search(rf"^{k}:\s*[\"']?([^\"'\n]+)", t, re.M) or [None, ""])[1].strip()
+        url = site + path(g("kind"), g("slug"), g("month"), g("sign"))
+        seen.add(url)
+        out.append({"date": g("date"), "title": g("title"), "status": "published", "url": url})
+    for line in (r / "content/calendar.yml").read_text().splitlines():
+        if not line.startswith("- {"):
+            continue
+        g = lambda k: (re.search(rf"[{{ ]{k}: ([^,}}]+)", line) or [None, ""])[1].strip()
+        if g("status") == "published":
+            continue
+        k, on, slug, month, sign = g("kind"), g("on"), g("slug"), g("month"), g("sign")
+        if site + path(k, slug, month, sign) in seen:
+            continue
+        mname = f"{MONTH_NAMES[int(month[5:7]) - 1]} {month[:4]}" if month else ""
+        title = f"{sign.capitalize()} sidereal horoscope, {mname}" if k == "forecast" else f"Vedic astrology {mname}: monthly overview" if k == "overview" else slug.replace("-", " ").capitalize()
+        st = "missed" if d(on) < TODAY else ("missed" if NOW.hour >= 9 else "due_today") if d(on) == TODAY else "queued"
+        out.append({"date": on, "title": title, "status": st, "url": None,
+                    "note": "Overdue: the next run publishes it and the rest slide" if st == "missed" else None})
+    return {"brand": "Natal Notes", "stream": "Website", "cadence": "One post every other day (content/calendar.yml)", "items": out}
+
+
 def trim(stream):
     if "items" not in stream:
         return stream
@@ -198,6 +233,7 @@ streams = [
     calendar_stream("BookByte", "Guides", "bookbyte-site", "_src/calendar.json", "https://bookbytellc.com", run_hour=6),
     calendar_stream("Purogé", "Journal", "puroge-site", "content/calendar.json", "https://puroge.com", run_hour=5),
     pinoy(),
+    natal(),
     astro("Intelligentia Antiqua", "intelligentiaantiqua-site", "https://intelligentiaantiqua.com", "docs/content-calendar.md"),
     astro("Satsplain", "satsplain-site", "https://satsplain.com"),
 ]
