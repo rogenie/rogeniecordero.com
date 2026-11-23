@@ -156,7 +156,7 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
 </div>
 <script>
 const NETS=["TikTok","Facebook","YouTube","Instagram","LinkedIn"];
-const ORDER=["9nth Dimension","Natal Notes","ÆTAS","Tibi Mundum","Computatio","BookByte","Purogé","Pinoy Mobile Mechanic","thatmommatho"];
+const ORDER=["9nth Dimension","Natal Notes","ÆTAS","Tibi Mundum","Computatio","BookByte","Purogé","Pinoy Mobile Mechanic","Intelligentia Antiqua","Satsplain","thatmommatho"];
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt=n=>n==null?"–":Number(n).toLocaleString("en-US");
@@ -170,7 +170,7 @@ const GC={"ÆTAS":{code:"parvaregina",site:"aetasliveforever.com",note:"Counter 
   "Computatio":{code:"computatio",site:"computatio.io",host:true,shared:"BookByte"},
   "BookByte":{code:"computatio",site:"bookbytellc.com",host:true,shared:"Computatio"},
   "Pinoy Mobile Mechanic":{code:"pinoymobilemechanic",site:"pinoymobilemechanic.com"}};
-const NOVISIT={"9nth Dimension":"9nthdimension.com uses Google Analytics, which this page can't read.","Purogé":"puroge.com has no visit counter yet."};
+const NOVISIT={"Intelligentia Antiqua":"intelligentiaantiqua.com has no visit counter (the site loads no analytics on purpose).","Satsplain":"satsplain.com has no visit counter (the site loads no analytics on purpose).","9nth Dimension":"9nthdimension.com uses Google Analytics, which this page can't read.","Purogé":"puroge.com has no visit counter yet."};
 const isoDay=n=>{const d=new Date();d.setDate(d.getDate()-n);return d.toLocaleDateString("en-CA",{timeZone:"America/Los_Angeles"})};
 const gcCache={};
 function gcCount(code,path,days){
@@ -240,6 +240,22 @@ async function pinoyLive(){
   for(const m of kw.matchAll(/^- \[ \] [^|]+\|\s*([^|]+?)\s*\|/gm)){while(dom(n)%2===1)n=addDays(n,1);items.push({date:n,title:m[1],status:"queued",url:null});n=addDays(n,1)}
   return trimStream({brand:"Pinoy Mobile Mechanic",stream:"Blog",cadence:"Even days of the month, 4:53 AM Pacific",items},today);
 }
+async function astroLive(brand,repo,site,calPath){
+  const {today}=ptNow();
+  const list=await fetch(`https://api.github.com/repos/rogenie/${repo}/contents/src/content/articles`,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+  const mds=await Promise.all(list.filter(f=>/\.mdx?$/.test(f.name)).map(f=>fetchText(RAW(repo,"src/content/articles/"+f.name))));
+  const items=[],dates=new Set();
+  for(const t of mds){if(/^draft:\s*true/m.test(t))continue;
+    const dt=(t.match(/^publishDate:\s*['"]?(\d{4}-\d{2}-\d{2})/m)||[])[1];const ti=(t.match(/^title:\s*(.+)$/m)||[])[1];const sl=(t.match(/^slug:\s*(\S+)/m)||[])[1];
+    items.push({date:dt,title:ti?ti.trim().replace(/^"|"$/g,""):sl,status:"published",url:`${site}/articles/${sl}/`});if(dt)dates.add(dt)}
+  let cadence="No publishing calendar yet";
+  if(calPath){try{const md=await fetchText(RAW(repo,calPath));cadence="Mon, Wed, Fri (docs/content-calendar.md)";
+    const M={Jan:"01",Feb:"02",Mar:"03",Apr:"04",May:"05",Jun:"06",Jul:"07",Aug:"08",Sep:"09",Oct:"10",Nov:"11",Dec:"12"};
+    for(const m of md.matchAll(/^\|\s*\w{3}\s+(\d{1,2})\s+(\w{3})\s+(\d{4})\s*\|\s*([^|]+?)\s*\|/gm)){
+      const d=`${m[3]}-${M[m[2]]}-${m[1].padStart(2,"0")}`;if(dates.has(d))continue;
+      items.push({date:d,title:m[4],status:d<today?"missed":d===today?"due_today":"queued",url:null,note:d<today?"No publisher is scheduled for this site":null})}}catch(e){}}
+  return trimStream({brand,stream:"Articles",cadence,items},today);
+}
 // Tibi Mundum's calendar is in a private repo, so its streams keep the last saved snapshot.
 async function liveArticles(snap){
   const jobs=[["9nth Dimension","Articles",nineLive],
@@ -248,7 +264,9 @@ async function liveArticles(snap){
     ["Computatio","Answers",()=>calStream("Computatio","Answers","computatio-site","_src/answers_calendar.json","https://computatio.io",5,"question")],
     ["BookByte","Guides",()=>calStream("BookByte","Guides","bookbyte-site","_src/calendar.json","https://bookbytellc.com",6)],
     ["Purogé","Journal",()=>calStream("Purogé","Journal","puroge-site","content/calendar.json","https://puroge.com",5)],
-    ["Pinoy Mobile Mechanic","Blog",pinoyLive]];
+    ["Pinoy Mobile Mechanic","Blog",pinoyLive],
+    ["Intelligentia Antiqua","Articles",()=>astroLive("Intelligentia Antiqua","intelligentiaantiqua-site","https://intelligentiaantiqua.com","docs/content-calendar.md")],
+    ["Satsplain","Articles",()=>astroLive("Satsplain","satsplain-site","https://satsplain.com",null)]];
   const old=(b,st)=>(snap.streams||[]).find(x=>x.brand===b&&x.stream===st);
   const out=await Promise.all(jobs.map(async([b,st,fn])=>{
     if(!fn){const o=old(b,st);return o?{...o,snapshot:true}:{brand:b,stream:st,error:"no saved data"}}

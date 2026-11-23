@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-22T16:25-08:00",
+ "generated": "2026-11-22T16:51-08:00",
  "today": "2026-11-22",
  "streams": [
   {
@@ -1242,6 +1242,131 @@
     "status": "queued",
     "url": null
    }
+  },
+  {
+   "brand": "Intelligentia Antiqua",
+   "stream": "Articles",
+   "cadence": "Mon, Wed, Fri (docs/content-calendar.md)",
+   "counts": {
+    "published": 3,
+    "queued": 6,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 3
+   },
+   "published": [
+    {
+     "date": "2026-11-20",
+     "title": "What is AI, in plain English?",
+     "status": "published",
+     "url": "https://intelligentiaantiqua.com/articles/what-is-ai/"
+    },
+    {
+     "date": "2026-11-20",
+     "title": "How to use an AI assistant safely",
+     "status": "published",
+     "url": "https://intelligentiaantiqua.com/articles/how-to-use-an-ai-assistant/"
+    },
+    {
+     "date": "2026-11-20",
+     "title": "AI scams: voice clones and deepfakes",
+     "status": "published",
+     "url": "https://intelligentiaantiqua.com/articles/ai-scams-voice-clones-and-deepfakes/"
+    }
+   ],
+   "queue": [
+    {
+     "date": "2026-11-23",
+     "title": "What machine learning is, without the math",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-25",
+     "title": "What never to paste into a chatbot",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-27",
+     "title": "What “hallucination” means",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-11-30",
+     "title": "Will AI take jobs? What the 2026 report actually says",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-02",
+     "title": "What alignment means",
+     "status": "queued",
+     "url": null,
+     "note": null
+    },
+    {
+     "date": "2026-12-04",
+     "title": "How to check an AI answer in five minutes",
+     "status": "queued",
+     "url": null,
+     "note": null
+    }
+   ],
+   "problems": [],
+   "next": {
+    "date": "2026-11-23",
+    "title": "What machine learning is, without the math",
+    "status": "queued",
+    "url": null,
+    "note": null
+   }
+  },
+  {
+   "brand": "Satsplain",
+   "stream": "Articles",
+   "cadence": "No publishing calendar yet",
+   "counts": {
+    "published": 4,
+    "queued": 0,
+    "missed": 0,
+    "held": 0,
+    "published_7d": 4
+   },
+   "published": [
+    {
+     "date": "2026-11-20",
+     "title": "What is a seed phrase? The words that control your crypto",
+     "status": "published",
+     "url": "https://satsplain.com/articles/what-is-a-seed-phrase/"
+    },
+    {
+     "date": "2026-11-19",
+     "title": "What is Bitcoin? A plain‑English guide for beginners",
+     "status": "published",
+     "url": "https://satsplain.com/articles/what-is-bitcoin/"
+    },
+    {
+     "date": "2026-11-19",
+     "title": "How to buy crypto safely for the first time",
+     "status": "published",
+     "url": "https://satsplain.com/articles/how-to-buy-crypto-safely/"
+    },
+    {
+     "date": "2026-11-19",
+     "title": "Crypto scams to avoid (and how to spot them)",
+     "status": "published",
+     "url": "https://satsplain.com/articles/crypto-scams-to-avoid/"
+    }
+   ],
+   "queue": [],
+   "problems": [],
+   "next": null
   }
  ]
 }

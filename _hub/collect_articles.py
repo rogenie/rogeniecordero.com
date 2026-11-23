@@ -138,6 +138,39 @@ def pinoy():
     return {"brand": "Pinoy Mobile Mechanic", "stream": "Blog", "cadence": "Even days of the month, 4:53 AM Pacific", "items": out}
 
 
+MONTHS = {m: i for i, m in enumerate(["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], 1)}
+
+
+def astro(brand, repo, site, cal=None):
+    r = SRC / repo
+    if not r.exists():
+        return {"brand": brand, "stream": "Articles", "error": f"{repo} not found"}
+    out, dates = [], set()
+    for f in sorted((r / "src/content/articles").glob("*.md*")):
+        t = f.read_text()
+        if re.search(r"^draft:\s*true", t, re.M):
+            continue
+        dt = re.search(r"^publishDate:\s*['\"]?(\d{4}-\d{2}-\d{2})", t, re.M)
+        ti = re.search(r"^title:\s*(.+)$", t, re.M)
+        sl = re.search(r"^slug:\s*(\S+)", t, re.M)
+        slug = sl.group(1) if sl else f.stem
+        out.append({"date": dt.group(1) if dt else None, "title": ti.group(1).strip().strip('"') if ti else slug,
+                    "status": "published", "url": f"{site}/articles/{slug}/"})
+        if dt:
+            dates.add(dt.group(1))
+    cadence = "No publishing calendar yet"
+    if cal and (r / cal).exists():
+        cadence = "Mon, Wed, Fri (docs/content-calendar.md)"
+        for m in re.finditer(r"^\|\s*\w{3}\s+(\d{1,2})\s+(\w{3})\s+(\d{4})\s*\|\s*([^|]+?)\s*\|", (r / cal).read_text(), re.M):
+            dt = date(int(m.group(3)), MONTHS[m.group(2)], int(m.group(1))).isoformat()
+            if dt in dates:
+                continue
+            st = "missed" if d(dt) < TODAY else "due_today" if d(dt) == TODAY else "queued"
+            out.append({"date": dt, "title": m.group(4), "status": st, "url": None,
+                        "note": "No publisher is scheduled for this site" if st == "missed" else None})
+    return {"brand": brand, "stream": "Articles", "cadence": cadence, "items": out}
+
+
 def trim(stream):
     if "items" not in stream:
         return stream
@@ -165,6 +198,8 @@ streams = [
     calendar_stream("BookByte", "Guides", "bookbyte-site", "_src/calendar.json", "https://bookbytellc.com", run_hour=6),
     calendar_stream("Purogé", "Journal", "puroge-site", "content/calendar.json", "https://puroge.com", run_hour=5),
     pinoy(),
+    astro("Intelligentia Antiqua", "intelligentiaantiqua-site", "https://intelligentiaantiqua.com", "docs/content-calendar.md"),
+    astro("Satsplain", "satsplain-site", "https://satsplain.com"),
 ]
 # Computatio answers: fill live URLs from slugs (its calendar has no url field).
 for s in streams:
