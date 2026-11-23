@@ -245,8 +245,8 @@ function render(art,soc){
       </div>`).join("")}</div>`:`<div class="ok">No problems for ${esc(pick)}. Every due article is live and no social post failed.</div>`;
     // visits
     const g=GC[pick];
-    $("#visitsSec").hidden=!g;
-    if(g){
+    if(!g){$("#visits").innerHTML=`<div style="padding:18px;color:var(--muted)">${esc(NOVISIT[pick]||"No visit counter for this brand.")}</div>`;$("#visitSrc").textContent=""}
+    else{
       $("#visitSrc").innerHTML=`GoatCounter · <a href="https://${g.code}.goatcounter.com">open full stats</a>`;
       $("#visits").innerHTML=`<div class="nets">${[["All time",0],["Last 30 days",30],["Last 7 days",7]].map(([l,d])=>`<div class="net"><div class="lab">${l}</div><span class="f" data-v="${d}">…</span></div>`).join("")}</div>
         <div id="vnote" style="padding:10px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--line)">${g.shared?`${esc(g.site)} shares one counter with ${esc(g.shared)}, so these totals cover both sites. Per-article counts below are this site only.`:esc(g.note||g.site)}</div>`;
