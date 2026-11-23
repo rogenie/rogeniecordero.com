@@ -104,6 +104,10 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
 .net .f{font:500 26px/1.2 var(--mono);display:block;margin-top:2px}
 .net .h{font-size:12px;color:var(--muted)}
 [hidden]{display:none!important}
+.refresh{font:600 15px var(--body);color:#fff;background:var(--accent);border:0;border-radius:8px;padding:10px 18px;cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.refresh:hover{filter:brightness(1.1)}.refresh:disabled{opacity:.6;cursor:progress}
+.refresh:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+@media (prefers-color-scheme:dark){.refresh{color:#0e121b}}
 </style>
 </head>
 <body>
@@ -113,6 +117,7 @@ td.pr{font:500 15px var(--mono)}td.pr.bad{color:var(--down)}td.pr.good{color:var
       <h1>All Brands Dashboard</h1>
       <p class="sub" id="fresh">Loading…</p>
     </div>
+    <button class="refresh" id="refresh" type="button"><span aria-hidden="true">↻</span> Refresh</button>
   </header>
 
   <section>
@@ -185,14 +190,90 @@ function acctNums(a){
   return{now,d7:now-back(7),d30:now-back(30),asOf:last};
 }
 
-async function load(){
-  const get=u=>fetch(u+"?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
-  const [art,soc]=await Promise.all([get("articles.json"),get("social.json")]);
-  render(art||{streams:[]},soc||{brands:[],problems:[]});
+
+// ---------- live article check (runs in your browser from each site's public calendar on GitHub) ----------
+const RAW=(repo,path)=>`https://raw.githubusercontent.com/rogenie/${repo}/main/${path}?t=${Date.now()}`;
+const ptNow=()=>{const f=new Intl.DateTimeFormat("en-CA",{timeZone:"America/Los_Angeles",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",hourCycle:"h23"}).formatToParts(new Date());
+  const g=t=>f.find(x=>x.type===t).value;return{today:`${g("year")}-${g("month")}-${g("day")}`,hour:+g("hour")}};
+const addDays=(iso,n)=>{const d=new Date(iso+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10)};
+const dom=iso=>+iso.slice(8,10);
+const fetchText=u=>fetch(u,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.text()});
+function trimStream(st,today){
+  const it=st.items.sort((a,b)=>String(a.date).localeCompare(String(b.date)));
+  const pub=it.filter(i=>i.status==="published"),q=it.filter(i=>i.status==="queued"||i.status==="due_today"),bad=it.filter(i=>i.status==="missed"||i.status==="held");
+  const wk=addDays(today,-7);
+  st.counts={published:pub.length,queued:q.length,missed:bad.filter(i=>i.status==="missed").length,held:bad.filter(i=>i.status==="held").length,published_7d:pub.filter(i=>i.date>wk).length};
+  st.published=pub.reverse().slice(0,15);st.queue=q.slice(0,12);st.problems=bad;st.next=q[0]||null;delete st.items;return st;
+}
+async function calStream(brand,stream,repo,path,site,runHour,titleKey){
+  const {today,hour}=ptNow();
+  const c=JSON.parse(await fetchText(RAW(repo,path)));
+  const items=Array.isArray(c)?c:Object.values(c).find(Array.isArray);
+  return trimStream({brand,stream,cadence:c.cadence||"",items:items.map(i=>{
+    const dt=i.date.slice(0,10);let url=i.url||(i.path?site+i.path:null);
+    if(!url&&repo==="computatio-site"&&i.slug)url=`${site}/answers/${i.slug}/`;
+    const st=i.status==="published"?"published":i.status==="held"?"held":dt<today?"missed":dt===today?(hour>=runHour+3?"missed":"due_today"):"queued";
+    return{date:dt,title:i[titleKey]||i.question||i.title||i.slug,status:st,url:st==="published"?url:null,note:i.note||i.held_reason||null};
+  })},today);
+}
+async function nineLive(){
+  const {today,hour}=ptNow();
+  const list=await fetch("https://api.github.com/repos/rogenie/9nthdimension-site/contents/content/articles",{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+  const mds=await Promise.all(list.filter(f=>f.name.endsWith(".md")).map(f=>fetchText(RAW("9nthdimension-site","content/articles/"+f.name)).then(t=>({t,slug:f.name.slice(0,-3)}))));
+  const items=[],dates=new Set();
+  for(const {t,slug} of mds){const dt=(t.match(/^date:\s*['"]?(\d{4}-\d{2}-\d{2})/m)||[])[1];const ti=(t.match(/^title:\s*(.+)$/m)||[])[1];const rung=(t.match(/^rung:\s*(\S+)/m)||[])[1];
+    items.push({date:dt,title:ti?ti.trim().replace(/^"|"$/g,""):slug,status:"published",url:rung?`https://9nthdimension.com/ladder/${rung}/${slug}/`:"https://9nthdimension.com/"});if(dt)dates.add(dt)}
+  let d=[...dates].sort()[0]||today;
+  while(d<today||(d===today&&hour>=9)){if(dom(d)%2===1&&!dates.has(d))items.push({date:d,title:"No article went live on this scheduled day",status:"missed",url:null,slot:true});d=addDays(d,1)}
+  const bl=await fetchText(RAW("9nthdimension-site","content/backlog.yml"));
+  let n=(dom(today)%2===1&&hour<6&&!dates.has(today))?today:addDays(today,1);
+  for(const m of bl.matchAll(/^- \{q: "(.+?)",.*status: todo/gm)){while(dom(n)%2===0)n=addDays(n,1);items.push({date:n,title:m[1],status:"queued",url:null});n=addDays(n,1)}
+  return trimStream({brand:"9nth Dimension",stream:"Articles",cadence:"Odd days of the month, 5:37 AM Pacific",items},today);
+}
+async function pinoyLive(){
+  const {today,hour}=ptNow();
+  const st=JSON.parse(await fetchText(RAW("pinoy-mobile-mechanic","status.json")));
+  const items=(st.articles||[]).map(a=>({date:a.date,title:a.title,status:"published",url:a.url}));const dates=new Set(items.map(i=>i.date));
+  let d=[...dates].sort()[0]||today;
+  while(d<today||(d===today&&hour>=8)){if(dom(d)%2===0&&!dates.has(d)&&!dates.has(addDays(d,-1)))items.push({date:d,title:"No article went live on this scheduled day",status:"missed",url:null,slot:true});d=addDays(d,1)}
+  const kw=await fetchText(RAW("pinoy-mobile-mechanic","content/keywords.md"));let n=addDays(today,1);
+  for(const m of kw.matchAll(/^- \[ \] [^|]+\|\s*([^|]+?)\s*\|/gm)){while(dom(n)%2===1)n=addDays(n,1);items.push({date:n,title:m[1],status:"queued",url:null});n=addDays(n,1)}
+  return trimStream({brand:"Pinoy Mobile Mechanic",stream:"Blog",cadence:"Even days of the month, 4:53 AM Pacific",items},today);
+}
+// Tibi Mundum's calendar is in a private repo, so its streams keep the last saved snapshot.
+async function liveArticles(snap){
+  const jobs=[["9nth Dimension","Articles",nineLive],
+    ["ÆTAS","Articles",()=>calStream("ÆTAS","Articles","aetasliveforever-site","_src/calendar.json","https://aetasliveforever.com",6)],
+    ["Tibi Mundum","PTO guides",null],["Tibi Mundum","Itineraries",null],
+    ["Computatio","Answers",()=>calStream("Computatio","Answers","computatio-site","_src/answers_calendar.json","https://computatio.io",5,"question")],
+    ["BookByte","Guides",()=>calStream("BookByte","Guides","bookbyte-site","_src/calendar.json","https://bookbytellc.com",6)],
+    ["Purogé","Journal",()=>calStream("Purogé","Journal","puroge-site","content/calendar.json","https://puroge.com",5)],
+    ["Pinoy Mobile Mechanic","Blog",pinoyLive]];
+  const old=(b,st)=>(snap.streams||[]).find(x=>x.brand===b&&x.stream===st);
+  const out=await Promise.all(jobs.map(async([b,st,fn])=>{
+    if(!fn){const o=old(b,st);return o?{...o,snapshot:true}:{brand:b,stream:st,error:"no saved data"}}
+    try{return await fn()}catch(e){const o=old(b,st);return o?{...o,snapshot:true}:{brand:b,stream:st,error:"couldn't load the calendar"}}
+  }));
+  return{generated:new Date().toISOString(),today:ptNow().today,streams:out,live:true};
 }
 
+let snapAt="";
+async function load(){
+  const btn=$("#refresh");btn.disabled=true;btn.lastChild.textContent=" Refreshing…";
+  for(const k in gcCache)delete gcCache[k];
+  const get=u=>fetch(u+"?t="+Date.now(),{cache:"no-store"}).then(r=>r.ok?r.json():null).catch(()=>null);
+  const [snap,soc]=await Promise.all([get("articles.json"),get("social.json")]);
+  const s2=soc||{brands:[],problems:[]};
+  snapAt=snap?snap.generated:"";
+  render(snap||{streams:[]},s2);
+  const art=await liveArticles(snap||{streams:[]});
+  render(art,s2);
+  btn.disabled=false;btn.lastChild.textContent=" Refresh";
+}
+$("#refresh").onclick=load;
+
 function render(art,soc){
-  $("#fresh").innerHTML=`Articles checked ${esc(when(art.generated))} · Social checked ${esc(when(soc.generated))} · Pacific time`;
+  $("#fresh").innerHTML=art.live?`Articles and visits checked just now (${esc(when(art.generated))}) · Followers and social posts last checked ${esc(when(soc.generated))}`:`Loading the latest…`;
 
   // ---------- gather per-brand data ----------
   const probs=[...(soc.problems||[])];
@@ -269,7 +350,7 @@ function render(art,soc){
       const c=s.counts;
       const li=(i,link)=>`<li class="${i.status==="missed"?"miss":i.status==="due_today"?"today":""}"><span class="dt">${esc(md(i.date))}</span><span class="ti">${link&&i.url?`<a href="${esc(i.url)}">${esc(i.title)}</a>`:esc(i.title)}</span><span class="vc"${link&&i.url&&GC[s.brand]?` data-u="${esc(i.url)}" title="visits"`:""}></span></li>`;
       return`<div class="panel stream">
-        <div class="top"><h3>${esc(s.stream)}</h3><span class="cad">${esc(s.cadence||"")}</span></div>
+        <div class="top"><h3>${esc(s.stream)}</h3><span class="cad">${s.snapshot?`Saved ${esc(when(art.generated&&s.snapshot?snapAt:""))} (private calendar, refreshed when Claude updates the dashboard) · `:""}${esc(s.cadence||"")}</span></div>
         <div class="stats"><span><b>${c.published}</b> live</span><span><b>${c.published_7d}</b> this week</span><span><b>${c.queued}</b> in queue</span>${c.missed?`<span class="bad"><b>${c.missed}</b> missed</span>`:""}${c.held?`<span class="bad"><b>${c.held}</b> held</span>`:""}</div>
         <div class="cols">
           <div><h4>Published</h4><ol>${s.published.map(i=>li(i,true)).join("")||'<li class="more">None yet</li>'}</ol>${c.published>s.published.length?`<div class="more">+ ${c.published-s.published.length} older</div>`:""}</div>
